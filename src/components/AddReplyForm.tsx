@@ -10,20 +10,24 @@ import { addReply } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddReplySchema } from '@/lib/validationSchemas';
 import { Letter } from '@prisma/client';
+import { Pin } from 'react-bootstrap-icons';
 
 const onSubmit = async (data: {
   reply: string;
   letterId: number;
-  owner: string; }) => {
+  owner: string;
+}, reset: () => void) => {
   await addReply(data);
   swal('Success', 'Your response has been added', 'success', {
     timer: 2000,
   });
+  reset();
 };
 
-const AddReplyForm = ({ letter } : { letter: Letter }) => {
+const AddReplyForm = ({ letter }: { letter: Letter }) => {
   const { data: session, status } = useSession();
   const currentUser = session?.user?.email || '';
+
   const {
     register,
     handleSubmit,
@@ -32,24 +36,30 @@ const AddReplyForm = ({ letter } : { letter: Letter }) => {
   } = useForm({
     resolver: yupResolver(AddReplySchema),
   });
+
   if (status === 'loading') {
     return <LoadingSpinner />;
   }
+
   if (status === 'unauthenticated') {
     redirect('/auth/signin');
   }
 
   return (
     <Card>
-      <Card.Header style={{ textAlign: 'center' }}>Add Timestamped Reponse</Card.Header>
       <Card.Body>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit((data) => onSubmit(data, reset))}>
           <Form.Group>
-            <Form.Label>Response</Form.Label>
-            <input
-              type="text"
+            {/* <Form.Label>Post a Reply</Form.Label> */}
+            <textarea
               {...register('reply')}
               className={`form-control ${errors.reply ? 'is-invalid' : ''}`}
+              placeholder="Leave a note for the board :)"
+              style={{
+                width: '100%',
+                resize: 'vertical',
+                minHeight: '100px',
+              }}
             />
             <div className="invalid-feedback">{errors.reply?.message}</div>
           </Form.Group>
@@ -58,13 +68,10 @@ const AddReplyForm = ({ letter } : { letter: Letter }) => {
           <Form.Group className="form-group">
             <Row className="pt-3">
               <Col>
-                <Button type="submit" variant="primary">
-                  Submit
-                </Button>
-              </Col>
-              <Col>
-                <Button type="button" onClick={() => reset()} variant="warning" className="float-right">
-                  Reset
+                <Button type="submit" variant="primary" className="float-end" style={{ backgroundColor: '#f8d7da', borderColor: '#f5c6cb' }}>
+                  <Pin className="mr-2" />
+                  {' '}
+                  Pin to Board
                 </Button>
               </Col>
             </Row>

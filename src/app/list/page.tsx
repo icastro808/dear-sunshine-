@@ -63,7 +63,17 @@ const ListPage = async () => {
   });
   return (
     <main>
-      <Container id="list" fluid className="py-3">
+      <Container
+        id="list"
+        fluid
+        className="py-3"
+        style={{
+          backgroundColor: '#D4B89A', // Corkboard color
+          padding: '5%', // Increase padding to make it thicker (you can adjust the percentage)
+          border: '10px solid #B58F6C', // Make the border thicker (increase from 5px to 10px)
+          boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.2)', // Increase the shadow for a stronger effect
+        }}
+      >
         <Container>
           <Row>
             <Col>

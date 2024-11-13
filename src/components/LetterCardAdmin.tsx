@@ -5,7 +5,7 @@ import { Card, ListGroup } from 'react-bootstrap';
 import ReplyItem from './ReplyItem';
 
 const LetterCardAdmin = ({ letter, replies }: { letter: Letter; replies: Reply[] }) => (
-  <Card style={{ backgroundColor: '#fcf4e2', width: '100%' }}>
+  <Card>
     <Card.Header>
       <Card.Title>
         {letter.firstName}

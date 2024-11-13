@@ -7,7 +7,7 @@ import ReplyItem from './ReplyItem';
 import AddReplyForm from './AddReplyForm';
 
 const LetterCard = ({ letter, replies }: { letter: Letter; replies: Reply[] }) => (
-  <Card style={{ backgroundColor: '#fcf4e2', width: '100%' }}>
+  <Card style={{ borderRadius: '2.5%', padding: '5%' }}>
     <Card.Header>
       <Card.Title>
         {letter.firstName}
@@ -16,7 +16,7 @@ const LetterCard = ({ letter, replies }: { letter: Letter; replies: Reply[] }) =
       </Card.Title>
     </Card.Header>
     <Card.Body>
-      <Card.Text>
+      <Card.Text style={{ paddingBottom: '5%', borderBottom: '1px solid #d3d3d3' }}>
         {letter.text}
       </Card.Text>
       <ListGroup variant="flush">
