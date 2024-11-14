@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Letter" ALTER COLUMN "text" DROP NOT NULL,
+ALTER COLUMN "text" DROP DEFAULT;

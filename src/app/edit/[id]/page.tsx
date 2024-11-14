@@ -1,12 +1,12 @@
 import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
-import { Stuff } from '@prisma/client';
-import authOptions from '@/lib/authOptions';
+import { Letter } from '@prisma/client';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import { prisma } from '@/lib/prisma';
-import EditStuffForm from '@/components/EditStuffForm';
+import EditLetterForm from '@/components/EditLetterForm';
 
-export default async function EditStuffPage({ params }: { params: { id: string | string[] } }) {
+export default async function EditLetterPage({ params }: { params: { id: string | string[] } }) {
   // Protect the page, only logged in users can access it.
   const session = await getServerSession(authOptions);
   loggedInProtectedPage(
@@ -16,18 +16,16 @@ export default async function EditStuffPage({ params }: { params: { id: string |
     } | null,
   );
   const id = Number(Array.isArray(params?.id) ? params?.id[0] : params?.id);
-  // console.log(id);
-  const stuff: Stuff | null = await prisma.stuff.findUnique({
+  const letter: Letter | null = await prisma.letter.findUnique({
     where: { id },
   });
-  // console.log(stuff);
-  if (!stuff) {
+  if (!letter) {
     return notFound();
   }
 
   return (
     <main>
-      <EditStuffForm stuff={stuff} />
+      <EditLetterForm letter={letter} />
     </main>
   );
 }

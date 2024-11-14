@@ -6,19 +6,22 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import swal from 'sweetalert';
 import { redirect } from 'next/navigation';
-import { addStuff } from '@/lib/dbActions';
+import { addLetter } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { AddStuffSchema } from '@/lib/validationSchemas';
+import { AddLetterSchema } from '@/lib/validationSchemas';
 
-const onSubmit = async (data: { name: string; quantity: number; owner: string; condition: string }) => {
-  // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
-  await addStuff(data);
-  swal('Success', 'Your item has been added', 'success', {
+const onSubmit = async (data: {
+  firstName: string;
+  lastName: string;
+  text: string;
+  owner: string; }) => {
+  await addLetter(data);
+  swal('Success', 'Your letter has been added', 'success', {
     timer: 2000,
   });
 };
 
-const AddStuffForm: React.FC = () => {
+const AddLetterForm: React.FC = () => {
   const { data: session, status } = useSession();
   // console.log('AddStuffForm', status, session);
   const currentUser = session?.user?.email || '';
@@ -28,7 +31,7 @@ const AddStuffForm: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(AddStuffSchema),
+    resolver: yupResolver(AddLetterSchema),
   });
   if (status === 'loading') {
     return <LoadingSpinner />;
@@ -40,40 +43,44 @@ const AddStuffForm: React.FC = () => {
   return (
     <Container className="py-3">
       <Row className="justify-content-center">
-        <Col xs={5}>
+        <Col xs={10}>
           <Col className="text-center">
-            <h2>Add Stuff</h2>
+            <h2>Add Contact</h2>
           </Col>
           <Card>
             <Card.Body>
               <Form onSubmit={handleSubmit(onSubmit)}>
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>First Name</Form.Label>
+                      <input
+                        type="text"
+                        {...register('firstName')}
+                        className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
+                      />
+                      <div className="invalid-feedback">{errors.firstName?.message}</div>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Last Name</Form.Label>
+                      <input
+                        type="text"
+                        {...register('lastName')}
+                        className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
+                      />
+                      <div className="invalid-feedback">{errors.lastName?.message}</div>
+                    </Form.Group>
+                  </Col>
+                </Row>
                 <Form.Group>
-                  <Form.Label>Name</Form.Label>
-                  <input
-                    type="text"
-                    {...register('name')}
-                    className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                  <Form.Label>Text</Form.Label>
+                  <textarea
+                    {...register('text')}
+                    className={`form-control ${errors.text ? 'is-invalid' : ''}`}
                   />
-                  <div className="invalid-feedback">{errors.name?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Quantity</Form.Label>
-                  <input
-                    type="number"
-                    {...register('quantity')}
-                    className={`form-control ${errors.quantity ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.quantity?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Condition</Form.Label>
-                  <select {...register('condition')} className={`form-control ${errors.condition ? 'is-invalid' : ''}`}>
-                    <option value="excellent">Excellent</option>
-                    <option value="good">Good</option>
-                    <option value="fair">Fair</option>
-                    <option value="poor">Poor</option>
-                  </select>
-                  <div className="invalid-feedback">{errors.condition?.message}</div>
+                  <div className="invalid-feedback">{errors.text?.message}</div>
                 </Form.Group>
                 <input type="hidden" {...register('owner')} value={currentUser} />
                 <Form.Group className="form-group">
@@ -99,4 +106,4 @@ const AddStuffForm: React.FC = () => {
   );
 };
 
-export default AddStuffForm;
+export default AddLetterForm;
