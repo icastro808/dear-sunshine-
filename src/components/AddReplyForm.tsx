@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 'use client';
 
 import { useSession } from 'next-auth/react';
@@ -54,7 +56,7 @@ const AddReplyForm = ({ letter }: { letter: Letter }) => {
             <textarea
               {...register('reply')}
               className={`form-control ${errors.reply ? 'is-invalid' : ''}`}
-              placeholder="Leave a note for the board :)"
+              placeholder="Leave a note for this letter :)"
               style={{
                 width: '100%',
                 resize: 'vertical',
@@ -71,7 +73,7 @@ const AddReplyForm = ({ letter }: { letter: Letter }) => {
                 <Button type="submit" variant="primary" className="float-end" style={{ backgroundColor: '#f8d7da', borderColor: '#f5c6cb' }}>
                   <Pin className="mr-2" />
                   {' '}
-                  Pin to Board
+                  Pin to board
                 </Button>
               </Col>
             </Row>
