@@ -57,10 +57,23 @@ export async function editLetter(letter: Letter) {
     data: {
       firstName: letter.firstName,
       lastName: letter.lastName,
+      text: letter.text,
       owner: letter.owner,
     },
   });
   redirect('/list');
+}
+
+export async function deleteLetter(id: number, admin: boolean = false) {
+  await prisma.letter.delete({
+    where: { id },
+  });
+
+  if (admin) {
+    redirect('/admin');
+  } else {
+    redirect('/list');
+  }
 }
 
 export async function addReply(reply: { reply: string; letterId: number, owner: string }) {

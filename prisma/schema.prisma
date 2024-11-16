@@ -38,7 +38,7 @@ model Reply {
   reply     String
   owner     String
   createdAt DateTime @default(now())
-  Letter     Letter  @relation(fields: [letterId], references: [id])
+  Letter     Letter  @relation(fields: [letterId], references: [id], onDelete: Cascade)
 }
 
 model Letter {

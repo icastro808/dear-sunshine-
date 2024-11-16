@@ -2,32 +2,82 @@
 
 import { Letter, Reply } from '@prisma/client';
 import Link from 'next/link';
-import { Card, ListGroup } from 'react-bootstrap';
+import { Card, ListGroup, Button, Modal, Row, Col } from 'react-bootstrap';
+import { deleteLetter } from '@/lib/dbActions';
+import { useState } from 'react';
 import ReplyItem from './ReplyItem';
 import AddReplyForm from './AddReplyForm';
 
-const LetterCard = ({ letter, replies }: { letter: Letter; replies: Reply[] }) => (
-  <Card style={{ borderRadius: '2.5%', padding: '5%' }}>
-    <Card.Header>
-      <Card.Title>
-        {letter.firstName}
-          &nbsp;
-        {letter.lastName}
-      </Card.Title>
-    </Card.Header>
-    <Card.Body>
-      <Card.Text style={{ paddingBottom: '5%', borderBottom: '1px solid #d3d3d3' }}>
-        {letter.text}
-      </Card.Text>
-      <ListGroup variant="flush">
-        {replies.map((reply) => <ReplyItem key={reply.id} reply={reply} />)}
-      </ListGroup>
-      <AddReplyForm letter={letter} />
-    </Card.Body>
-    <Card.Footer>
-      <Link href={`edit/${letter.id}`}>Edit</Link>
-    </Card.Footer>
-  </Card>
-);
+const LetterCard = ({ letter, replies }: { letter: Letter; replies: Reply[] }) => {
+  // state to control the visibility of the modal
+  const [showModal, setShowModal] = useState(false);
 
+  // makes the modal visible
+  const handleShowModal = () => setShowModal(true);
+  // hides the modal
+  const handleCloseModal = () => setShowModal(false);
+
+  const confirmDelete = async () => {
+    try {
+      await deleteLetter(letter.id);
+      swal('Success', 'The letter was deleted successfully', 'success');
+      handleCloseModal();
+    } catch (error) {
+      console.error('An error occurred while deleting the letter', error);
+      handleCloseModal();
+    }
+  };
+
+  return (
+    <Card style={{ borderRadius: '2.5%', padding: '5%' }}>
+      <Card.Header>
+        <Card.Title>
+          {letter.firstName}
+            &nbsp;
+          {letter.lastName}
+        </Card.Title>
+      </Card.Header>
+      <Card.Body>
+        <Card.Text style={{ paddingBottom: '5%', borderBottom: '1px solid #d3d3d3' }}>
+          {letter.text}
+        </Card.Text>
+        <ListGroup variant="flush">
+          {replies.map((reply) => <ReplyItem key={reply.id} reply={reply} />)}
+        </ListGroup>
+        <AddReplyForm letter={letter} />
+      </Card.Body>
+      <Card.Footer>
+        <Row className="justify-content-between">
+          <Col xs="auto">
+            <Link href={`edit/${letter.id}`}>Edit</Link>
+          </Col>
+          <Col xs="auto">
+            <Button onClick={handleShowModal}>
+              Delete
+            </Button>
+          </Col>
+        </Row>
+      </Card.Footer>
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete this letter?
+        </Modal.Body>
+        <Modal.Footer>
+          <strong className="me-auto">You cannot undo this action</strong>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={confirmDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+    </Card>
+  );
+};
 export default LetterCard;

@@ -39,6 +39,10 @@ export const EditLetterSchema = Yup.object({
   owner: Yup.string().required(),
 });
 
+export const DeleteLetterSchema = Yup.object({
+  id: Yup.number().required(),
+});
+
 export const AddReplySchema = Yup.object({
   reply: Yup.string().required(),
   letterId: Yup.number().required(),
