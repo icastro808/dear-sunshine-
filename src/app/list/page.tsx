@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { Col, Container, Row } from 'react-bootstrap';
 import { loggedInProtectedPage } from '@/lib/page-protection';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import authOptions from '@/lib/authOptions';
 import { Letter } from '@prisma/client';
 import LetterCard from '@/components/LetterCard';
 import { prisma } from '@/lib/prisma';
