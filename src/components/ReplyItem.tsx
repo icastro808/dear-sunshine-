@@ -3,7 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { deleteReply } from '@/lib/dbActions';
 import { Reply } from '@prisma/client';
-import { ListGroup, Button } from 'react-bootstrap';
+import { ListGroup, Dropdown, Row, Col } from 'react-bootstrap';
+import { ThreeDots } from 'react-bootstrap-icons';
 
 const ReplyItem = ({ reply }: { reply: Reply }) => {
   // used to refresh page after deleting a reply
@@ -21,15 +22,30 @@ const ReplyItem = ({ reply }: { reply: Reply }) => {
 
   return (
     <ListGroup.Item>
-      <p className="fw-lighter">{reply.createdAt.toLocaleDateString('en-US')}</p>
-      <p>{reply.reply}</p>
-      <Button
-        className="btn-outline-danger btn-sm"
-        style={{ backgroundColor: 'transparent' }}
-        onClick={confirmDelete}
-      >
-        Delete
-      </Button>
+      <Row>
+        <Col>
+          <p className="fw-lighter">{reply.createdAt.toLocaleDateString('en-US')}</p>
+        </Col>
+
+        <Col>
+          <Dropdown>
+            <Dropdown.Toggle
+              variant="transparent"
+              style={{ marginLeft: '140px', marginTop: '-5px', color: 'darkgray' }}
+            >
+              <ThreeDots />
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={confirmDelete}>Delete</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Col>
+      </Row>
+
+      <Row>
+        <p>{reply.reply}</p>
+      </Row>
     </ListGroup.Item>
   );
 };
