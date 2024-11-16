@@ -86,3 +86,9 @@ export async function addReply(reply: { reply: string; letterId: number, owner: 
   });
   redirect('/list');
 }
+
+export async function deleteReply(replyId: number) {
+  await prisma.reply.delete({
+    where: { id: replyId },
+  });
+}
