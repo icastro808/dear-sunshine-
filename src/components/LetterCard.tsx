@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Card, ListGroup, Button, Modal, Row, Col } from 'react-bootstrap';
 import { deleteLetter } from '@/lib/dbActions';
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import ReplyItem from './ReplyItem';
 import AddReplyForm from './AddReplyForm';
 
@@ -12,7 +13,10 @@ const LetterCard = ({ letter, replies }: { letter: Letter; replies: Reply[] }) =
   // state to control the visibility of the modal
   const [showModal, setShowModal] = useState(false);
 
-  // makes the modal visible
+  // retrieves the current session
+  const { data: session } = useSession();
+
+  // makes the modal (confirming deletion popup) visible
   const handleShowModal = () => setShowModal(true);
   // hides the modal
   const handleCloseModal = () => setShowModal(false);
@@ -47,6 +51,8 @@ const LetterCard = ({ letter, replies }: { letter: Letter; replies: Reply[] }) =
         <AddReplyForm letter={letter} />
       </Card.Body>
       <Card.Footer>
+        { (session?.user?.email === letter.owner || (session?.user as any)?.randomKey === 'ADMIN') && (
+        // only shows edit and delete buttons if the current user is the owner of the letter or admin.
         <Row className="justify-content-between">
           <Col xs="auto">
             <Link href={`edit/${letter.id}`}>Edit</Link>
@@ -57,6 +63,7 @@ const LetterCard = ({ letter, replies }: { letter: Letter; replies: Reply[] }) =
             </Button>
           </Col>
         </Row>
+        )}
       </Card.Footer>
 
       <Modal show={showModal} onHide={handleCloseModal}>
