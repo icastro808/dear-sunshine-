@@ -6,7 +6,3 @@ body {
   padding: 0;
   margin: 0;
 }
-
-.btn-outline-danger:hover {
-  color: orange !important;
-}
