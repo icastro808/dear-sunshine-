@@ -1,4 +1,4 @@
-import { PrismaClient, Role } from '@prisma/client';
+import { PrismaClient, Role, Tag } from '@prisma/client';
 import { hash } from 'bcrypt';
 import * as config from '../config/settings.development.json';
 
@@ -34,6 +34,7 @@ async function main() {
         lastName: letter.lastName,
         text: letter.text,
         owner: letter.owner,
+        tags: letter.tags as Tag[],
       },
     });
   });

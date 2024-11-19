@@ -1,7 +1,8 @@
 'use client';
 
 import { Letter, Reply } from '@prisma/client';
-import { Card, ListGroup, Modal, Button } from 'react-bootstrap';
+import { Card, ListGroup, Modal, Button, Badge } from 'react-bootstrap';
+import Link from 'next/link';
 import { useState } from 'react';
 import { deleteLetter } from '@/lib/dbActions';
 import swal from 'sweetalert';
@@ -30,10 +31,26 @@ const LetterCardAdmin = ({ letter, replies }: { letter: Letter; replies: Reply[]
   return (
     <Card>
       <Card.Header>
-        <Card.Title>
-          {letter.firstName}
-          &nbsp;
-          {letter.lastName}
+        <Card.Title className="d-flex justify-content-between align-items-center">
+          <div>
+            {letter.firstName}
+            &nbsp;
+            {letter.lastName}
+          </div>
+          <div className="d-flex gap-1">
+            {letter.tags.map((tag) => (
+              // change href to the correct path for filtering by tag
+              <Link href="/list" key={tag}>
+                <Badge
+                  key={tag}
+                  className={`tag-${tag} text-white`}
+                  style={{ fontSize: '10px' }}
+                >
+                  {tag}
+                </Badge>
+              </Link>
+            ))}
+          </div>
         </Card.Title>
       </Card.Header>
       <Card.Body>
