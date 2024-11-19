@@ -52,14 +52,22 @@ const ListPage = async () => {
     },
   ]; */
   const letters: Letter[] = await prisma.letter.findMany({
+    /*
+    uncomment this to show letters only belonging to the owner
+
     where: {
       owner: session?.user!.email ? session.user.email : '',
     },
+    */
   });
   const replies = await prisma.reply.findMany({
+    /*
+    uncomment this to show replies only belonging to the owner
+
     where: {
       owner: session?.user!.email ? session.user.email : '',
     },
+    */
   });
   return (
     <main>
