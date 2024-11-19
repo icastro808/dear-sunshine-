@@ -29,6 +29,7 @@ export const AddLetterSchema = Yup.object({
   lastName: Yup.string().required(),
   text: Yup.string().required(),
   owner: Yup.string().required(),
+  tags: Yup.array().of(Yup.string().oneOf(['happy', 'neutral', 'sad', 'angry']).required()).required(),
 });
 
 export const EditLetterSchema = Yup.object({
@@ -37,6 +38,7 @@ export const EditLetterSchema = Yup.object({
   lastName: Yup.string().required(),
   text: Yup.string().required(),
   owner: Yup.string().required(),
+  tags: Yup.array().of(Yup.string().oneOf(['happy', 'neutral', 'sad', 'angry']).required()).required(),
 });
 
 export const DeleteLetterSchema = Yup.object({

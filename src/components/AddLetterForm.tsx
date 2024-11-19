@@ -1,6 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -14,21 +15,27 @@ const onSubmit = async (data: {
   firstName: string;
   lastName: string;
   text: string;
-  owner: string; }) => {
+  owner: string;
+  tags: string[];
+}) => {
   await addLetter(data);
   swal('Success', 'Your letter has been added', 'success', {
     timer: 2000,
   });
 };
 
+const tagOptions: ('happy' | 'neutral' | 'sad' | 'angry')[] = ['happy', 'neutral', 'sad', 'angry'];
+
 const AddLetterForm: React.FC = () => {
   const { data: session, status } = useSession();
-  // console.log('AddStuffForm', status, session);
+  const [selectedTags, setSelectedTags] = useState<('happy' | 'neutral' | 'sad' | 'angry')[]>([]);
   const currentUser = session?.user?.email || '';
+
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(AddLetterSchema),
@@ -39,6 +46,15 @@ const AddLetterForm: React.FC = () => {
   if (status === 'unauthenticated') {
     redirect('/auth/signin');
   }
+
+  const handleTags = (tag: 'happy' | 'neutral' | 'sad' | 'angry') => {
+    const updatedTags = selectedTags.includes(tag)
+      ? selectedTags.filter((t) => t !== tag)
+      : [...selectedTags, tag];
+
+    setSelectedTags(updatedTags);
+    setValue('tags', updatedTags);
+  };
 
   return (
     <Container className="py-3">
@@ -82,6 +98,30 @@ const AddLetterForm: React.FC = () => {
                   />
                   <div className="invalid-feedback">{errors.text?.message}</div>
                 </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Tags</Form.Label>
+                  <div className="d-flex flex-wrap gap-2">
+                    {tagOptions.map((tag) => (
+                      <Button
+                        key={tag}
+                        type="button"
+                        variant={selectedTags.includes(tag) ? 'primary' : 'outline-primary'}
+                        onClick={() => handleTags(tag)}
+                        className="me-2 mb-2"
+                      >
+                        {tag}
+                      </Button>
+                    ))}
+                  </div>
+                  <input
+                    type="hidden"
+                    {...register('tags')}
+                    value={selectedTags.join(',')}
+                  />
+                  {errors.tags && <div className="invalid-feedback d-block">{errors.tags?.message}</div>}
+                </Form.Group>
+
                 <input type="hidden" {...register('owner')} value={currentUser} />
                 <Form.Group className="form-group">
                   <Row className="pt-3">

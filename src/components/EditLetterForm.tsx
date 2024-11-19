@@ -2,6 +2,7 @@
 
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
 import swal from 'sweetalert';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Letter } from '@prisma/client';
@@ -15,15 +16,37 @@ const onSubmit = async (data: Letter) => {
   });
 };
 
+const tagOptions: ('happy' | 'neutral' | 'sad' | 'angry')[] = ['happy', 'neutral', 'sad', 'angry'];
+
 const EditLetterForm = ({ letter }: { letter: Letter }) => {
+  const [selectedTags, setSelectedTags] = useState<('happy' | 'neutral' | 'sad' | 'angry')[]>([]);
+
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<Letter>({
     resolver: yupResolver(EditLetterSchema),
   });
+
+  useEffect(() => {
+    if (letter.tags) {
+      setSelectedTags(letter.tags); // Assuming letter.tags is an array of strings
+      setValue('tags', letter.tags); // Set the tags in the form state
+    }
+  }, [letter, setValue]);
+
+  const handleTags = (tag: 'happy' | 'neutral' | 'sad' | 'angry') => {
+    const updatedTags = selectedTags.includes(tag)
+      ? selectedTags.filter((t) => t !== tag)
+      : [...selectedTags, tag];
+
+    setSelectedTags(updatedTags);
+    setValue('tags', updatedTags);
+  };
+
   return (
     <Container className="py-3">
       <Row className="justify-content-center">
@@ -70,6 +93,25 @@ const EditLetterForm = ({ letter }: { letter: Letter }) => {
                   />
                   <div className="invalid-feedback">{errors.text?.message}</div>
                 </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Tags</Form.Label>
+                  <div className="d-flex flex-wrap gap-2">
+                    {tagOptions.map((tag) => (
+                      <Button
+                        key={tag}
+                        type="button"
+                        variant={selectedTags.includes(tag) ? 'primary' : 'outline-primary'}
+                        onClick={() => handleTags(tag)}
+                        className="me-2 mb-2"
+                      >
+                        {tag}
+                      </Button>
+                    ))}
+                  </div>
+                  {errors.tags && <div className="invalid-feedback d-block">{errors.tags?.message}</div>}
+                </Form.Group>
+
                 <input type="hidden" {...register('owner')} value={letter.owner} />
                 <Form.Group className="form-group">
                   <Row className="pt-3">

@@ -1,6 +1,6 @@
 'use server';
 
-import { Letter } from '@prisma/client';
+import { Letter, Tag } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -39,13 +39,16 @@ export async function addLetter(letter: {
   firstName: string;
   lastName: string;
   text: string,
-  owner: string; }) {
+  owner: string;
+  tags: string[];
+}) {
   await prisma.letter.create({
     data: {
       firstName: letter.firstName,
       lastName: letter.lastName,
       text: letter.text,
       owner: letter.owner,
+      tags: letter.tags as Tag[],
     },
   });
   redirect('/list');
@@ -59,6 +62,7 @@ export async function editLetter(letter: Letter) {
       lastName: letter.lastName,
       text: letter.text,
       owner: letter.owner,
+      tags: letter.tags as Tag[],
     },
   });
   redirect('/list');

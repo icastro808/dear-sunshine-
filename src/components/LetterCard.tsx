@@ -2,7 +2,7 @@
 
 import { Letter, Reply } from '@prisma/client';
 import Link from 'next/link';
-import { Card, ListGroup, Button, Modal, Row, Col } from 'react-bootstrap';
+import { Card, ListGroup, Button, Modal, Row, Col, Badge } from 'react-bootstrap';
 import { deleteLetter } from '@/lib/dbActions';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
@@ -35,10 +35,26 @@ const LetterCard = ({ letter, replies }: { letter: Letter; replies: Reply[] }) =
   return (
     <Card style={{ borderRadius: '2.5%', padding: '5%' }}>
       <Card.Header>
-        <Card.Title>
-          {letter.firstName}
+        <Card.Title className="d-flex justify-content-between align-items-center">
+          <div>
+            {letter.firstName}
             &nbsp;
-          {letter.lastName}
+            {letter.lastName}
+          </div>
+          <div className="d-flex gap-1">
+            {letter.tags.map((tag) => (
+              // change href to the correct path for filtering by tag
+              <Link href="/list" key={tag}>
+                <Badge
+                  key={tag}
+                  className="text-white rounded-pill"
+                  style={{ fontSize: '10px' }}
+                >
+                  {tag}
+                </Badge>
+              </Link>
+            ))}
+          </div>
         </Card.Title>
       </Card.Header>
       <Card.Body>
