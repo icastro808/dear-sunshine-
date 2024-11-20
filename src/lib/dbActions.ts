@@ -1,6 +1,6 @@
 'use server';
 
-import { Letter } from '@prisma/client';
+import { Letter, Tag } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -39,13 +39,16 @@ export async function addLetter(letter: {
   firstName: string;
   lastName: string;
   text: string,
-  owner: string; }) {
+  owner: string;
+  tags: string[];
+}) {
   await prisma.letter.create({
     data: {
       firstName: letter.firstName,
       lastName: letter.lastName,
       text: letter.text,
       owner: letter.owner,
+      tags: letter.tags as Tag[],
     },
   });
   redirect('/list');
@@ -57,10 +60,24 @@ export async function editLetter(letter: Letter) {
     data: {
       firstName: letter.firstName,
       lastName: letter.lastName,
+      text: letter.text,
       owner: letter.owner,
+      tags: letter.tags as Tag[],
     },
   });
   redirect('/list');
+}
+
+export async function deleteLetter(id: number, admin: boolean = false) {
+  await prisma.letter.delete({
+    where: { id },
+  });
+
+  if (admin) {
+    redirect('/admin');
+  } else {
+    redirect('/list');
+  }
 }
 
 export async function addReply(reply: { reply: string; letterId: number, owner: string }) {
@@ -72,4 +89,10 @@ export async function addReply(reply: { reply: string; letterId: number, owner: 
     },
   });
   redirect('/list');
+}
+
+export async function deleteReply(replyId: number) {
+  await prisma.reply.delete({
+    where: { id: replyId },
+  });
 }

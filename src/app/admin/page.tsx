@@ -29,7 +29,7 @@ const AdminPage = async () => {
                   <Col key={letter.firstName + letter.lastName} className="d-flex">
                     <LetterCardAdmin
                       letter={letter}
-                      replies={replies.filter(reply => reply.letterId === reply.id)}
+                      replies={replies.filter(reply => reply.letterId === letter.id)}
                     />
                   </Col>
                 ))}

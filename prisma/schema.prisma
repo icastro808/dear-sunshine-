@@ -29,11 +29,11 @@ model User {
   role     Role   @default(USER)
 }
 
-enum Condition {
-  excellent
-  good
-  fair
-  poor
+enum Tag {
+  happy
+  neutral
+  sad
+  angry
 }
 
 model Reply {
@@ -42,7 +42,7 @@ model Reply {
   reply     String
   owner     String
   createdAt DateTime @default(now())
-  Letter     Letter  @relation(fields: [letterId], references: [id])
+  Letter     Letter  @relation(fields: [letterId], references: [id], onDelete: Cascade)
 }
 
 model Letter {
@@ -52,4 +52,5 @@ model Letter {
   text      String
   reply     Reply[]
   owner     String
+  tags      Tag[]
 }
