@@ -70,7 +70,7 @@ const AddReplyForm = ({ letter }: { letter: Letter }) => {
           <Form.Group className="form-group">
             <Row className="pt-3">
               <Col>
-                <Button type="submit" variant="primary" className="float-end" style={{ backgroundColor: '#f8d7da', borderColor: '#f5c6cb' }}>
+                <Button type="submit" variant="primary" className="float-end" style={{ backgroundColor: '#e6a1a8', borderColor: '#f5c6cb' }}>
                   <Pin className="mr-2" />
                   {' '}
                   Pin to board
