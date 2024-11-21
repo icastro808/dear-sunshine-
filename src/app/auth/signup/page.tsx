@@ -48,7 +48,7 @@ const SignUp = () => {
       <Container>
         <Row className="justify-content-center">
           <Col xs={5}>
-            <h1 className="text-center">Sign Up</h1>
+            <h1 className="text-center" style={{ color: '#FFFFFF' }}>Sign Up</h1>
             <Card>
               <Card.Body>
                 <Form onSubmit={handleSubmit(onSubmit)}>
@@ -83,7 +83,12 @@ const SignUp = () => {
                   <Form.Group className="form-group py-3">
                     <Row>
                       <Col>
-                        <Button type="submit" className="btn btn-primary">
+                        <Button
+                          type="submit"
+                          style={{ backgroundColor: '#EC9706', color: '#FFFFFF', border: 'none',
+                          }}
+                          className="btn btn-primary"
+                        >
                           Register
                         </Button>
                       </Col>
