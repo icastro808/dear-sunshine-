@@ -28,6 +28,9 @@ const NavBar: React.FC = () => {
                   <Nav.Link id="list-stuff-nav" href="/list" key="list" active={pathName === '/list'}>
                     Letter Board
                   </Nav.Link>,
+                  <Nav.Link id="mental-health-nav" href="/health" key="health" active={pathName === '/health'}>
+                    Feeling  Down?
+                  </Nav.Link>,
                 ]
               : ''}
             {currentUser && role === 'ADMIN' ? (
