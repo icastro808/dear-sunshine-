@@ -58,32 +58,6 @@ const EditLetterForm = ({ letter }: { letter: Letter }) => {
             <Card.Body>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <input type="hidden" {...register('id')} value={letter.id} />
-                <Row>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label>First Name</Form.Label>
-                      <input
-                        type="text"
-                        defaultValue={letter.firstName}
-                        {...register('firstName')}
-                        className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
-                      />
-                      <div className="invalid-feedback">{errors.firstName?.message}</div>
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label>Last Name</Form.Label>
-                      <input
-                        type="text"
-                        defaultValue={letter.lastName}
-                        {...register('lastName')}
-                        className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
-                      />
-                      <div className="invalid-feedback">{errors.lastName?.message}</div>
-                    </Form.Group>
-                  </Col>
-                </Row>
                 <Form.Group>
                   <Form.Label>Text</Form.Label>
                   <textarea

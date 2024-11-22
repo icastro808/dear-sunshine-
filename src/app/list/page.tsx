@@ -54,7 +54,8 @@ const ListPage = async () => {
               <h2 className="text-center">Letter Board</h2>
               <Row xs={1} md={2} lg={3} className="g-4">
                 {letters.map((letter) => (
-                  <Col key={letter.firstName + letter.lastName} className="d-flex">
+                  // <Col key={letter.firstName + letter.lastName} className="d-flex">
+                  <Col className="d-flex">
                     <LetterCard
                       letter={letter}
                       replies={replies.filter(reply => reply.letterId === letter.id)}

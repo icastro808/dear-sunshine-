@@ -25,8 +25,6 @@ import * as Yup from 'yup';
 // }
 
 export const AddLetterSchema = Yup.object({
-  firstName: Yup.string().required(),
-  lastName: Yup.string().required(),
   text: Yup.string().required(),
   owner: Yup.string().required(),
   tags: Yup.array().of(Yup.string().oneOf(['happy', 'neutral', 'sad', 'angry']).required()).required(),
@@ -34,8 +32,6 @@ export const AddLetterSchema = Yup.object({
 
 export const EditLetterSchema = Yup.object({
   id: Yup.number().required(),
-  firstName: Yup.string().required(),
-  lastName: Yup.string().required(),
   text: Yup.string().required(),
   owner: Yup.string().required(),
   tags: Yup.array().of(Yup.string().oneOf(['happy', 'neutral', 'sad', 'angry']).required()).required(),

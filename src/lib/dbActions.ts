@@ -36,16 +36,12 @@ export async function changePassword(credentials: { email: string; password: str
 }
 
 export async function addLetter(letter: {
-  firstName: string;
-  lastName: string;
   text: string,
   owner: string;
   tags: string[];
 }) {
   await prisma.letter.create({
     data: {
-      firstName: letter.firstName,
-      lastName: letter.lastName,
       text: letter.text,
       owner: letter.owner,
       tags: letter.tags as Tag[],
@@ -58,8 +54,6 @@ export async function editLetter(letter: Letter) {
   await prisma.letter.update({
     where: { id: letter.id },
     data: {
-      firstName: letter.firstName,
-      lastName: letter.lastName,
       text: letter.text,
       owner: letter.owner,
       tags: letter.tags as Tag[],
