@@ -43,8 +43,6 @@ model Reply {
 
 model Letter {
   id        Int      @id @default(autoincrement())
-  firstName String
-  lastName  String
   text      String
   reply     Reply[]
   owner     String

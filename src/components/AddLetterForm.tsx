@@ -12,8 +12,6 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddLetterSchema } from '@/lib/validationSchemas';
 
 const onSubmit = async (data: {
-  firstName: string;
-  lastName: string;
   text: string;
   owner: string;
   tags: string[];
@@ -66,30 +64,6 @@ const AddLetterForm: React.FC = () => {
           <Card>
             <Card.Body>
               <Form onSubmit={handleSubmit(onSubmit)}>
-                <Row>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label>First Name</Form.Label>
-                      <input
-                        type="text"
-                        {...register('firstName')}
-                        className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
-                      />
-                      <div className="invalid-feedback">{errors.firstName?.message}</div>
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label>Last Name</Form.Label>
-                      <input
-                        type="text"
-                        {...register('lastName')}
-                        className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
-                      />
-                      <div className="invalid-feedback">{errors.lastName?.message}</div>
-                    </Form.Group>
-                  </Col>
-                </Row>
                 <Form.Group>
                   <Form.Label>Text</Form.Label>
                   <textarea
