@@ -1,23 +1,34 @@
+/* eslint-disable max-len */
 import { getServerSession } from 'next-auth';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { Letter } from '@prisma/client';
+import { Letter, Tag } from '@prisma/client';
 import LetterCard from '@/components/LetterCard';
 import { prisma } from '@/lib/prisma';
 
-/** Render a list of stuff for the logged in user. */
-const ListPage = async () => {
+/** Render a list of stuff for the logged-in user. */
+const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) => {
   // Protect the page, only logged in users can access it.
   const session = await getServerSession(authOptions);
   loggedInProtectedPage(
     session as {
       user: { email: string; id: string; randomKey: string };
-      // eslint-disable-next-line @typescript-eslint/comma-dangle
     } | null,
   );
 
+  const selectedTags = searchParams?.tags ? searchParams.tags.split(',').map(tag => tag as Tag) : [];
+
+  const whereClause = selectedTags.length > 0
+    ? {
+      tags: {
+        hasSome: selectedTags,
+      },
+    }
+    : {};
+
   const letters: Letter[] = await prisma.letter.findMany({
+    where: whereClause,
     /*
     uncomment this to show letters only belonging to the owner
 
@@ -26,6 +37,7 @@ const ListPage = async () => {
     },
     */
   });
+
   const replies = await prisma.reply.findMany({
     /*
     uncomment this to show replies only belonging to the owner
@@ -35,6 +47,7 @@ const ListPage = async () => {
     },
     */
   });
+
   return (
     <main>
       <Container
@@ -52,10 +65,31 @@ const ListPage = async () => {
           <Row>
             <Col>
               <h2 className="text-center">Letter Board</h2>
+              {/* Tag filter buttons */}
+              <Row className="mb-4">
+                <Col xs="auto">
+                  <Button
+                    variant={selectedTags.length === 0 ? 'primary' : 'outline-primary'}
+                    href="?tags="
+                  >
+                    All
+                  </Button>
+                </Col>
+                {Object.values(Tag).map((tag) => (
+                  <Col key={tag} xs="auto">
+                    <Button
+                      variant={selectedTags.includes(tag) ? 'primary' : 'outline-primary'}
+                      href={`?tags=${selectedTags.includes(tag) ? selectedTags.filter(t => t !== tag).join(',') : [...selectedTags, tag].join(',')}`}
+                    >
+                      {tag}
+                    </Button>
+                  </Col>
+                ))}
+              </Row>
+              {/* Display letters based on the selected tag */}
               <Row xs={1} md={2} lg={3} className="g-4">
                 {letters.map((letter) => (
-                  // <Col key={letter.firstName + letter.lastName} className="d-flex">
-                  <Col className="d-flex">
+                  <Col key={letter.id} className="d-flex">
                     <LetterCard
                       letter={letter}
                       replies={replies.filter(reply => reply.letterId === letter.id)}

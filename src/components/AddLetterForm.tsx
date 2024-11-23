@@ -59,7 +59,7 @@ const AddLetterForm: React.FC = () => {
       <Row className="justify-content-center">
         <Col xs={10}>
           <Col className="text-center">
-            <h2>Add Contact</h2>
+            <h2>Write Letter</h2>
           </Col>
           <Card>
             <Card.Body>
