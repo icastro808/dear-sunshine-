@@ -32,7 +32,7 @@ const AddLetterForm: React.FC = () => {
   const {
     register,
     handleSubmit,
-    reset,
+    // reset,
     setValue,
     formState: { errors },
   } = useForm({
@@ -56,24 +56,34 @@ const AddLetterForm: React.FC = () => {
 
   return (
     <Container className="py-3">
-      <Row className="justify-content-center">
+      <Row className="justify-content-center ">
         <Col xs={10}>
           <Col className="text-center">
             <h2>What&apos;s on your mind?</h2>
           </Col>
-          <Card>
-            <Card.Body>
+          <Card style={{ border: 'none' }}>
+            <Card.Body style={{
+              margin: '0 auto',
+              width: '80%',
+              height: '70vh',
+              backgroundColor: '#f8f9fa',
+            }}
+            >
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
                   <Form.Label>Text here...</Form.Label>
                   <textarea
                     {...register('text')}
                     className={`form-control ${errors.text ? 'is-invalid' : ''}`}
+                    rows={12}
                   />
                   <div className="invalid-feedback">{errors.text?.message}</div>
                 </Form.Group>
-
                 <Form.Group>
+                  <div style={{ fontSize: '150%', textAlign: 'right', padding: '2%' }}>
+                    From Sunshine,
+                  </div>
+                  <br />
                   <Form.Label>Tags</Form.Label>
                   <div className="d-flex flex-wrap gap-2">
                     {tagOptions.map((tag) => (
@@ -104,11 +114,11 @@ const AddLetterForm: React.FC = () => {
                         Post
                       </Button>
                     </Col>
-                    <Col>
+                    {/* <Col>
                       <Button type="button" onClick={() => reset()} variant="warning" className="float-right">
                         Reset
                       </Button>
-                    </Col>
+                    </Col> */}
                   </Row>
                 </Form.Group>
               </Form>
