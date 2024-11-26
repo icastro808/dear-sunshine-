@@ -59,13 +59,13 @@ const AddLetterForm: React.FC = () => {
       <Row className="justify-content-center">
         <Col xs={10}>
           <Col className="text-center">
-            <h2>Write Letter</h2>
+            <h2>What&apos;s on your mind?</h2>
           </Col>
           <Card>
             <Card.Body>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
-                  <Form.Label>Text</Form.Label>
+                  <Form.Label>Text here...</Form.Label>
                   <textarea
                     {...register('text')}
                     className={`form-control ${errors.text ? 'is-invalid' : ''}`}
@@ -101,7 +101,7 @@ const AddLetterForm: React.FC = () => {
                   <Row className="pt-3">
                     <Col>
                       <Button type="submit" variant="primary">
-                        Submit
+                        Post
                       </Button>
                     </Col>
                     <Col>
