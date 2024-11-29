@@ -74,7 +74,8 @@ const ProfilePage = async ({ userId }: { userId: string }) => {
                 >
                   <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>{post.text}</p>
                   <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
-                    <strong>Tags:</strong> {post.tags.join(', ')}
+                    <strong>Tags:</strong>
+                    {post.tags.join(', ')}
                   </p>
                 </div>
               </Col>
@@ -98,7 +99,8 @@ const ProfilePage = async ({ userId }: { userId: string }) => {
                 >
                   <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>{reply.reply}</p>
                   <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
-                    <strong>Created At:</strong>{' '}
+                    <strong>Created At:</strong>
+                    {' '}
                     {new Date(reply.createdAt).toLocaleString()}
                   </p>
                 </div>
