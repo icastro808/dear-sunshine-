@@ -11,11 +11,72 @@ import { addLetter } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddLetterSchema } from '@/lib/validationSchemas';
 
-const onSubmit = async (data: {
-  text: string;
-  owner: string;
-  tags: string[];
-}) => {
+const styles = {
+  container: {
+    fontFamily: `'Georgia', serif`,
+    padding: '40px 0',
+    backgroundColor: '#f8f4e3', // Parchment background
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '100vh',
+  },
+  card: {
+    backgroundColor: '#fffdf3', // Parchment color
+    border: '1px solid #d3c5a0',
+    boxShadow: '0 6px 10px rgba(0, 0, 0, 0.1)',
+    padding: '40px',
+    maxWidth: '800px',
+    margin: '0 auto',
+    textAlign: 'left',
+    borderRadius: '0px', // Remove rounded edges for "paper" look
+  },
+  title: {
+    fontSize: '2rem',
+    fontWeight: 'bold',
+    marginBottom: '30px',
+    color: '#6b4226', // Warm brown color
+    textAlign: 'center',
+  },
+  label: {
+    fontSize: '1.1rem',
+    fontWeight: '600',
+    marginBottom: '10px',
+    color: '#6b4226',
+  },
+  textarea: {
+    width: '100%',
+    padding: '15px',
+    fontSize: '1.1rem',
+    border: '1px solid #d3c5a0',
+    borderRadius: '0px',
+    resize: 'vertical',
+    height: '150px',
+    marginBottom: '15px',
+    backgroundColor: '#fffdf3',
+    color: '#6b4226',
+  },
+  button: {
+    borderRadius: '20px',
+    fontSize: '1rem',
+    fontWeight: 'bold',
+    border: '2px solid #d3c5a0',
+    padding: '10px 15px',
+    boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
+  },
+  submitBtn: {
+    backgroundColor: '#4CAF50',
+    color: '#fff',
+    border: 'none',
+  },
+  resetBtn: {
+    backgroundColor: '#f44336',
+    color: '#fff',
+    border: 'none',
+  },
+};
+
+const onSubmit = async (data: { text: string; owner: string; tags: string[] }) => {
   await addLetter(data);
   swal('Success', 'Your letter has been added', 'success', {
     timer: 2000,
@@ -38,9 +99,11 @@ const AddLetterForm: React.FC = () => {
   } = useForm({
     resolver: yupResolver(AddLetterSchema),
   });
+
   if (status === 'loading') {
     return <LoadingSpinner />;
   }
+
   if (status === 'unauthenticated') {
     redirect('/auth/signin');
   }
@@ -55,67 +118,71 @@ const AddLetterForm: React.FC = () => {
   };
 
   return (
-    <Container className="py-3">
-      <Row className="justify-content-center">
-        <Col xs={10}>
-          <Col className="text-center">
-            <h2>Write Letter</h2>
-          </Col>
-          <Card>
-            <Card.Body>
-              <Form onSubmit={handleSubmit(onSubmit)}>
-                <Form.Group>
-                  <Form.Label>Text</Form.Label>
-                  <textarea
-                    {...register('text')}
-                    className={`form-control ${errors.text ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.text?.message}</div>
-                </Form.Group>
+    <Container className="py-5" style={styles.container}>
+      <Card style={styles.card}>
+        <h2 style={styles.title}>Write Your Letter</h2>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form.Group>
+            <Form.Label style={styles.label}>Text</Form.Label>
+            <textarea
+              {...register('text')}
+              className={`form-control ${errors.text ? 'is-invalid' : ''}`}
+              style={styles.textarea}
+            />
+            <div className="invalid-feedback">{errors.text?.message}</div>
+          </Form.Group>
 
-                <Form.Group>
-                  <Form.Label>Tags</Form.Label>
-                  <div className="d-flex flex-wrap gap-2">
-                    {tagOptions.map((tag) => (
-                      <Button
-                        key={tag}
-                        type="button"
-                        variant={selectedTags.includes(tag) ? 'primary' : 'outline-primary'}
-                        onClick={() => handleTags(tag)}
-                        className="me-2 mb-2"
-                      >
-                        {tag}
-                      </Button>
-                    ))}
-                  </div>
-                  <input
-                    type="hidden"
-                    {...register('tags')}
-                    value={selectedTags.join(',')}
-                  />
-                  {errors.tags && <div className="invalid-feedback d-block">{errors.tags?.message}</div>}
-                </Form.Group>
+          <Form.Group>
+            <Form.Label style={styles.label}>What kind of responses would you like?</Form.Label>
+            <p style={{ fontSize: '1rem', color: '#6b4226', marginBottom: '10px' }}>
+              Select one or more tags that describe the tone or style of responses you'd like to
+              receive.
+            </p>
+            <div className="d-flex flex-wrap gap-2">
+              {tagOptions.map((tag) => (
+                <Button
+                  key={tag}
+                  type="button"
+                  onClick={() => handleTags(tag)}
+                  style={{
+                    ...styles.button,
+                    backgroundColor: selectedTags.includes(tag) ? '#f4cc70' : '#fffdf3',
+                    color: selectedTags.includes(tag) ? '#fff' : '#6b4226',
+                  }}
+                >
+                  {tag}
+                </Button>
+              ))}
+            </div>
+            <input type="hidden" {...register('tags')} value={selectedTags.join(',')} />
+            {errors.tags && (
+              <div className="invalid-feedback d-block">{errors.tags?.message}</div>
+            )}
+          </Form.Group>
 
-                <input type="hidden" {...register('owner')} value={currentUser} />
-                <Form.Group className="form-group">
-                  <Row className="pt-3">
-                    <Col>
-                      <Button type="submit" variant="primary">
-                        Submit
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button type="button" onClick={() => reset()} variant="warning" className="float-right">
-                        Reset
-                      </Button>
-                    </Col>
-                  </Row>
-                </Form.Group>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+          <input type="hidden" {...register('owner')} value={currentUser} />
+
+          <Form.Group className="form-group">
+            <Row className="pt-3">
+              <Col>
+                <Button type="submit" style={styles.submitBtn}>
+                  Submit
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  type="button"
+                  onClick={() => reset()}
+                  className="float-right"
+                  style={styles.resetBtn}
+                >
+                  Reset
+                </Button>
+              </Col>
+            </Row>
+          </Form.Group>
+        </Form>
+      </Card>
     </Container>
   );
 };

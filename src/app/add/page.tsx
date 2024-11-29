@@ -3,6 +3,12 @@ import authOptions from '@/lib/authOptions';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import AddLetterForm from '@/components/AddLetterForm';
 
+const styles = {
+  main: {
+    backgroundColor: 'palegoldenrod',
+  },
+};
+
 const AddLetter = async () => {
   // Protect the page, only logged in users can access it.
   const session = await getServerSession(authOptions);
@@ -12,7 +18,7 @@ const AddLetter = async () => {
     } | null,
   );
   return (
-    <main>
+    <main style={styles.main}>
       <AddLetterForm />
     </main>
   );
