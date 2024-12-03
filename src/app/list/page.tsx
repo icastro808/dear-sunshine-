@@ -93,6 +93,7 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
                     <LetterCard
                       letter={letter}
                       replies={replies.filter(reply => reply.letterId === letter.id)}
+                      showReplyButton
                     />
                   </Col>
                 ))}

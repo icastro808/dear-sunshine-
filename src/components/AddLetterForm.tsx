@@ -83,11 +83,23 @@ const onSubmit = async (data: { text: string; owner: string; tags: string[] }) =
   });
 };
 
+// max character count for a letter
+const MAX_CHAR_COUNT = 500;
+
+// options for the tags -- can be expanded upon
 const tagOptions: ('happy' | 'neutral' | 'sad' | 'angry')[] = ['happy', 'neutral', 'sad', 'angry'];
 
 const AddLetterForm: React.FC = () => {
+  // retrieves the current session
   const { data: session, status } = useSession();
+
+  // state to keep track of the selected tags
   const [selectedTags, setSelectedTags] = useState<('happy' | 'neutral' | 'sad' | 'angry')[]>([]);
+
+  // state to keep track of the character count
+  const [charCount, setCharCount] = useState(0);
+
+  // retrieves the current user's email
   const currentUser = session?.user?.email || '';
 
   const {
@@ -108,13 +120,21 @@ const AddLetterForm: React.FC = () => {
     redirect('/auth/signin');
   }
 
+  // handles the tags as the user selects them
   const handleTags = (tag: 'happy' | 'neutral' | 'sad' | 'angry') => {
     const updatedTags = selectedTags.includes(tag)
       ? selectedTags.filter((t) => t !== tag)
       : [...selectedTags, tag];
 
+    // updates the state and the form value
     setSelectedTags(updatedTags);
     setValue('tags', updatedTags);
+  };
+
+  // handles the character count as the user types in realtime
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = e.target;
+    setCharCount(value.length);
   };
 
   return (
@@ -128,8 +148,22 @@ const AddLetterForm: React.FC = () => {
               {...register('text')}
               className={`form-control ${errors.text ? 'is-invalid' : ''}`}
               style={styles.textarea as React.CSSProperties}
+              // sends the value to the handleTextChange function to update the character count
+              onChange={(e) => {
+                handleTextChange(e);
+                register('text').onChange(e);
+              }}
             />
             <div className="invalid-feedback">{errors.text?.message}</div>
+            {/* displays the character count */}
+            <small
+              className={charCount > MAX_CHAR_COUNT ? 'text-danger' : 'text-muted'}
+            >
+              {charCount}
+              /
+              {MAX_CHAR_COUNT}
+              &nbsp;characters
+            </small>
           </Form.Group>
 
           <Form.Group>

@@ -3,6 +3,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -26,8 +27,17 @@ const onSubmit = async (data: {
   reset();
 };
 
+// max character count for the reply
+const MAX_CHAR_COUNT = 250;
+
 const AddReplyForm = ({ letter }: { letter: Letter }) => {
+  // retrieve the current session
   const { data: session, status } = useSession();
+
+  // state to keep track of the character count
+  const [charCount, setCharCount] = useState(0);
+
+  // retrieve the current user's email
   const currentUser = session?.user?.email || '';
 
   const {
@@ -47,12 +57,18 @@ const AddReplyForm = ({ letter }: { letter: Letter }) => {
     redirect('/auth/signin');
   }
 
+  // handles the character count as the user types in realtime
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = e.target;
+    setCharCount(value.length);
+  };
+
   return (
     <Card>
       <Card.Body>
         <Form onSubmit={handleSubmit((data) => onSubmit(data, reset))}>
           <Form.Group>
-            {/* <Form.Label>Post a Reply</Form.Label> */}
+            <Form.Label>Dear Sunshine,</Form.Label>
             <textarea
               {...register('reply')}
               className={`form-control ${errors.reply ? 'is-invalid' : ''}`}
@@ -61,9 +77,24 @@ const AddReplyForm = ({ letter }: { letter: Letter }) => {
                 width: '100%',
                 resize: 'vertical',
                 minHeight: '100px',
+                height: '350px',
+              }}
+              // sends the value to the handleTextChange function to update the character count
+              onChange={(e) => {
+                handleTextChange(e);
+                register('reply').onChange(e);
               }}
             />
             <div className="invalid-feedback">{errors.reply?.message}</div>
+            {/* displays the character count */}
+            <small
+              className={charCount > MAX_CHAR_COUNT ? 'text-danger' : 'text-muted'}
+            >
+              {charCount}
+              /
+              {MAX_CHAR_COUNT}
+              &nbsp;characters
+            </small>
           </Form.Group>
           <input type="hidden" {...register('owner')} value={currentUser} />
           <input type="hidden" {...register('letterId')} value={letter.id} />
