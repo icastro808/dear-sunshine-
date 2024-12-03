@@ -8,6 +8,10 @@ body {
   /* background-color: #492f6f !important; */
 }
 
+.main{
+  background-color: palegoldenrod;
+}
+
 .wrapper {
   box-sizing: border-box;
   min-height: 100%;
