@@ -2,7 +2,7 @@
 
 import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import authOptions from '@/lib/authOptions';
 
 async function getUserData(userId: string) {
   console.log('Fetching data for user:', userId); // Add this line to debug
