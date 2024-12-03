@@ -1,20 +1,10 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { getServerSession } from 'next-auth';
-import { loggedInProtectedPage } from '@/lib/page-protection';
 import { Container, Row, Col } from 'react-bootstrap';
 import getUserData from '@/lib/getUserData';
-import authOptions from '@/lib/authOptions';
 
 /** Profile page showing user's posts, replies, and counts. */
 export default async function ProfilePage({ userId }: { userId: string }) {
-  const session = await getServerSession(authOptions);
-  loggedInProtectedPage(
-    session as {
-      user: { email: string; id: string; randomKey: string };
-      // eslint-disable-next-line @typescript-eslint/comma-dangle
-    } | null,
-  );
   const { posts, replies, postCount, replyCount } = await getUserData(userId);
   return (
     <main>
