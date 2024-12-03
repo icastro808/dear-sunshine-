@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
+import { User } from '@prisma/client';
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
@@ -13,6 +14,7 @@ const NavBar: React.FC = () => {
   const userWithRole = session?.user as { email: string; randomKey: string };
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
+  const user = session?.user as User;
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -31,7 +33,12 @@ const NavBar: React.FC = () => {
                   <Nav.Link id="mental-health-nav" href="/health" key="health" active={pathName === '/health'}>
                     Feeling  Down?
                   </Nav.Link>,
-                  <Nav.Link id="profile-nav" href="/profile" key="profile" active={pathName === '/profile'}>
+                  <Nav.Link
+                    id="profile-nav"
+                    href={`/profile/${user.id}`}
+                    key="profile"
+                    active={pathName === '/profile'}
+                  >
                     Profile
                   </Nav.Link>,
                 ]
