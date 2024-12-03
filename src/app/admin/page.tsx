@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { adminProtectedPage } from '@/lib/page-protection';
 import { Letter, Reply } from '@prisma/client';
 import LetterCardAdmin from '@/components/LetterCardAdmin';
-import { authOptions } from '../api/auth/[...nextauth]/route';
+import authOptions from '@/lib/authOptions';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
