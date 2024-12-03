@@ -41,7 +41,7 @@ const MentalHealthPage = () => (
               margin: 0,
             }}
           >
-            "Even On Cloudy Days"
+            &quot;Even On Cloudy Days&quot;
           </p>
         </Col>
       </Row>
@@ -60,7 +60,7 @@ const MentalHealthPage = () => (
           >
             <p>
               Dear Sunshine is here to bring hope and warmth to your life, even when the
-              skies seem gray. Life’s challenges are a shared experience, and it's okay
+              skies seem gray. Life&apos;s challenges are a shared experience, and it&apos;s okay
               to lean on others for support. Let this space be your guide to self-care
               and encouragement.
             </p>
@@ -87,7 +87,7 @@ const MentalHealthPage = () => (
         <Col>
           <h3 style={{ color: '#d76b00', fontWeight: '600' }}>Mental Health Resources</h3>
           <p style={{ color: '#5e4a3c', fontSize: '1.1rem' }}>
-            If you or someone you know is struggling, don’t hesitate to reach out to these
+            If you or someone you know is struggling, don&apos;t hesitate to reach out to these
             resources:
           </p>
           <ul style={{ paddingLeft: '20px', fontSize: '1.1rem', color: '#5e4a3c' }}>
@@ -95,7 +95,8 @@ const MentalHealthPage = () => (
             <li>Text HOME to 741741 for confidential support 24/7.</li>
             <li>Local Mental Health Services Directory for personalized help.</li>
             <li>
-              Visit{' '}
+              Visit
+              {' '}
               <a
                 href="https://www.mentalhealth.gov"
                 target="_blank"
@@ -106,7 +107,8 @@ const MentalHealthPage = () => (
                 }}
               >
                 MentalHealth.gov
-              </a>{' '}
+              </a>
+              {' '}
               for detailed guidance.
             </li>
           </ul>
