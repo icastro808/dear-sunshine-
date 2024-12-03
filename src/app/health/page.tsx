@@ -4,100 +4,80 @@ import { Container, Row, Col } from 'react-bootstrap';
 const MentalHealthPage = () => (
   <main
     style={{
-      backgroundColor: 'darkred',
+      backgroundColor: '#fff8e6', // Light, warm background
       minHeight: '100vh',
-      padding: '20px',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
+      overflowY: 'auto', // Enable scrolling
+      padding: '40px 20px',
     }}
   >
     <Container
-      fluid
       style={{
-        maxWidth: '800px',
-        backgroundColor: 'beige',
-        borderRadius: '8px',
-        boxShadow: '0 0 15px rgba(0, 0, 0, 0.2)',
-        padding: '20px',
+        maxWidth: '900px',
+        backgroundColor: '#ffffff',
+        borderRadius: '12px',
+        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
+        padding: '30px',
+        lineHeight: '1.8',
       }}
     >
-      {/* Title Section */}
-      <Row className="text-center">
-        <Col>
+      {/* Header Section */}
+      <Row>
+        <Col className="text-center">
           <h1
             style={{
               fontSize: '2rem',
-              color: '#842029',
-              marginBottom: '0',
+              fontWeight: 'bold',
+              color: '#d76b00',
+              marginBottom: '10px',
             }}
           >
-            &quot;Dear Sunshine, Even On Cloudy Days&quot;
+            Dear Sunshine
           </h1>
+          <p
+            style={{
+              fontSize: '1.2rem',
+              color: '#5e4a3c',
+              fontStyle: 'italic',
+              margin: 0,
+            }}
+          >
+            &quot;Even On Cloudy Days&quot;
+          </p>
         </Col>
       </Row>
 
       {/* Introduction Section */}
-      <Row className="text-center" style={{ marginTop: '20px' }}>
+      <Row style={{ marginTop: '30px' }}>
         <Col>
           <div
             style={{
-              backgroundColor: '#FFEFEF',
-              color: '#5A1D1D',
-              fontSize: '1.2rem',
-              padding: '15px',
+              backgroundColor: '#fff3e0',
               borderRadius: '8px',
-              border: '1px solid #5A1D1D',
+              padding: '20px',
+              color: '#5e4a3c',
+              fontSize: '1.1rem',
             }}
           >
             <p>
-              Dear Sunshine is created to be a beacon of hope and comfort. We
-              know that life can be tough, and it&apos;s okay to seek help. This
-              platform is here to uplift you, even when the light seems dim.
+              Dear Sunshine is here to bring hope and warmth to your life, even when the
+              skies seem gray. Life&apos;s challenges are a shared experience, and it&apos;s okay
+              to lean on others for support. Let this space be your guide to self-care
+              and encouragement.
             </p>
           </div>
         </Col>
       </Row>
 
       {/* Tips Section */}
-      <Row
-        className="tips-section"
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '10px',
-          marginTop: '40px',
-        }}
-      >
-        <Col
-          xs={6}
-          style={{
-            backgroundColor: '#F8D7DA',
-            borderRadius: '8px 0 0 8px',
-            padding: '20px',
-            textAlign: 'center',
-          }}
-        >
-          <h3 style={{ margin: 0 }}>Tips</h3>
-        </Col>
-        <Col
-          xs={6}
-          style={{
-            backgroundColor: '#FFF3F4',
-            borderRadius: '0 8px 8px 0',
-            padding: '20px',
-            borderLeft: '1px solid #5A1D1D',
-            color: '#6A1E1E',
-            fontSize: '1rem',
-          }}
-        >
-          <ul style={{ listStyleType: 'none', padding: 0 }}>
-            <li>Take breaks when feeling overwhelmed.</li>
-            <li>Practice mindfulness or meditation.</li>
-            <li>Talk to someone you trust about your feelings.</li>
-            <li>Maintain a regular sleep schedule.</li>
-            <li>Engage in physical activities you enjoy.</li>
+      <Row style={{ marginTop: '40px' }}>
+        <Col>
+          <h3 style={{ color: '#d76b00', fontWeight: '600' }}>Self-Care Tips</h3>
+          <ul style={{ paddingLeft: '20px', fontSize: '1.1rem', color: '#5e4a3c' }}>
+            <li>Find a daily moment of gratitude to focus on positivity.</li>
+            <li>Keep a journal to process your thoughts and emotions.</li>
+            <li>Take mindful breaks from social media and technology.</li>
+            <li>Engage in hobbies or creative outlets that bring you joy.</li>
+            <li>Surround yourself with uplifting and supportive people.</li>
           </ul>
         </Col>
       </Row>
@@ -105,36 +85,54 @@ const MentalHealthPage = () => (
       {/* Resources Section */}
       <Row style={{ marginTop: '40px' }}>
         <Col>
+          <h3 style={{ color: '#d76b00', fontWeight: '600' }}>Mental Health Resources</h3>
+          <p style={{ color: '#5e4a3c', fontSize: '1.1rem' }}>
+            If you or someone you know is struggling, don&apos;t hesitate to reach out to these
+            resources:
+          </p>
+          <ul style={{ paddingLeft: '20px', fontSize: '1.1rem', color: '#5e4a3c' }}>
+            <li>National Suicide Prevention Lifeline: 1-800-273-TALK (8255)</li>
+            <li>Text HOME to 741741 for confidential support 24/7.</li>
+            <li>Local Mental Health Services Directory for personalized help.</li>
+            <li>
+              Visit
+              {' '}
+              <a
+                href="https://www.mentalhealth.gov"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#d76b00',
+                  textDecoration: 'underline',
+                }}
+              >
+                MentalHealth.gov
+              </a>
+              {' '}
+              for detailed guidance.
+            </li>
+          </ul>
+        </Col>
+      </Row>
+
+      {/* Encouragement Section */}
+      <Row style={{ marginTop: '50px' }}>
+        <Col>
           <div
             style={{
-              backgroundColor: '#FBE9E7',
-              color: '#5C1B1B',
-              fontSize: '1.1rem',
-              padding: '20px',
+              backgroundColor: '#ffe8d6',
               borderRadius: '8px',
-              border: '1px solid #5A1D1D',
+              padding: '20px',
+              textAlign: 'center',
+              color: '#5e4a3c',
+              fontSize: '1.2rem',
+              fontWeight: '500',
             }}
           >
-            <h4>Mental Health Resources</h4>
-            <ul style={{ listStyleType: 'none', padding: 0 }}>
-              <li>National Suicide Prevention Lifeline: 1-800-273-TALK (8255)</li>
-              <li>Text HOME to 741741 for free support.</li>
-              <li>Local Mental Health Services Directory</li>
-              <li>
-                Visit
-                {' '}
-                <a
-                  href="https://www.mentalhealth.gov"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: '#842029', textDecoration: 'underline' }}
-                >
-                  MentalHealth.gov
-                </a>
-                {' '}
-                for more information.
-              </li>
-            </ul>
+            <p>
+              Remember, even on cloudy days, the sun is still shining behind the clouds.
+              You are not alone, and brighter days are ahead.
+            </p>
           </div>
         </Col>
       </Row>

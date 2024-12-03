@@ -25,13 +25,11 @@ async function main() {
     // console.log(`  Created user: ${user.email} with role: ${user.role}`);
   });
   config.defaultLetters.forEach(async (letter, index) => {
-    console.log(`  Adding letter: ${letter.firstName} (${letter.lastName})`);
+    // console.log(`  Adding letter: ${letter.firstName} (${letter.lastName})`);
     await prisma.letter.upsert({
       where: { id: index },
       update: {},
       create: {
-        firstName: letter.firstName,
-        lastName: letter.lastName,
         text: letter.text,
         owner: letter.owner,
         tags: letter.tags as Tag[],

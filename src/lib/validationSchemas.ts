@@ -1,42 +1,35 @@
 import * as Yup from 'yup';
-
-// export const AddStuffSchema = Yup.object({
-//   name: Yup.string().required(),
-//   quantity: Yup.number().positive().required(),
-//   condition: Yup.string().oneOf(['excellent', 'good', 'fair', 'poor']).required(),
-//   owner: Yup.string().required(),
-// });
-
-// export const EditStuffSchema = Yup.object({
-//   id: Yup.number().required(),
-//   name: Yup.string().required(),
-//   quantity: Yup.number().positive().required(),
-//   condition: Yup.string().oneOf(['excellent', 'good', 'fair', 'poor']).required(),
-//   owner: Yup.string().required(),
-// });
-
-// export interface Contact {
-//   firstName: string;
-//   lastName: string;
-//   address: string;
-//   image: string;
-//   description: string;
-//   owner: string
-// }
+import profanityList from './profanityList.json';
 
 export const AddLetterSchema = Yup.object({
-  firstName: Yup.string().required(),
-  lastName: Yup.string().required(),
-  text: Yup.string().required(),
+  text: Yup.string()
+    .test(
+      'Prohibited word',
+      'Your input contains prohibited language',
+      (value) => {
+        if (!value) return true;
+        const words = value.toLowerCase().split(/\b/);
+        return !profanityList.some((bannedWord) => words.includes(bannedWord));
+      },
+    )
+    .required().max(500, 'Your reply cannot exceed 500 characters'),
   owner: Yup.string().required(),
   tags: Yup.array().of(Yup.string().oneOf(['happy', 'neutral', 'sad', 'angry']).required()).required(),
 });
 
 export const EditLetterSchema = Yup.object({
   id: Yup.number().required(),
-  firstName: Yup.string().required(),
-  lastName: Yup.string().required(),
-  text: Yup.string().required(),
+  text: Yup.string()
+    .test(
+      'Prohibited word',
+      'Your input contains prohibited language',
+      (value) => {
+        if (!value) return true;
+        const words = value.toLowerCase().split(/\b/);
+        return !profanityList.some((bannedWord) => words.includes(bannedWord));
+      },
+    )
+    .required().max(500, 'Your reply cannot exceed 500 characters'),
   owner: Yup.string().required(),
   tags: Yup.array().of(Yup.string().oneOf(['happy', 'neutral', 'sad', 'angry']).required()).required(),
 });
@@ -46,7 +39,17 @@ export const DeleteLetterSchema = Yup.object({
 });
 
 export const AddReplySchema = Yup.object({
-  reply: Yup.string().required(),
+  reply: Yup.string()
+    .test(
+      'Prohibited word',
+      'Your input contains prohibited language',
+      (value) => {
+        if (!value) return true;
+        const words = value.toLowerCase().split(/\b/);
+        return !profanityList.some((bannedWord) => words.includes(bannedWord));
+      },
+    )
+    .required().max(250, 'Your reply cannot exceed 250 characters'),
   letterId: Yup.number().required(),
   owner: Yup.string().required(),
 });

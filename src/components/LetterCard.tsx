@@ -36,15 +36,11 @@ const LetterCard = ({ letter, replies }: { letter: Letter; replies: Reply[] }) =
     <Card style={{ borderRadius: '2.5%', padding: '5%' }}>
       <Card.Header>
         <Card.Title className="d-flex justify-content-between align-items-center">
-          <div>
-            {letter.firstName}
-            &nbsp;
-            {letter.lastName}
-          </div>
           <div className="d-flex gap-1">
             {letter.tags.map((tag) => (
               // change href to the correct path for filtering by tag
-              <Link href="/list" key={tag}>
+              // <Link href="/list" key={tag}>
+              <Link href={`/list?tag=${tag}`} key={tag}>
                 <Badge
                   key={tag}
                   className="text-white rounded-pill"
