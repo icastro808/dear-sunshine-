@@ -1,10 +1,14 @@
-/* eslint-disable max-len */
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import getUserData from '@/lib/getUserData';
 
+/** Define the Props type */
+interface ProfilePageProps {
+  userId: string;
+}
+
 /** Profile page showing user's posts, replies, and counts. */
-const ProfilePage = async ({ userId }: { userId: string }) => {
+const ProfilePage: React.FC<ProfilePageProps> = async ({ userId }) => {
   const { posts, replies, postCount, replyCount } = await getUserData(userId);
   return (
     <main>
