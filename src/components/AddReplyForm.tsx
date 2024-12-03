@@ -52,7 +52,7 @@ const AddReplyForm = ({ letter }: { letter: Letter }) => {
       <Card.Body>
         <Form onSubmit={handleSubmit((data) => onSubmit(data, reset))}>
           <Form.Group>
-            {/* <Form.Label>Post a Reply</Form.Label> */}
+            <Form.Label>Dear Sunshine,</Form.Label>
             <textarea
               {...register('reply')}
               className={`form-control ${errors.reply ? 'is-invalid' : ''}`}
@@ -61,6 +61,7 @@ const AddReplyForm = ({ letter }: { letter: Letter }) => {
                 width: '100%',
                 resize: 'vertical',
                 minHeight: '100px',
+                height: '350px',
               }}
             />
             <div className="invalid-feedback">{errors.reply?.message}</div>
