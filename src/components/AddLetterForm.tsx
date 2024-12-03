@@ -13,7 +13,7 @@ import { AddLetterSchema } from '@/lib/validationSchemas';
 
 const styles = {
   container: {
-    fontFamily: `'Georgia', serif`,
+    fontFamily: 'Georgia, serif',
     padding: '40px 0',
     backgroundColor: '#f8f4e3', // Parchment background
     display: 'flex',
@@ -119,15 +119,15 @@ const AddLetterForm: React.FC = () => {
 
   return (
     <Container className="py-5" style={styles.container}>
-      <Card style={styles.card}>
-        <h2 style={styles.title}>Write Your Letter</h2>
+      <Card style={styles.card as React.CSSProperties}>
+        <h2 style={styles.title as React.CSSProperties}>Write Your Letter</h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group>
             <Form.Label style={styles.label}>Text</Form.Label>
             <textarea
               {...register('text')}
               className={`form-control ${errors.text ? 'is-invalid' : ''}`}
-              style={styles.textarea}
+              style={styles.textarea as React.CSSProperties}
             />
             <div className="invalid-feedback">{errors.text?.message}</div>
           </Form.Group>
@@ -135,7 +135,7 @@ const AddLetterForm: React.FC = () => {
           <Form.Group>
             <Form.Label style={styles.label}>What kind of responses would you like?</Form.Label>
             <p style={{ fontSize: '1rem', color: '#6b4226', marginBottom: '10px' }}>
-              Select one or more tags that describe the tone or style of responses you'd like to
+              Select one or more tags that describe the tone or style of responses you&apos;d like to
               receive.
             </p>
             <div className="d-flex flex-wrap gap-2">
