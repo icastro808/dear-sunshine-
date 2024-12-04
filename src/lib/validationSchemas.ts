@@ -12,7 +12,7 @@ export const AddLetterSchema = Yup.object({
         return !profanityList.some((bannedWord) => words.includes(bannedWord));
       },
     )
-    .required().max(500, 'Your reply cannot exceed 500 characters'),
+    .required().max(500, 'Your letter cannot exceed 500 characters'),
   owner: Yup.string().required(),
   tags: Yup.array().of(Yup.string().oneOf(['happy', 'neutral', 'sad', 'angry']).required()).required(),
 });
@@ -29,7 +29,7 @@ export const EditLetterSchema = Yup.object({
         return !profanityList.some((bannedWord) => words.includes(bannedWord));
       },
     )
-    .required().max(500, 'Your reply cannot exceed 500 characters'),
+    .required().max(500, 'Your letter cannot exceed 500 characters'),
   owner: Yup.string().required(),
   tags: Yup.array().of(Yup.string().oneOf(['happy', 'neutral', 'sad', 'angry']).required()).required(),
   signature: Yup.string().default('Sunshine'),

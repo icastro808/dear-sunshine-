@@ -4,8 +4,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 import getUserData from '@/lib/getUserData';
 
 /** Profile page showing user's posts, replies, and counts. */
-const ProfilePage = async ({ userId }: { userId: string }) => {
-  const { posts, replies, postCount, replyCount } = await getUserData(userId);
+export default async function ProfilePage({ params }: { params: { userId: string } }) {
+  const { posts, replies, postCount, replyCount } = await getUserData(params.userId);
   return (
     <main>
       <Container
@@ -111,6 +111,4 @@ const ProfilePage = async ({ userId }: { userId: string }) => {
       </Container>
     </main>
   );
-};
-
-export default ProfilePage;
+}
