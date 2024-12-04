@@ -32,6 +32,7 @@ export const EditLetterSchema = Yup.object({
     .required().max(500, 'Your reply cannot exceed 500 characters'),
   owner: Yup.string().required(),
   tags: Yup.array().of(Yup.string().oneOf(['happy', 'neutral', 'sad', 'angry']).required()).required(),
+  signature: Yup.string().default('Sunshine'),
 });
 
 export const DeleteLetterSchema = Yup.object({

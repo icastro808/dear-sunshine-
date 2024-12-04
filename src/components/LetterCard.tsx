@@ -56,6 +56,10 @@ const LetterCard = ({
       <Card.Body>
         <Card.Text style={{ paddingBottom: '5%', borderBottom: '1px solid #d3d3d3' }}>
           {letter.text}
+          <br />
+          <br />
+          <strong>From: </strong>
+          <strong>{letter.signature}</strong>
         </Card.Text>
         <ListGroup variant="flush">
           {replies.map((reply) => <ReplyItem key={reply.id} reply={reply} />)}

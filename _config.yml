@@ -1,8 +1,6 @@
-title: nextjs-application-template
 description: A template for quickly starting Next.js application development
 google_analytics:
 show_downloads: true
-remote_theme: mmistakes/hpstr-jekyll-theme
 plugins:
   - jekyll-remote-theme
 gems:
