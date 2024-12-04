@@ -15,7 +15,6 @@ const styles = {
   container: {
     fontFamily: 'Georgia, serif',
     padding: '40px 0',
-    backgroundColor: '#f8f4e3', // Parchment background
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
