@@ -76,7 +76,11 @@ const styles = {
   },
 };
 
-const onSubmit = async (data: { text: string; owner: string; tags: string[] }) => {
+const onSubmit = async (data: {
+  text: string;
+  owner: string;
+  tags: string[];
+}) => {
   await addLetter(data);
   swal('Success', 'Your letter has been added', 'success', {
     timer: 2000,
@@ -121,11 +125,11 @@ const AddLetterForm: React.FC = () => {
 
   // handles the tags as the user selects them
   const handleTags = (tag: 'happy' | 'neutral' | 'sad' | 'angry') => {
+    // if the tag is already selected, remove it; otherwise, add it to the list
     const updatedTags = selectedTags.includes(tag)
       ? selectedTags.filter((t) => t !== tag)
       : [...selectedTags, tag];
-
-    // updates the state and the form value
+    // update the state and the form value
     setSelectedTags(updatedTags);
     setValue('tags', updatedTags);
   };
@@ -135,7 +139,6 @@ const AddLetterForm: React.FC = () => {
     const { value } = e.target;
     setCharCount(value.length);
   };
-
   return (
     <Container className="py-5" style={styles.container}>
       <Card style={styles.card as React.CSSProperties}>
