@@ -105,7 +105,6 @@ const AddLetterForm: React.FC = () => {
   const {
     register,
     handleSubmit,
-    reset,
     setValue,
     formState: { errors },
   } = useForm({
@@ -201,16 +200,6 @@ const AddLetterForm: React.FC = () => {
               <Col>
                 <Button type="submit" style={styles.submitBtn}>
                   Submit
-                </Button>
-              </Col>
-              <Col>
-                <Button
-                  type="button"
-                  onClick={() => reset()}
-                  className="float-right"
-                  style={styles.resetBtn}
-                >
-                  Reset
                 </Button>
               </Col>
             </Row>
