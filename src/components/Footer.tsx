@@ -29,7 +29,9 @@ const Footer = () => (
             marginTop: '10px',
           }}
         >
-          © {new Date().getFullYear()} Dear Sunshine. Spreading warmth and positivity.
+          ©
+          {new Date().getFullYear()}
+          Dear Sunshine. Spreading warmth and positivity.
         </small>
       </Col>
     </Container>
