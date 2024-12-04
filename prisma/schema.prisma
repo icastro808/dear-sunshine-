@@ -23,6 +23,7 @@ model User {
   email    String @unique
   password String
   role     Role   @default(USER)
+  signature String @default("Sunshine")
 }
 
 enum Tag {
@@ -39,6 +40,7 @@ model Reply {
   owner     String
   createdAt DateTime @default(now())
   Letter     Letter  @relation(fields: [letterId], references: [id], onDelete: Cascade)
+  signature String @default("Sunshine")
 }
 
 model Letter {
@@ -47,4 +49,5 @@ model Letter {
   reply     Reply[]
   owner     String
   tags      Tag[]
+  signature String @default("Sunshine")
 }
