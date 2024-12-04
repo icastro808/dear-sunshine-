@@ -7,9 +7,9 @@ import { deleteLetter } from '@/lib/dbActions';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import ReplyItem from './ReplyItem';
-import AddReplyForm from './AddReplyForm';
 
-const LetterCard = ({ letter, replies }: { letter: Letter; replies: Reply[] }) => {
+const LetterCard = ({
+  letter, replies, showReplyButton = true }: { letter: Letter; replies: Reply[]; showReplyButton: boolean }) => {
   // state to control the visibility of the modal
   const [showModal, setShowModal] = useState(false);
 
@@ -56,26 +56,38 @@ const LetterCard = ({ letter, replies }: { letter: Letter; replies: Reply[] }) =
       <Card.Body>
         <Card.Text style={{ paddingBottom: '5%', borderBottom: '1px solid #d3d3d3' }}>
           {letter.text}
+          <br />
+          <br />
+          <strong>From: </strong>
+          <strong>{letter.signature}</strong>
         </Card.Text>
         <ListGroup variant="flush">
           {replies.map((reply) => <ReplyItem key={reply.id} reply={reply} />)}
         </ListGroup>
-        <AddReplyForm letter={letter} />
       </Card.Body>
       <Card.Footer>
-        { (session?.user?.email === letter.owner || (session?.user as any)?.randomKey === 'ADMIN') && (
-        // only shows edit and delete buttons if the current user is the owner of the letter or admin.
         <Row className="justify-content-between">
-          <Col xs="auto">
-            <Link href={`edit/${letter.id}`}>Edit</Link>
-          </Col>
-          <Col xs="auto">
-            <Button onClick={handleShowModal}>
-              Delete
-            </Button>
-          </Col>
+          { /* show reply button only if the user is viewing from letter board */ }
+          {showReplyButton && (
+            <Col xs="auto">
+              <Button variant="primary" href={`reply/${letter.id}`}>Reply</Button>
+            </Col>
+          )}
+
+          { (session?.user?.email === letter.owner || (session?.user as any)?.randomKey === 'ADMIN') && (
+          // only shows edit and delete buttons if the current user is the owner of the letter or admin.
+            <>
+              <Col xs="auto" className="mt-2">
+                <Link href={`edit/${letter.id}`}>Edit</Link>
+              </Col>
+              <Col xs="auto">
+                <Button onClick={handleShowModal}>
+                  Delete
+                </Button>
+              </Col>
+            </>
+          )}
         </Row>
-        )}
       </Card.Footer>
 
       <Modal show={showModal} onHide={handleCloseModal}>

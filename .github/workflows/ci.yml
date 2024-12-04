@@ -1,4 +1,4 @@
-name: ci-nextjs-application-template
+name: dear-sunshine
 on:
   push:
     branches: [main, master]
