@@ -109,15 +109,16 @@ const AddLetterForm: React.FC = () => {
   const {
     register,
     handleSubmit,
-    // reset,
     setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(AddLetterSchema),
   });
+
   if (status === 'loading') {
     return <LoadingSpinner />;
   }
+
   if (status === 'unauthenticated') {
     redirect('/auth/signin');
   }
@@ -128,7 +129,6 @@ const AddLetterForm: React.FC = () => {
     const updatedTags = selectedTags.includes(tag)
       ? selectedTags.filter((t) => t !== tag)
       : [...selectedTags, tag];
-
     // update the state and the form value
     setSelectedTags(updatedTags);
     setValue('tags', updatedTags);
@@ -203,15 +203,6 @@ const AddLetterForm: React.FC = () => {
               <Col>
                 <Button type="submit" style={styles.submitBtn}>
                   Submit
-                </Button>
-              </Col>
-              <Col>
-                <Button
-                  type="button"
-                  className="float-right"
-                  style={styles.resetBtn}
-                >
-                  Reset
                 </Button>
               </Col>
             </Row>
