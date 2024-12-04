@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-indent, @typescript-eslint/indent */
-
 'use client';
 
 import { useSession } from 'next-auth/react';
@@ -13,59 +11,175 @@ const NavBar: React.FC = () => {
   const userWithRole = session?.user as { email: string; randomKey: string };
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
+
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar
+      expand="lg"
+      style={{
+        background: 'linear-gradient(90deg, #FFF8DC, #FAFAD2)', // Soft yellow gradient
+        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Gentle shadow
+        borderBottom: '2px solid #FFD700', // Soft gold bottom border
+      }}
+    >
       <Container>
-        <Navbar.Brand href="/">Dear Sunshine</Navbar.Brand>
+        <Navbar.Brand
+          href="/"
+          style={{
+            fontFamily: 'Georgia, serif',
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            color: '#F9A602', // Soft orange-yellow
+          }}
+        >
+          Dear Sunshine
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
-            {currentUser
-              ? [
-                  <Nav.Link id="add-stuff-nav" href="/add" key="add" active={pathName === '/add'}>
-                    Write Letter
-                  </Nav.Link>,
-                  <Nav.Link id="list-stuff-nav" href="/list" key="list" active={pathName === '/list'}>
-                    Letter Board
-                  </Nav.Link>,
-                  <Nav.Link id="mental-health-nav" href="/health" key="health" active={pathName === '/health'}>
-                    Feeling  Down?
-                  </Nav.Link>,
-                  <Nav.Link id="profile-nav" href="/profile" key="profile" active={pathName === '/profile'}>
-                    Profile
-                  </Nav.Link>,
-                ]
-              : ''}
-            {currentUser && role === 'ADMIN' ? (
-              <Nav.Link id="admin-stuff-nav" href="/admin" key="admin" active={pathName === '/admin'}>
+            {currentUser && (
+              <>
+                <Nav.Link
+                  id="add-stuff-nav"
+                  href="/add"
+                  active={pathName === '/add'}
+                  style={{
+                    color: pathName === '/add' ? '#F9A602' : '#FFCC66',
+                    fontWeight: '500',
+                  }}
+                >
+                  Write Letter
+                </Nav.Link>
+                <Nav.Link
+                  id="list-stuff-nav"
+                  href="/list"
+                  active={pathName === '/list'}
+                  style={{
+                    color: pathName === '/list' ? '#F9A602' : '#FFCC66',
+                    fontWeight: '500',
+                  }}
+                >
+                  Letter Board
+                </Nav.Link>
+                <Nav.Link
+                  id="mental-health-nav"
+                  href="/health"
+                  active={pathName === '/health'}
+                  style={{
+                    color: pathName === '/health' ? '#F9A602' : '#FFCC66',
+                    fontWeight: '500',
+                  }}
+                >
+                  Feeling Down?
+                </Nav.Link>
+                <Nav.Link
+                  id="profile-nav"
+                  href="/profile"
+                  active={pathName === '/profile'}
+                  style={{
+                    color: pathName === '/profile' ? '#F9A602' : '#FFCC66',
+                    fontWeight: '500',
+                  }}
+                >
+                  Profile
+                </Nav.Link>
+              </>
+            )}
+            {currentUser && role === 'ADMIN' && (
+              <Nav.Link
+                id="admin-stuff-nav"
+                href="/admin"
+                active={pathName === '/admin'}
+                style={{
+                  color: pathName === '/admin' ? '#F9A602' : '#FFB347',
+                  fontWeight: '500',
+                }}
+              >
                 Admin
               </Nav.Link>
-            ) : (
-              ''
             )}
           </Nav>
           <Nav>
             {session ? (
-              <NavDropdown id="login-dropdown" title={currentUser}>
-                <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
-                  <BoxArrowRight />
-                  Sign Out
-                </NavDropdown.Item>
-                <NavDropdown.Item id="login-dropdown-change-password" href="/auth/change-password">
-                  <Lock />
-                  Change Password
-                </NavDropdown.Item>
+              <NavDropdown
+                id="login-dropdown"
+                title={currentUser}
+                style={{
+                  color: '#FFB347',
+                  fontWeight: 'bold',
+                }}
+                menuVariant="light"
+              >
+                <div
+                  style={{
+                    background: 'linear-gradient(90deg, #FFF8DC, #FAFAD2)',
+                    border: '1px solid #FFD700',
+                    borderRadius: '5px',
+                  }}
+                >
+                  <NavDropdown.Item
+                    id="login-dropdown-sign-out"
+                    href="/api/auth/signout"
+                    style={{
+                      color: '#4B4B4B',
+                      fontWeight: '500',
+                    }}
+                  >
+                    <BoxArrowRight style={{ marginRight: '5px' }} />
+                    Sign Out
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    id="login-dropdown-change-password"
+                    href="/auth/change-password"
+                    style={{
+                      color: '#4B4B4B',
+                      fontWeight: '500',
+                    }}
+                  >
+                    <Lock style={{ marginRight: '5px' }} />
+                    Change Password
+                  </NavDropdown.Item>
+                </div>
               </NavDropdown>
             ) : (
-              <NavDropdown id="login-dropdown" title="Login">
-                <NavDropdown.Item id="login-dropdown-sign-in" href="/auth/signin">
-                  <PersonFill />
-                  Sign in
-                </NavDropdown.Item>
-                <NavDropdown.Item id="login-dropdown-sign-up" href="/auth/signup">
-                  <PersonPlusFill />
-                  Sign up
-                </NavDropdown.Item>
+              <NavDropdown
+                id="login-dropdown"
+                title="Login"
+                style={{
+                  color: '#FFD700',
+                  fontWeight: 'bold',
+                }}
+                menuVariant="light"
+              >
+                <div
+                  style={{
+                    background: 'linear-gradient(90deg, #FFF8DC, #FAFAD2)',
+                    border: '1px solid #FFD700',
+                    borderRadius: '5px',
+                  }}
+                >
+                  <NavDropdown.Item
+                    id="login-dropdown-sign-in"
+                    href="/auth/signin"
+                    style={{
+                      color: '#4B4B4B',
+                      fontWeight: '500',
+                    }}
+                  >
+                    <PersonFill style={{ marginRight: '5px' }} />
+                    Sign in
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    id="login-dropdown-sign-up"
+                    href="/auth/signup"
+                    style={{
+                      color: '#4B4B4B',
+                      fontWeight: '500',
+                    }}
+                  >
+                    <PersonPlusFill style={{ marginRight: '5px' }} />
+                    Sign up
+                  </NavDropdown.Item>
+                </div>
               </NavDropdown>
             )}
           </Nav>
