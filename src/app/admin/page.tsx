@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { adminProtectedPage } from '@/lib/page-protection';
 import { Letter, Reply } from '@prisma/client';
 import LetterCardAdmin from '@/components/LetterCardAdmin';
-import { authOptions } from '../api/auth/[...nextauth]/route';
+import authOptions from '@/lib/authOptions';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
@@ -27,7 +27,7 @@ const AdminPage = async () => {
               <Row xs={1} md={2} lg={3} className="g-4">
                 {letters.map((letter) => (
                   // <Col key={letter.firstName + letter.lastName} className="d-flex">
-                  <Col className="d-flex">
+                  <Col key={letter.id} className="d-flex">
                     <LetterCardAdmin
                       letter={letter}
                       replies={replies.filter(reply => reply.letterId === letter.id)}

@@ -2,8 +2,8 @@
 import { getServerSession } from 'next-auth';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { loggedInProtectedPage } from '@/lib/page-protection';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { Letter, Tag } from '@prisma/client';
+import authOptions from '@/lib/authOptions';
 import LetterCard from '@/components/LetterCard';
 import { prisma } from '@/lib/prisma';
 
@@ -93,6 +93,7 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
                     <LetterCard
                       letter={letter}
                       replies={replies.filter(reply => reply.letterId === letter.id)}
+                      showReplyButton
                     />
                   </Col>
                 ))}
