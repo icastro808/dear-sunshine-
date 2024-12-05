@@ -67,9 +67,14 @@ const styles = {
     boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
   },
   submitBtn: {
-    backgroundColor: '#e6a1a8',
-    color: '#fff',
-    border: 'none',
+    backgroundColor: '#fff8e6',
+    color: '#d76b00',
+    borderRadius: '20px',
+    fontSize: '1rem',
+    fontWeight: 'bold',
+    border: '1px solid #d3c5a0',
+    padding: '10px 15px',
+    boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
   },
   resetBtn: {
     backgroundColor: '#f44336',
@@ -144,12 +149,13 @@ const AddLetterForm: React.FC = () => {
   return (
     <Container className="py-5" style={styles.container}>
       <Card style={styles.card as React.CSSProperties}>
-        <h2 style={styles.title as React.CSSProperties}>Write Your Letter</h2>
+        <h2 style={styles.title as React.CSSProperties}>Write Letter</h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group>
             {/* <Form.Label style={styles.label}>Text</Form.Label> */}
             <textarea
               {...register('text')}
+              placeholder="Write your letter here :)"
               className={`form-control ${errors.text ? 'is-invalid' : ''}`}
               style={styles.textarea as React.CSSProperties}
               // sends the value to the handleTextChange function to update the character count
