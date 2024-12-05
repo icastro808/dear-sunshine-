@@ -1,7 +1,7 @@
 'use server';
 
 import { Letter, Tag } from '@prisma/client';
-import { hash } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
 
@@ -39,15 +39,38 @@ export async function createUser(credentials: { email: string; password: string 
  * Changes the password of an existing user in the database.
  * @param credentials, an object with the following properties: email, password.
  */
-export async function changePassword(credentials: { email: string; password: string }) {
-  // console.log(`changePassword data: ${JSON.stringify(credentials, null, 2)}`);
-  const password = await hash(credentials.password, 10);
-  await prisma.user.update({
-    where: { email: credentials.email },
-    data: {
-      password,
-    },
-  });
+export async function changePassword(credentials: { email: string; oldpassword: string; password: string }) {
+  try {
+    // check if the email is already registered
+    const existingUser = await prisma.user.findUnique({
+      where: { email: credentials.email },
+    });
+
+    // if the user does not exist
+    if (!existingUser) {
+      throw new Error('User does not exist.');
+    }
+
+    // comparing the old password and new password
+    const isPasswordValid = await compare(credentials.oldpassword, existingUser.password);
+
+    // if the old password is incorrect
+    if (!isPasswordValid) {
+      throw new Error('Old password incorrect.');
+    }
+
+    const password = await hash(credentials.password, 10);
+    await prisma.user.update({
+      where: { email: credentials.email },
+      data: {
+        password,
+      },
+    });
+
+    return { success: true };
+  } catch (error) {
+    return { success: false, message: error instanceof Error ? error.message : 'An unknown error occurred' };
+  }
 }
 
 export async function addLetter(letter: {

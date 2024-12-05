@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import swal from 'sweetalert';
-import { Card, Col, Container, Button, Form, Row, InputGroup } from 'react-bootstrap';
+import { Card, Col, Container, Button, Form, Row, InputGroup, Alert } from 'react-bootstrap';
 import { LockFill, EyeSlash, Eye } from 'react-bootstrap-icons';
 import { changePassword } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
@@ -24,6 +24,9 @@ const ChangePassword = () => {
 
   // state for password visibility
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  // state for error messages
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const email = session?.user?.email || '';
   const validationSchema = Yup.object().shape({
@@ -47,10 +50,26 @@ const ChangePassword = () => {
   });
 
   const onSubmit = async (data: ChangePasswordForm) => {
-    // console.log(JSON.stringify(data, null, 2));
-    await changePassword({ email, ...data });
-    await swal('Password Changed', 'Your password has been changed', 'success', { timer: 2000 });
-    reset();
+    try {
+      // reset error message
+      setErrorMessage(null);
+
+      // send request to change password
+      const response = await changePassword({ email, ...data });
+
+      // if the request was not successful
+      if (!response.success) {
+        setErrorMessage(response.message ?? 'An unknown error occurred');
+        return;
+      }
+
+      await swal('Password Changed', 'Your password has been changed', 'success', { timer: 2000 });
+      reset();
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      }
+    }
   };
 
   if (status === 'loading') {
@@ -59,6 +78,12 @@ const ChangePassword = () => {
 
   return (
     <main className="custom-bg vh-100">
+      { /* displays error message below navbar */}
+      {errorMessage && (
+        <Alert className="text-center" style={{ color: 'red' }} variant="danger" onClose={() => setErrorMessage(null)}>
+          {errorMessage}
+        </Alert>
+      )}
       <Container className="pb-4 mb-4">
         <Row className="justify-content-center">
           <Col xs={5}>
