@@ -174,7 +174,7 @@ const AddLetterForm: React.FC = () => {
             <br />
             {/* <Form.Label style={styles.label}>What kind of responses would you like?</Form.Label> */}
             <p style={{ fontSize: '1rem', color: '#5e4a3c', marginBottom: '10px' }}>
-              Select one or more tags that describe the tone or style of responses you&apos;d like to
+              Select one or more tags that describe the tone or style of your response and the responses you&apos;d like to
               receive.
             </p>
             <div className="d-flex flex-wrap gap-2">
