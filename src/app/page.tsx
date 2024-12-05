@@ -2,21 +2,17 @@
 
 import { Col, Container, Row, Image, Button } from 'react-bootstrap';
 import { PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
-import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 
 /** The Home page. */
 const Home = () => {
-  // Simulate checking if the user is signed in
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  // retrieve the session status
+  const { status } = useSession();
 
-  // For demonstration, simulate sign-in status change after 2 seconds
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsSignedIn(true); // Change to true after 2 seconds (for testing purposes)
-    }, 2000);
-
-    return () => clearTimeout(timer); // Clean up the timer on unmount
-  }, []);
+  // if the session is still loading, return blank page. this is to prevent the sign-in buttons from flickering
+  if (status === 'loading') {
+    return null;
+  }
 
   return (
     <main>
@@ -67,7 +63,7 @@ const Home = () => {
               <p>A platform designed to uplift and encourage individuals who may be going through tough times.</p>
 
               {/* Conditionally render buttons based on the signed-in state */}
-              {!isSignedIn && (
+              {status === 'authenticated' ? null : (
                 <div className="button-group">
                   <Button variant="primary" href="/auth/signin" className="me-2">
                     <PersonFill />
