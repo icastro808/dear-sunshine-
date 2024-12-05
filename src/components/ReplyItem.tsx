@@ -6,6 +6,7 @@ import { deleteReply } from '@/lib/dbActions';
 import { Reply } from '@prisma/client';
 import { ListGroup, Dropdown, Row, Col } from 'react-bootstrap';
 import { ThreeDots } from 'react-bootstrap-icons';
+import swal from 'sweetalert';
 
 const ReplyItem = ({ reply }: { reply: Reply }) => {
   // used to refresh page after deleting a reply
