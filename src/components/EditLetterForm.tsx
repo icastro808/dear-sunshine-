@@ -18,10 +18,18 @@ const onSubmit = async (data: Letter) => {
   });
 };
 
+// options for the tags
 const tagOptions: ('vent' | 'advice' | 'thoughts' | 'positivity' | 'love' | 'family' | 'friendship' | 'school')[] = ['vent', 'advice', 'thoughts', 'positivity', 'love', 'family', 'friendship', 'school'];
 
+// max char count for a letter
+const MAX_CHAR_COUNT = 500;
+
 const EditLetterForm = ({ letter }: { letter: Letter }) => {
+  // state to keep track of the selected tags
   const [selectedTags, setSelectedTags] = useState<('vent' | 'advice' | 'thoughts' | 'positivity' | 'love' | 'family' | 'friendship' | 'school')[]>([]);
+
+  // state to keep track of the character count
+  const [charCount, setCharCount] = useState(0);
 
   const {
     register,
@@ -33,6 +41,7 @@ const EditLetterForm = ({ letter }: { letter: Letter }) => {
     resolver: yupResolver(EditLetterSchema),
   });
 
+  // set the default values for the form
   useEffect(() => {
     if (letter.tags) {
       setSelectedTags(letter.tags); // Assuming letter.tags is an array of strings
@@ -40,6 +49,7 @@ const EditLetterForm = ({ letter }: { letter: Letter }) => {
     }
   }, [letter, setValue]);
 
+  // handles the tags when the user clicks on them
   const handleTags = (tag: 'vent' | 'advice' | 'thoughts' | 'positivity' | 'love' | 'family' | 'friendship' | 'school') => {
     const updatedTags = selectedTags.includes(tag)
       ? selectedTags.filter((t) => t !== tag)
@@ -47,6 +57,12 @@ const EditLetterForm = ({ letter }: { letter: Letter }) => {
 
     setSelectedTags(updatedTags);
     setValue('tags', updatedTags);
+  };
+
+  // handles the character count as the user types in realtime
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = e.target;
+    setCharCount(value.length);
   };
 
   return (
@@ -66,8 +82,22 @@ const EditLetterForm = ({ letter }: { letter: Letter }) => {
                     {...register('text')}
                     defaultValue={letter.text}
                     className={`form-control ${errors.text ? 'is-invalid' : ''}`}
+                    // sends the value to the handleTextChange function to update the character count
+                    onChange={(e) => {
+                      handleTextChange(e);
+                      register('text').onChange(e);
+                    }}
                   />
                   <div className="invalid-feedback">{errors.text?.message}</div>
+                  {/* displays the character count */}
+                  <small
+                    className={charCount > MAX_CHAR_COUNT ? 'text-danger' : 'text-muted'}
+                  >
+                    {charCount}
+                    /
+                    {MAX_CHAR_COUNT}
+                    &nbsp;characters
+                  </small>
                 </Form.Group>
 
                 <Form.Group>
