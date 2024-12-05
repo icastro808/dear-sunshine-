@@ -6,8 +6,6 @@
     { "email": "sam@foo.com", "password": "changeme", "role": "USER" },
     { "email": "morgan@foo.com", "password": "changeme", "role": "USER" },
     { "email": "avery@foo.com", "password": "changeme", "role": "USER" },
-    { "email": "jules@foo.com", "password": "changeme", "role": "USER" },
-    { "email": "bailey@foo.com", "password": "changeme", "role": "USER" },
     { "email": "chris@foo.com", "password": "changeme", "role": "USER" },
     { "email": "simon@foo.com", "password": "changeme", "role": "USER" },
     { "email": "taylor@foo.com", "password": "changeme", "role": "USER" },
@@ -55,7 +53,7 @@
     {
       "text": "Family is complicated, but at the end of the day, they’re the ones who know you best. I’ve learned that it’s worth working through the tough times to preserve those relationships.",
       "owner": "chris@foo.com",
-      "tags": ["family", "postivity"]
+      "tags": ["family", "positivity"]
     },
     {
       "text": "I’ve been feeling lonely lately, even when I’m around people. I guess what I really want is someone who just gets it—someone who understands without me needing to explain.",
