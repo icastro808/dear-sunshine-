@@ -55,22 +55,31 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
         fluid
         className="py-3"
         style={{
-          backgroundColor: '#D4B89A', // Corkboard color
-          padding: '5%', // Increase padding to make it thicker (you can adjust the percentage)
-          border: '10px solid #B58F6C', // Make the border thicker (increase from 5px to 10px)
+          // backgroundColor: '#D4B89A', // Corkboard color
+          backgroundColor: '#fff8e6', // Soft beige background
+          // border: '10px solid #B58F6C', // Make the border thicker (increase from 5px to 10px)
           boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.2)', // Increase the shadow for a stronger effect
+          padding: '5%', // Increase padding to make it thicker (you can adjust the percentage)
         }}
       >
         <Container>
           <Row>
             <Col>
-              <h2 className="text-center">Letter Board</h2>
+              {/* <h2 className="text-center">Letter Board</h2> */}
               {/* Tag filter buttons */}
               <Row className="mb-4">
                 <Col xs="auto">
                   <Button
                     variant={selectedTags.length === 0 ? 'primary' : 'outline-primary'}
                     href="?tags="
+                    style={{
+                      backgroundColor: selectedTags.length === 0 ? '#f4cc70' : '#',
+                      color: selectedTags.length === 0 ? '#fff' : '#d76b00',
+                      borderRadius: '12px',
+                      border: '1px solid #d3c5a0',
+                      boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
+
+                    }}
                   >
                     All
                   </Button>
@@ -80,6 +89,13 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
                     <Button
                       variant={selectedTags.includes(tag) ? 'primary' : 'outline-primary'}
                       href={`?tags=${selectedTags.includes(tag) ? selectedTags.filter(t => t !== tag).join(',') : [...selectedTags, tag].join(',')}`}
+                      style={{
+                        backgroundColor: selectedTags.includes(tag) ? '#f4cc70' : '',
+                        color: selectedTags.includes(tag) ? '#fff' : '#d76b00',
+                        borderRadius: '12px',
+                        border: '1px solid #d3c5a0',
+                        boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
+                      }}
                     >
                       {tag}
                     </Button>

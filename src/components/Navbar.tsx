@@ -27,7 +27,7 @@ const NavBar: React.FC = () => {
         <Navbar.Brand
           href="/"
           style={{
-            fontFamily: 'Georgia, serif',
+            // fontFamily: 'Georgia, serif',
             fontSize: '1.5rem',
             fontWeight: 'bold',
             color: '#F9A602', // Soft orange-yellow
@@ -92,7 +92,7 @@ const NavBar: React.FC = () => {
                 href="/admin"
                 active={pathName === '/admin'}
                 style={{
-                  color: pathName === '/admin' ? '#F9A602' : '#FFB347',
+                  color: pathName === '/admin' ? '#F9A602' : '#FFCC66',
                   fontWeight: '500',
                 }}
               >
@@ -106,7 +106,7 @@ const NavBar: React.FC = () => {
                 id="login-dropdown"
                 title={currentUser}
                 style={{
-                  color: '#FFB347',
+                  color: '#d76b00',
                   fontWeight: 'bold',
                 }}
                 menuVariant="light"
@@ -122,7 +122,7 @@ const NavBar: React.FC = () => {
                     id="login-dropdown-sign-out"
                     href="/api/auth/signout"
                     style={{
-                      color: '#4B4B4B',
+                      color: '#d76b00',
                       fontWeight: '500',
                     }}
                   >
@@ -133,7 +133,7 @@ const NavBar: React.FC = () => {
                     id="login-dropdown-change-password"
                     href="/auth/change-password"
                     style={{
-                      color: '#4B4B4B',
+                      color: '#d76b00',
                       fontWeight: '500',
                     }}
                   >

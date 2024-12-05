@@ -26,7 +26,7 @@ const Home = () => {
             <div
               className="box"
               style={{
-                backgroundColor: '',
+                backgroundColor: '#F9A602',
                 height: '300px',
                 width: 'calc(300px * 1.3)', // Adjust width with aspect ratio of 1.3
                 display: 'flex',

@@ -1,23 +1,56 @@
 {
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN" },
-    { "email": "john@foo.com", "password": "changeme", "role": "USER" }
+    { "email": "john@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "pat@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "sam@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "morgan@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "avery@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "jules@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "bailey@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "chris@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "simon@foo.com", "password": "changeme", "role": "USER" }
   ],
   "defaultLetters": [
     {
-      "text": "This is a letter. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "owner": "john@foo.com",
-      "tags": ["happy"]
-    },
-    {
-      "text": "This is a letter. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "owner": "john@foo.com",
-      "tags": ["neutral"]
-    },
-    {
-      "text": "This is a letter. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "text": "Some days, it feels like the weight of the world is just too much. I try to remind myself that it's okay to take a break and just breathe, but it's hard to not feel like I'm falling behind.",
       "owner": "admin@foo.com",
-      "tags": ["sad", "angry"]
+      "tags": ["vent"]
+    },
+    {
+      "text": "I've been thinking a lot about how to approach difficult conversations. A friend once told me to lead with empathy and listen before I speak. It sounds simple, but it’s been life-changing advice.",
+      "owner": "john@foo.com",
+      "tags": ["advice", "friendship"]
+    },
+    {
+      "text": "I'm frustrated. No matter how much effort I put into my work, it feels like nobody notices or cares. Maybe I need to focus less on others' opinions and more on what fulfills me.",
+      "owner": "pat@foo.com",
+      "tags": ["vent"]
+    },
+    {
+      "text": "Love is such a strange and powerful thing. It can make you feel on top of the world one moment and completely vulnerable the next. But at the end of the day, it’s worth it.",
+      "owner": "sam@foo.com",
+      "tags": ["love"]
+    },
+    {
+      "text": "Friendship is one of the most underrated forms of love. A good friend can see you through your worst days and still remind you of your best qualities.",
+      "owner": "morgan@foo.com",
+      "tags": ["friendship"]
+    },
+    {
+      "text": "School can be so overwhelming sometimes. Between assignments, deadlines, and trying to have a social life, it’s easy to feel like there’s no time to breathe. But I’m trying to take it one day at a time.",
+      "owner": "avery@foo.com",
+      "tags": ["school"]
+    },
+    {
+      "text": "Family is complicated, but at the end of the day, they’re the ones who know you best. I’ve learned that it’s worth working through the tough times to preserve those relationships.",
+      "owner": "chris@foo.com",
+      "tags": ["family"]
+    },
+    {
+      "text": "I’ve been feeling lonely lately, even when I’m around people. I guess what I really want is someone who just gets it—someone who understands without me needing to explain.",
+      "owner": "simon@foo.com",
+      "tags": ["vent", "thoughts"]
     }
   ]
 }

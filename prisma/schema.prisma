@@ -27,10 +27,14 @@ model User {
 }
 
 enum Tag {
-  happy
-  neutral
-  sad
-  angry
+  vent
+  advice
+  thoughts
+  positivity
+  love
+  family
+  friendship
+  school
 }
 
 model Reply {

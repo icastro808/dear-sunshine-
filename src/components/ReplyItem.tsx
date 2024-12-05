@@ -51,10 +51,11 @@ const ReplyItem = ({ reply }: { reply: Reply }) => {
       </Row>
 
       <Row>
-        <strong>Dear Sunshine</strong>
+        Dear Sunshine,
         <p>{reply.reply}</p>
-        <strong>From: </strong>
-        <strong>{reply.signature}</strong>
+        From,
+        <br />
+        {reply.signature}
       </Row>
     </ListGroup.Item>
   );

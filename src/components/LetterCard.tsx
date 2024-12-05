@@ -58,8 +58,9 @@ const LetterCard = ({
           {letter.text}
           <br />
           <br />
-          <strong>From: </strong>
-          <strong>{letter.signature}</strong>
+          From,
+          <br />
+          {letter.signature}
         </Card.Text>
         <ListGroup variant="flush">
           {replies.map((reply) => <ReplyItem key={reply.id} reply={reply} />)}

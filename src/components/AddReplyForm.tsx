@@ -104,7 +104,7 @@ const AddReplyForm = ({ letter }: { letter: Letter }) => {
                 <Button type="submit" variant="primary" className="float-end" style={{ backgroundColor: '#e6a1a8', borderColor: '#f5c6cb' }}>
                   <Pin className="mr-2" />
                   {' '}
-                  Pin to board
+                  Reply to letter
                 </Button>
               </Col>
             </Row>

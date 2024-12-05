@@ -20,8 +20,8 @@ async function getUserData(userId: string) {
     },
   });
 
-  console.log('Posts:', userPosts); // Log posts data
-  console.log('Replies:', userReplies); // Log replies data
+  // console.log('Posts:', userPosts); // Log posts data
+  // console.log('Replies:', userReplies); // Log replies data
 
   return {
     posts: userPosts,

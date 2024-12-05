@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 'use client';
 
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
@@ -16,10 +18,10 @@ const onSubmit = async (data: Letter) => {
   });
 };
 
-const tagOptions: ('happy' | 'neutral' | 'sad' | 'angry')[] = ['happy', 'neutral', 'sad', 'angry'];
+const tagOptions: ('vent' | 'advice' | 'thoughts' | 'positivity' | 'love' | 'family' | 'friendship' | 'school')[] = ['vent', 'advice', 'thoughts', 'positivity', 'love', 'family', 'friendship', 'school'];
 
 const EditLetterForm = ({ letter }: { letter: Letter }) => {
-  const [selectedTags, setSelectedTags] = useState<('happy' | 'neutral' | 'sad' | 'angry')[]>([]);
+  const [selectedTags, setSelectedTags] = useState<('vent' | 'advice' | 'thoughts' | 'positivity' | 'love' | 'family' | 'friendship' | 'school')[]>([]);
 
   const {
     register,
@@ -38,7 +40,7 @@ const EditLetterForm = ({ letter }: { letter: Letter }) => {
     }
   }, [letter, setValue]);
 
-  const handleTags = (tag: 'happy' | 'neutral' | 'sad' | 'angry') => {
+  const handleTags = (tag: 'vent' | 'advice' | 'thoughts' | 'positivity' | 'love' | 'family' | 'friendship' | 'school') => {
     const updatedTags = selectedTags.includes(tag)
       ? selectedTags.filter((t) => t !== tag)
       : [...selectedTags, tag];
