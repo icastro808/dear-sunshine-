@@ -101,3 +101,52 @@ footer p {
   font-size: 0.8rem;
   margin-top: 20px;
 }
+
+/* custom font - delete if needed */
+@font-face {
+  font-family: 'SourGummy-Regular';
+  src: url('/fonts/SourGummy-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* gradient color */
+.gradient {
+  background: linear-gradient(#ffd875, transparent);
+}
+
+/* switches the gradient color when hovering */
+.gradient:hover {
+  background: linear-gradient(transparent, #ffd875);
+}
+
+/* change color of password toggle icon when hovering */
+.password-toggle:hover {
+  color: #f9b300 !important;
+}
+
+/* autofill for input field */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset !important; /* using box-shadow to cover the default background color */
+}
+
+/* LoadingSpinner overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(255, 248, 230, 0.5); /* semi-transparent background. don't really know if this is even working lol */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* ensures it appears above all other content */
+}
+
+/* custom background style - change font if needed */
+.custom-bg {
+  background-color: #fff8e6;
+  color: orange;
+  font-family: 'SourGummy-Regular', Georgia, serif;
+}
