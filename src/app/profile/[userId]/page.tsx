@@ -13,19 +13,13 @@ export default async function ProfilePage({ params }: { params: { userId: string
         fluid
         className="py-4"
         style={{
-          backgroundColor: '#F5F5DC', // Soft beige background
+          backgroundColor: '#fff8e6', // Soft beige background
           minHeight: '100vh',
         }}
       >
         <Container>
           <Row className="mb-4 text-center">
-            <h2 style={{ color: '#8B6C42', fontWeight: 'bold' }}>Your Profile</h2>
-          </Row>
-
-          <Row className="mb-4 text-center">
-            <Col>
-              <h4 style={{ color: '#A67D5D', fontWeight: '600' }}>Change Signature</h4>
-            </Col>
+            <h2 style={{ color: '#d76b00', fontWeight: 'bold' }}>Your Profile</h2>
           </Row>
 
           <Row className="mb-4 text-center justify-content-center">
@@ -34,12 +28,13 @@ export default async function ProfilePage({ params }: { params: { userId: string
               className="p-3"
               style={{
                 backgroundColor: '#FFF',
+                color: '#5e4a3c',
                 border: '1px solid #D1BFA7', // Soft neutral border
                 borderRadius: '12px',
                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <h4 style={{ color: '#8B6C42' }}>Posts</h4>
+              <h4 style={{ color: '#5e4a3c' }}>Posts</h4>
               <p style={{ fontSize: '1.5rem', fontWeight: '500' }}>{postCount}</p>
             </Col>
             <Col
@@ -47,17 +42,18 @@ export default async function ProfilePage({ params }: { params: { userId: string
               className="p-3 ms-3"
               style={{
                 backgroundColor: '#FFF',
+                color: '#5e4a3c',
                 border: '1px solid #D1BFA7', // Soft neutral border
                 borderRadius: '12px',
                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <h4 style={{ color: '#8B6C42' }}>Replies</h4>
+              <h4 style={{ color: '#5e4a3c' }}>Replies</h4>
               <p style={{ fontSize: '1.5rem', fontWeight: '500' }}>{replyCount}</p>
             </Col>
           </Row>
 
-          <h3 className="mt-5 text-center" style={{ color: '#A67D5D', fontWeight: 'bold' }}>
+          <h3 className="mt-5 text-center" style={{ color: '#d76b00', fontWeight: 'bold' }}>
             Your Posts
           </h3>
           <Row xs={1} md={2} lg={3} className="g-4">
@@ -66,7 +62,7 @@ export default async function ProfilePage({ params }: { params: { userId: string
                 <div
                   className="p-3 w-100"
                   style={{
-                    backgroundColor: '#FAF9F6', // Subtle warm background
+                    backgroundColor: '#FFF', // Subtle warm background
                     border: '1px solid #D1BFA7',
                     borderRadius: '12px',
                     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
@@ -82,7 +78,7 @@ export default async function ProfilePage({ params }: { params: { userId: string
             ))}
           </Row>
 
-          <h3 className="mt-5 text-center" style={{ color: '#A67D5D', fontWeight: 'bold' }}>
+          <h3 className="mt-5 text-center" style={{ color: '#d76b00', fontWeight: 'bold' }}>
             Your Replies
           </h3>
           <Row xs={1} md={2} lg={3} className="g-4">
@@ -91,7 +87,7 @@ export default async function ProfilePage({ params }: { params: { userId: string
                 <div
                   className="p-3 w-100"
                   style={{
-                    backgroundColor: '#FAF9F6', // Subtle warm background
+                    backgroundColor: '#FFF', // Subtle warm background
                     border: '1px solid #D1BFA7',
                     borderRadius: '12px',
                     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
@@ -106,6 +102,12 @@ export default async function ProfilePage({ params }: { params: { userId: string
                 </div>
               </Col>
             ))}
+          </Row>
+
+          <Row className="mb-4 text-center">
+            <Col>
+              <h3 style={{ color: '#d76b00', fontWeight: '600' }}>Change Signature</h3>
+            </Col>
           </Row>
         </Container>
       </Container>
