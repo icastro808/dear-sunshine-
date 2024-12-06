@@ -8,6 +8,25 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import ReplyItem from './ReplyItem';
 
+const styles = {
+  submitBtn: {
+    backgroundColor: '#fff8e6',
+    color: '#d76b00',
+    fontSize: '1rem',
+    fontWeight: 'bold',
+    borderRadius: '20px',
+    border: '1px solid #d3c5a0',
+    padding: '10px 15px',
+    boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
+  },
+  button: {
+    borderRadius: '20px',
+    border: '1px solid #d3c5a0',
+    padding: '10px 15px',
+    boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
+  },
+};
+
 const LetterCard = ({
   letter, replies, showReplyButton = true }: { letter: Letter; replies: Reply[]; showReplyButton: boolean }) => {
   // state to control the visibility of the modal
@@ -39,16 +58,19 @@ const LetterCard = ({
           <div className="d-flex gap-1">
             {letter.tags.map((tag) => (
               // change href to the correct path for filtering by tag
-              // <Link href="/list" key={tag}>
-              <Link href={`/list?tag=${tag}`} key={tag}>
-                <Badge
-                  key={tag}
-                  className="text-white rounded-pill"
-                  style={{ fontSize: '10px' }}
-                >
-                  {tag}
-                </Badge>
-              </Link>
+              // <Link href={`/list?tags=${tag}`} key={tag}>
+              <Badge
+                key={tag}
+                className="text-white rounded-pill"
+                style={{
+                  ...styles.button,
+                  backgroundColor: '#f4cc70 !important',
+                  fontSize: '12px',
+                }}
+              >
+                {tag}
+              </Badge>
+              // </Link>
             ))}
           </div>
         </Card.Title>
@@ -71,18 +93,25 @@ const LetterCard = ({
           { /* show reply button only if the user is viewing from letter board */ }
           {showReplyButton && (
             <Col xs="auto">
-              <Button variant="primary" href={`reply/${letter.id}`}>Reply</Button>
+              <Button variant="primary" href={`reply/${letter.id}`} style={styles.submitBtn}>Reply</Button>
             </Col>
           )}
 
           { (session?.user?.email === letter.owner || (session?.user as any)?.randomKey === 'ADMIN') && (
           // only shows edit and delete buttons if the current user is the owner of the letter or admin.
             <>
-              <Col xs="auto" className="mt-2">
+              {/* <Col xs="auto" className="mt-2">
                 <Link href={`edit/${letter.id}`}>Edit</Link>
+              </Col> */}
+              <Col xs="auto">
+                <Link href={`edit/${letter.id}`} passHref>
+                  <Button style={styles.submitBtn}>
+                    Edit
+                  </Button>
+                </Link>
               </Col>
               <Col xs="auto">
-                <Button onClick={handleShowModal}>
+                <Button onClick={handleShowModal} style={styles.submitBtn}>
                   Delete
                 </Button>
               </Col>

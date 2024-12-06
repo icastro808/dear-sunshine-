@@ -22,6 +22,12 @@ export default async function ProfilePage({ params }: { params: { userId: string
             <h2 style={{ color: '#d76b00', fontWeight: 'bold' }}>Your Profile</h2>
           </Row>
 
+          <Row className="mb-4 text-center">
+            <Col>
+              <h3 style={{ color: '#d76b00', fontWeight: '600' }}>Change Signature</h3>
+            </Col>
+          </Row>
+
           <Row className="mb-4 text-center justify-content-center">
             <Col
               xs={5}
@@ -102,12 +108,6 @@ export default async function ProfilePage({ params }: { params: { userId: string
                 </div>
               </Col>
             ))}
-          </Row>
-
-          <Row className="mb-4 text-center">
-            <Col>
-              <h3 style={{ color: '#d76b00', fontWeight: '600' }}>Change Signature</h3>
-            </Col>
           </Row>
         </Container>
       </Container>
