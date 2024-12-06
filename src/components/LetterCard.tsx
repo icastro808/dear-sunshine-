@@ -52,7 +52,7 @@ const LetterCard = ({
   };
 
   return (
-    <Card style={{ borderRadius: '2.5%', padding: '5%' }}>
+    <Card style={{ borderRadius: '2.5%', padding: '5%', minWidth: '100%' }}>
       <Card.Header>
         <Card.Title className="d-flex justify-content-between align-items-center">
           <div className="d-flex gap-1">
