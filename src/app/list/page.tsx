@@ -72,16 +72,17 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
                   <Button
                     variant={selectedTags.length === 0 ? 'primary' : 'outline-primary'}
                     href="?tags="
+                    className="no-hover-button"
                     style={{
                       backgroundColor: selectedTags.length === 0 ? '#f4cc70' : '#',
                       color: selectedTags.length === 0 ? '#fff' : '#d76b00',
+                      fontWeight: 'bold',
                       borderRadius: '12px',
                       border: '1px solid #d3c5a0',
                       boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
-
                     }}
                   >
-                    All
+                    all
                   </Button>
                 </Col>
                 {Object.values(Tag).map((tag) => (
@@ -92,6 +93,7 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
                       style={{
                         backgroundColor: selectedTags.includes(tag) ? '#f4cc70' : '',
                         color: selectedTags.includes(tag) ? '#fff' : '#d76b00',
+                        fontWeight: 'bold',
                         borderRadius: '12px',
                         border: '1px solid #d3c5a0',
                         boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',

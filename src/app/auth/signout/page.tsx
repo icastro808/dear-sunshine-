@@ -23,7 +23,7 @@ const SignOut = () => (
               style={{
                 fontWeight: 'bold',
                 fontSize: '2rem',
-                color: 'orange',
+                color: '#d76b00',
               }}
             >
               Are you sure you want to sign out?

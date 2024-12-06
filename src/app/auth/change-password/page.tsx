@@ -92,7 +92,7 @@ const ChangePassword = () => {
               style={{
                 fontWeight: 'bold',
                 fontSize: '2.5rem',
-                color: 'orange',
+                color: '#d76b00',
               }}
             >
               Change Password

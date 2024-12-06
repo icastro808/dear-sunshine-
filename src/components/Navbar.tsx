@@ -105,16 +105,16 @@ const NavBar: React.FC = () => {
               <NavDropdown
                 id="login-dropdown"
                 title={currentUser}
+                bsPrefix="custom-dropdown"
                 style={{
                   color: '#d76b00',
                   fontWeight: 'bold',
+                  textDecoration: 'none',
                 }}
                 menuVariant="light"
               >
                 <div
                   style={{
-                    background: 'linear-gradient(90deg, #FFF8DC, #FAFAD2)',
-                    border: '1px solid #FFD700',
                     borderRadius: '5px',
                   }}
                 >
@@ -122,8 +122,9 @@ const NavBar: React.FC = () => {
                     id="login-dropdown-sign-out"
                     href="/api/auth/signout"
                     style={{
-                      color: '#d76b00',
+                      color: '#FFCC66',
                       fontWeight: '500',
+                      backgroundColor: '#FFF',
                     }}
                   >
                     <BoxArrowRight style={{ marginRight: '5px' }} />
@@ -133,8 +134,9 @@ const NavBar: React.FC = () => {
                     id="login-dropdown-change-password"
                     href="/auth/change-password"
                     style={{
-                      color: '#d76b00',
+                      color: '#FFCC66',
                       fontWeight: '500',
+                      backgroundColor: '#FFF',
                     }}
                   >
                     <Lock style={{ marginRight: '5px' }} />
