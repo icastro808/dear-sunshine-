@@ -6,6 +6,12 @@ import { loggedInProtectedPage } from '@/lib/page-protection';
 import { prisma } from '@/lib/prisma';
 import EditLetterForm from '@/components/EditLetterForm';
 
+const styles = {
+  main: {
+    backgroundColor: '#fff8e6',
+  },
+};
+
 export default async function EditLetterPage({ params }: { params: { id: string | string[] } }) {
   // Protect the page, only logged in users can access it.
   const session = await getServerSession(authOptions);
@@ -24,7 +30,7 @@ export default async function EditLetterPage({ params }: { params: { id: string 
   }
 
   return (
-    <main>
+    <main style={styles.main}>
       <EditLetterForm letter={letter} />
     </main>
   );
