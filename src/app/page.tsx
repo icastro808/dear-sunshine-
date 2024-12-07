@@ -10,7 +10,7 @@ const styles = {
     height: '100%',
   },
   spacer: {
-    height: '20px', // Adjust this value to control the amount of space
+    height: '10px', // Adjust this value to control the amount of space
   },
 };
 
@@ -34,7 +34,7 @@ const Home = () => {
               alt="landing-image"
               className="mx-auto d-block"
               fluid
-              style={{ width: '35%', paddingLeft: '3%' }}
+              style={{ width: '50%', paddingLeft: '1%' }}
             />
           </Col>
         </Row>
