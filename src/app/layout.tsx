@@ -21,6 +21,9 @@ export default function RootLayout({
   const classString = `${inter.className} wrapper`;
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.png" />
+      </head>
       <body className={classString}>
         <Providers>
           <NavBar />

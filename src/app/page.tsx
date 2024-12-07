@@ -4,6 +4,16 @@ import { Col, Container, Row, Image, Button } from 'react-bootstrap';
 import { PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 import { useSession } from 'next-auth/react';
 
+const styles = {
+  main: {
+    backgroundColor: '#fff8e6',
+    height: '100%',
+  },
+  spacer: {
+    height: '20px', // Adjust this value to control the amount of space
+  },
+};
+
 /** The Home page. */
 const Home = () => {
   // retrieve the session status
@@ -15,69 +25,58 @@ const Home = () => {
   }
 
   return (
-    <main>
+    <main style={styles.main}>
       <Container id="landing-page" fluid className="py-3">
-        <Row className="align-middle text-center">
-          <Col xs={8} className="d-flex justify-content-end">
-            <div
-              className="box"
-              style={{
-                backgroundColor: '#F9A602',
-                height: '300px',
-                width: 'calc(300px * 1.3)', // Adjust width with aspect ratio of 1.3
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'flex-end', // Align all content to the right
-              }}
-            >
-              <Row className="w-100">
-                <Col
-                  style={{
-                    backgroundColor: '',
-                    height: '100px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                  }}
-                >
-                  <h1>Dear Sunshine</h1>
-                </Col>
-                <Col
-                  style={{
-                    backgroundColor: '',
-                    height: '100px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Image
-                    src="/stamp.png"
-                    alt="Sunshine Stamp"
-                    className="sun-image"
-                    style={{ width: '100px', height: 'auto' }}
-                  />
-                </Col>
-              </Row>
-              <p>A platform designed to uplift and encourage individuals who may be going through tough times.</p>
-
-              {/* Conditionally render buttons based on the signed-in state */}
-              {status === 'authenticated' ? null : (
-                <div className="button-group">
-                  <Button variant="primary" href="/auth/signin" className="me-2">
-                    <PersonFill />
-                    Sign In
-                  </Button>
-                  <Button variant="secondary" href="/auth/signup">
-                    <PersonPlusFill />
-                    Sign Up
-                  </Button>
-                </div>
-              )}
-            </div>
+        <Row className="justify-content-center">
+          <Col xs={12} className="text-center">
+            <Image
+              src="/landing-image.png"
+              alt="landing-image"
+              className="mx-auto d-block"
+              fluid
+              style={{ width: '35%', paddingLeft: '3%' }}
+            />
           </Col>
         </Row>
+        {/* Add a new Row for the button group */}
+        <Row className="justify-content-center text-center">
+          <Col xs={12}>
+            {/* Conditionally render buttons based on the signed-in state */}
+            {status === 'authenticated' ? null : (
+              <div className="button-group">
+                <Button
+                  variant="primary"
+                  href="/auth/signin"
+                  className="gradient btn-warning rounded-pill"
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '1.1rem',
+                    color: 'white',
+                  }}
+                >
+                  <PersonFill />
+                  Sign In
+                </Button>
+                <Button
+                  variant="secondary"
+                  href="/auth/signup"
+                  className="gradient btn-warning rounded-pill"
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '1.1rem',
+                    color: 'white',
+                  }}
+                >
+                  <PersonPlusFill />
+                  Sign Up
+                </Button>
+              </div>
+            )}
+          </Col>
+        </Row>
+
+        {/* Spacer Row to add extra space */}
+        <Row style={styles.spacer} />
       </Container>
     </main>
   );
