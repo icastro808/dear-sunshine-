@@ -53,5 +53,6 @@ model Letter {
   reply     Reply[]
   owner     String
   tags      Tag[]
+  createdAt DateTime @default(now())
   signature String @default("Sunshine")
 }

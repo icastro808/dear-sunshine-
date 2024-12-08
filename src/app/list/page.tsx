@@ -6,6 +6,7 @@ import { Letter, Tag } from '@prisma/client';
 import authOptions from '@/lib/authOptions';
 import LetterCard from '@/components/LetterCard';
 import { prisma } from '@/lib/prisma';
+import styles from './ListPage.module.css'; // Import your CSS module
 
 /** Render a list of stuff for the logged-in user. */
 const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) => {
@@ -55,32 +56,20 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
         fluid
         className="py-3"
         style={{
-          // backgroundColor: '#D4B89A', // Corkboard color
-          backgroundColor: '#fff8e6', // Soft beige background
-          // border: '10px solid #B58F6C', // Make the border thicker (increase from 5px to 10px)
-          boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.2)', // Increase the shadow for a stronger effect
-          padding: '5%', // Increase padding to make it thicker (you can adjust the percentage)
+          backgroundColor: '#fff8e6',
+          padding: '5%',
         }}
       >
         <Container>
           <Row>
             <Col>
-              {/* <h2 className="text-center">Letter Board</h2> */}
               {/* Tag filter buttons */}
               <Row className="mb-4">
                 <Col xs="auto">
                   <Button
                     variant={selectedTags.length === 0 ? 'primary' : 'outline-primary'}
                     href="?tags="
-                    className="no-hover-button"
-                    style={{
-                      backgroundColor: selectedTags.length === 0 ? '#f4cc70' : '#',
-                      color: selectedTags.length === 0 ? '#fff' : '#d76b00',
-                      fontWeight: 'bold',
-                      borderRadius: '12px',
-                      border: '1px solid #d3c5a0',
-                      boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
-                    }}
+                    className={`${styles.buttonTag} ${selectedTags.length === 0 ? styles.buttonTagSelected : styles.buttonTagUnselected}`}
                   >
                     all
                   </Button>
@@ -90,14 +79,7 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
                     <Button
                       variant={selectedTags.includes(tag) ? 'primary' : 'outline-primary'}
                       href={`?tags=${selectedTags.includes(tag) ? selectedTags.filter(t => t !== tag).join(',') : [...selectedTags, tag].join(',')}`}
-                      style={{
-                        backgroundColor: selectedTags.includes(tag) ? '#f4cc70' : '',
-                        color: selectedTags.includes(tag) ? '#fff' : '#d76b00',
-                        fontWeight: 'bold',
-                        borderRadius: '12px',
-                        border: '1px solid #d3c5a0',
-                        boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
-                      }}
+                      className={`${styles.buttonTag} ${selectedTags.includes(tag) ? styles.buttonTagSelected : styles.buttonTagUnselected}`}
                     >
                       {tag}
                     </Button>
@@ -116,21 +98,6 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
                   </Col>
                 ))}
               </Row>
-              {/* <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Condition</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {stuff.map((item) => (
-                    <StuffItem key={item.id} {...item} />
-                  ))}
-                </tbody>
-              </Table> */}
             </Col>
           </Row>
         </Container>
