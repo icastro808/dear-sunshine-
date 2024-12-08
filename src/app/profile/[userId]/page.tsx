@@ -1,10 +1,20 @@
 /* eslint-disable max-len */
+import { getServerSession } from 'next-auth';
+import authOptions from '@/lib/authOptions';
+import { loggedInProtectedPage } from '@/lib/page-protection';
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import getUserData from '@/lib/getUserData';
 
 /** Profile page showing user's posts, replies, and counts. */
 export default async function ProfilePage({ params }: { params: { userId: string } }) {
+  const session = await getServerSession(authOptions);
+  loggedInProtectedPage(
+    session as {
+      user: { email: string; id: string; randomKey: string };
+      // eslint-disable-next-line @typescript-eslint/comma-dangle
+    } | null,
+  );
   const { posts, replies, postCount, replyCount } = await getUserData(params.userId);
   return (
     <main>
@@ -76,8 +86,11 @@ export default async function ProfilePage({ params }: { params: { userId: string
                 >
                   <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>{post.text}</p>
                   <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
-                    <strong>Tags:</strong>
+                    <strong>Tags: </strong>
                     {post.tags.join(', ')}
+                  </p>
+                  <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
+                    {new Date(post.createdAt).toLocaleDateString('en-US')}
                   </p>
                 </div>
               </Col>
@@ -101,9 +114,7 @@ export default async function ProfilePage({ params }: { params: { userId: string
                 >
                   <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>{reply.reply}</p>
                   <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
-                    <strong>Created At:</strong>
-                    {' '}
-                    {new Date(reply.createdAt).toLocaleString()}
+                    {new Date(reply.createdAt).toLocaleDateString('en-US')}
                   </p>
                 </div>
               </Col>
