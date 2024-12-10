@@ -4,7 +4,9 @@ import authOptions from '@/lib/authOptions';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { BoxArrowInUpRight } from 'react-bootstrap-icons';
 import getUserData from '@/lib/getUserData';
+import Link from 'next/link';
 
 /** Profile page showing user's posts, replies, and counts. */
 export default async function ProfilePage({ params }: { params: { userId: string } }) {
@@ -84,7 +86,12 @@ export default async function ProfilePage({ params }: { params: { userId: string
                     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                   }}
                 >
-                  <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>{post.text}</p>
+                  <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
+                    {post.text}
+                    <Link href={`/reply/${post.id}`} passHref className="link-toggle no-underline" style={{ color: 'black' }}>
+                      <BoxArrowInUpRight className="mb-2 ms-2" width="9px" />
+                    </Link>
+                  </p>
                   <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
                     <strong>Tags: </strong>
                     {post.tags.join(', ')}
@@ -112,7 +119,13 @@ export default async function ProfilePage({ params }: { params: { userId: string
                     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                   }}
                 >
-                  <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>{reply.reply}</p>
+                  {/* redirects to the specific letter's reply page */}
+                  <Link href={`/reply/${reply.letterId}`} passHref className="link-toggle no-underline" style={{ color: 'black' }}>
+                    <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
+                      {reply.reply}
+                      <BoxArrowInUpRight className="mb-2 ms-1" width="8px" />
+                    </p>
+                  </Link>
                   <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
                     {new Date(reply.createdAt).toLocaleDateString('en-US')}
                   </p>

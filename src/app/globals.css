@@ -136,7 +136,7 @@ footer p {
 }
 
 /* change color of password toggle icon when hovering */
-.password-toggle:hover {
+.link-toggle:hover {
   color: #f9b300 !important;
   font-family: 'SourGummy-Regular', Georgia, serif;
 }
