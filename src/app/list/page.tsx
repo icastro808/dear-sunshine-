@@ -6,10 +6,17 @@ import { Letter, Tag } from '@prisma/client';
 import authOptions from '@/lib/authOptions';
 import LetterCard from '@/components/LetterCard';
 import { prisma } from '@/lib/prisma';
+import PaginationComponent from '@/components/PaginationComponent';
 import styles from './ListPage.module.css'; // Import your CSS module
 
 /** Render a list of stuff for the logged-in user. */
-const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) => {
+const ListPage = async ({ searchParams }: { searchParams: { tags?: string; page?: string } }) => {
+  // max number of letters allowed per page
+  const LETTERS_PER_PAGE = 6;
+
+  // get the current page number
+  const currentPage = parseInt(searchParams?.page || '1', 10);
+
   // Protect the page, only logged in users can access it.
   const session = await getServerSession(authOptions);
   loggedInProtectedPage(
@@ -18,8 +25,10 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
     } | null,
   );
 
+  // get the selected tags
   const selectedTags = searchParams?.tags ? searchParams.tags.split(',').map(tag => tag as Tag) : [];
 
+  // get the letters based on the selected tags
   const whereClause = selectedTags.length > 0
     ? {
       tags: {
@@ -30,24 +39,19 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
 
   const letters: Letter[] = await prisma.letter.findMany({
     where: whereClause,
-    /*
-    uncomment this to show letters only belonging to the owner
-
-    where: {
-      owner: session?.user!.email ? session.user.email : '',
-    },
-    */
+    skip: (currentPage - 1) * LETTERS_PER_PAGE,
+    take: LETTERS_PER_PAGE,
   });
 
-  const replies = await prisma.reply.findMany({
-    /*
-    uncomment this to show replies only belonging to the owner
+  const replies = await prisma.reply.findMany({});
 
-    where: {
-      owner: session?.user!.email ? session.user.email : '',
-    },
-    */
+  // get the total number of letters
+  const totalLettersCount = await prisma.letter.count({
+    where: whereClause,
   });
+
+  // calculate the total number of pages
+  const totalPages = Math.ceil(totalLettersCount / LETTERS_PER_PAGE);
 
   return (
     <main>
@@ -97,6 +101,17 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
                     />
                   </Col>
                 ))}
+              </Row>
+
+              {/* pagination */}
+              <Row>
+                <Col className="pt-4 d-flex justify-content-center">
+                  <PaginationComponent
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    selectedTags={selectedTags}
+                  />
+                </Col>
               </Row>
             </Col>
           </Row>
