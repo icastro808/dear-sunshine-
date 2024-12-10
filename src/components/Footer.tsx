@@ -16,11 +16,11 @@ const Footer = () => (
         <h5 style={{ fontWeight: 'bold', marginBottom: '10px', fontSize: '1.5rem' }}>
           Stay Bright, Stay Inspired
         </h5>
-        <p style={{ margin: 0, fontSize: '1.1rem' }}>
+        {/* <p style={{ margin: 0, fontSize: '1.1rem' }}>
           Department of Information and Computer Sciences
         </p>
         <p style={{ margin: 0, fontSize: '1.1rem' }}>University of Hawaii</p>
-        <p style={{ margin: 0, fontSize: '1.1rem' }}>Honolulu, HI 96822</p>
+        <p style={{ margin: 0, fontSize: '1.1rem' }}>Honolulu, HI 96822</p> */}
         <small
           style={{
             fontSize: '0.9rem',
@@ -29,10 +29,23 @@ const Footer = () => (
             marginTop: '10px',
           }}
         >
+          Feeling Down?
+          <br />
+          <a
+            href="/health"
+            style={{
+              color: '#F9A602',
+              fontWeight: 'bold',
+              textDecoration: 'none', // Ensures no underline
+            }}
+          >
+            Visit the Mental Health Page
+          </a>
+          <br />
           ©
           {new Date().getFullYear()}
-          Dear Sunshine. Spreading warmth and positivity.
         </small>
+
       </Col>
     </Container>
   </footer>

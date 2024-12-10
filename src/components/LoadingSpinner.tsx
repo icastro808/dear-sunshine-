@@ -1,12 +1,9 @@
-import { Container, Row, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 
 const LoadingSpinner = () => (
-  <Container>
-    <Row className="justify-content-md-center">
-      <Spinner animation="border" />
-      Getting data
-    </Row>
-  </Container>
+  <div className="loading-overlay">
+    <Spinner animation="border" variant="light" />
+  </div>
 );
 
 export default LoadingSpinner;

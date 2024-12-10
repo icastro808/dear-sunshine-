@@ -5,7 +5,7 @@ import AddLetterForm from '@/components/AddLetterForm';
 
 const styles = {
   main: {
-    backgroundColor: 'palegoldenrod',
+    backgroundColor: '#fff8e6',
   },
 };
 

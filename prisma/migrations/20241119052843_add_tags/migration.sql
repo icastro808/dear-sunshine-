@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Tag" AS ENUM ('happy', 'neutral', 'sad', 'angry');
+CREATE TYPE "Tag" AS ENUM ('vent', 'advice', 'thoughts', 'positivity', 'love', 'family', 'friendship', 'school');
 
 -- AlterTable
 ALTER TABLE "Letter" ADD COLUMN     "tags" "Tag"[];

@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 'use client';
 
 import { useSession } from 'next-auth/react';
@@ -10,10 +12,11 @@ import { redirect } from 'next/navigation';
 import { addLetter } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddLetterSchema } from '@/lib/validationSchemas';
+import { Pin } from 'react-bootstrap-icons';
 
 const styles = {
   container: {
-    fontFamily: 'Georgia, serif',
+    // fontFamily: 'Georgia, serif',
     padding: '40px 0',
     display: 'flex',
     justifyContent: 'center',
@@ -21,27 +24,27 @@ const styles = {
     minHeight: '100vh',
   },
   card: {
-    backgroundColor: '#fffdf3', // Parchment color
+    backgroundColor: '#FFF', // Parchment color
     border: '1px solid #d3c5a0',
     boxShadow: '0 6px 10px rgba(0, 0, 0, 0.1)',
     padding: '40px',
     maxWidth: '800px',
     margin: '0 auto',
     textAlign: 'left',
-    borderRadius: '0px', // Remove rounded edges for "paper" look
+    borderRadius: '12px', // Remove rounded edges for "paper" look
   },
   title: {
     fontSize: '2rem',
     fontWeight: 'bold',
     marginBottom: '30px',
-    color: '#6b4226', // Warm brown color
+    color: '#d76b00', // Warm brown color
     textAlign: 'center',
   },
   label: {
     fontSize: '1.1rem',
     fontWeight: '600',
     marginBottom: '10px',
-    color: '#6b4226',
+    color: '#d76b00',
   },
   textarea: {
     width: '100%',
@@ -52,21 +55,26 @@ const styles = {
     resize: 'vertical',
     height: '150px',
     marginBottom: '15px',
-    backgroundColor: '#fffdf3',
-    color: '#6b4226',
+    backgroundColor: '#FFF',
+    color: '#5e4a3c',
   },
   button: {
     borderRadius: '20px',
     fontSize: '1rem',
     fontWeight: 'bold',
-    border: '2px solid #d3c5a0',
+    border: '1px solid #d3c5a0',
     padding: '10px 15px',
     boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
   },
   submitBtn: {
-    backgroundColor: '#4CAF50',
-    color: '#fff',
-    border: 'none',
+    backgroundColor: '#fff8e6',
+    color: '#d76b00',
+    borderRadius: '20px',
+    fontSize: '1rem',
+    fontWeight: 'bold',
+    border: '1px solid #d3c5a0',
+    padding: '10px 15px',
+    boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
   },
   resetBtn: {
     backgroundColor: '#f44336',
@@ -90,14 +98,14 @@ const onSubmit = async (data: {
 const MAX_CHAR_COUNT = 500;
 
 // options for the tags -- can be expanded upon
-const tagOptions: ('happy' | 'neutral' | 'sad' | 'angry')[] = ['happy', 'neutral', 'sad', 'angry'];
+const tagOptions: ('vent' | 'advice' | 'thoughts' | 'positivity' | 'love' | 'family' | 'friendship' | 'school')[] = ['vent', 'advice', 'thoughts', 'positivity', 'love', 'family', 'friendship', 'school'];
 
 const AddLetterForm: React.FC = () => {
   // retrieves the current session
   const { data: session, status } = useSession();
 
   // state to keep track of the selected tags
-  const [selectedTags, setSelectedTags] = useState<('happy' | 'neutral' | 'sad' | 'angry')[]>([]);
+  const [selectedTags, setSelectedTags] = useState<('vent' | 'advice' | 'thoughts' | 'positivity' | 'love' | 'family' | 'friendship' | 'school')[]>([]);
 
   // state to keep track of the character count
   const [charCount, setCharCount] = useState(0);
@@ -123,7 +131,7 @@ const AddLetterForm: React.FC = () => {
   }
 
   // handles the tags as the user selects them
-  const handleTags = (tag: 'happy' | 'neutral' | 'sad' | 'angry') => {
+  const handleTags = (tag: 'vent' | 'advice' | 'thoughts' | 'positivity' | 'love' | 'family' | 'friendship' | 'school') => {
     // if the tag is already selected, remove it; otherwise, add it to the list
     const updatedTags = selectedTags.includes(tag)
       ? selectedTags.filter((t) => t !== tag)
@@ -141,12 +149,13 @@ const AddLetterForm: React.FC = () => {
   return (
     <Container className="py-5" style={styles.container}>
       <Card style={styles.card as React.CSSProperties}>
-        <h2 style={styles.title as React.CSSProperties}>Write Your Letter</h2>
+        <h2 style={styles.title as React.CSSProperties}>Write Letter</h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group>
-            <Form.Label style={styles.label}>Text</Form.Label>
+            {/* <Form.Label style={styles.label}>Text</Form.Label> */}
             <textarea
               {...register('text')}
+              placeholder="Write your letter here :)"
               className={`form-control ${errors.text ? 'is-invalid' : ''}`}
               style={styles.textarea as React.CSSProperties}
               // sends the value to the handleTextChange function to update the character count
@@ -168,9 +177,10 @@ const AddLetterForm: React.FC = () => {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label style={styles.label}>What kind of responses would you like?</Form.Label>
-            <p style={{ fontSize: '1rem', color: '#6b4226', marginBottom: '10px' }}>
-              Select one or more tags that describe the tone or style of responses you&apos;d like to
+            <br />
+            {/* <Form.Label style={styles.label}>What kind of responses would you like?</Form.Label> */}
+            <p style={{ fontSize: '1rem', color: '#5e4a3c', marginBottom: '10px' }}>
+              Select one or more tags that describe the tone or style of your response and the responses you&apos;d like to
               receive.
             </p>
             <div className="d-flex flex-wrap gap-2">
@@ -181,8 +191,8 @@ const AddLetterForm: React.FC = () => {
                   onClick={() => handleTags(tag)}
                   style={{
                     ...styles.button,
-                    backgroundColor: selectedTags.includes(tag) ? '#f4cc70' : '#fffdf3',
-                    color: selectedTags.includes(tag) ? '#fff' : '#6b4226',
+                    backgroundColor: selectedTags.includes(tag) ? '#f4cc70' : '#FFF',
+                    color: selectedTags.includes(tag) ? '#fff' : '#d76b00',
                   }}
                 >
                   {tag}
@@ -200,8 +210,11 @@ const AddLetterForm: React.FC = () => {
           <Form.Group className="form-group">
             <Row className="pt-3">
               <Col>
+                <br />
                 <Button type="submit" style={styles.submitBtn}>
-                  Submit
+                  <Pin className="mr-2" />
+                  {' '}
+                  Pin to letter board
                 </Button>
               </Col>
             </Row>

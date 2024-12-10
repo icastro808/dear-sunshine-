@@ -6,9 +6,17 @@ import { Letter, Tag } from '@prisma/client';
 import authOptions from '@/lib/authOptions';
 import LetterCard from '@/components/LetterCard';
 import { prisma } from '@/lib/prisma';
+import PaginationComponent from '@/components/PaginationComponent';
+import styles from './ListPage.module.css'; // Import your CSS module
 
 /** Render a list of stuff for the logged-in user. */
-const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) => {
+const ListPage = async ({ searchParams }: { searchParams: { tags?: string; page?: string } }) => {
+  // max number of letters allowed per page
+  const LETTERS_PER_PAGE = 6;
+
+  // get the current page number
+  const currentPage = parseInt(searchParams?.page || '1', 10);
+
   // Protect the page, only logged in users can access it.
   const session = await getServerSession(authOptions);
   loggedInProtectedPage(
@@ -17,8 +25,10 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
     } | null,
   );
 
+  // get the selected tags
   const selectedTags = searchParams?.tags ? searchParams.tags.split(',').map(tag => tag as Tag) : [];
 
+  // get the letters based on the selected tags
   const whereClause = selectedTags.length > 0
     ? {
       tags: {
@@ -29,24 +39,19 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
 
   const letters: Letter[] = await prisma.letter.findMany({
     where: whereClause,
-    /*
-    uncomment this to show letters only belonging to the owner
-
-    where: {
-      owner: session?.user!.email ? session.user.email : '',
-    },
-    */
+    skip: (currentPage - 1) * LETTERS_PER_PAGE,
+    take: LETTERS_PER_PAGE,
   });
 
-  const replies = await prisma.reply.findMany({
-    /*
-    uncomment this to show replies only belonging to the owner
+  const replies = await prisma.reply.findMany({});
 
-    where: {
-      owner: session?.user!.email ? session.user.email : '',
-    },
-    */
+  // get the total number of letters
+  const totalLettersCount = await prisma.letter.count({
+    where: whereClause,
   });
+
+  // calculate the total number of pages
+  const totalPages = Math.ceil(totalLettersCount / LETTERS_PER_PAGE);
 
   return (
     <main>
@@ -55,24 +60,22 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
         fluid
         className="py-3"
         style={{
-          backgroundColor: '#D4B89A', // Corkboard color
-          padding: '5%', // Increase padding to make it thicker (you can adjust the percentage)
-          border: '10px solid #B58F6C', // Make the border thicker (increase from 5px to 10px)
-          boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.2)', // Increase the shadow for a stronger effect
+          backgroundColor: '#fff8e6',
+          padding: '5%',
         }}
       >
         <Container>
           <Row>
             <Col>
-              <h2 className="text-center">Letter Board</h2>
               {/* Tag filter buttons */}
               <Row className="mb-4">
                 <Col xs="auto">
                   <Button
                     variant={selectedTags.length === 0 ? 'primary' : 'outline-primary'}
                     href="?tags="
+                    className={`${styles.buttonTag} ${selectedTags.length === 0 ? styles.buttonTagSelected : styles.buttonTagUnselected}`}
                   >
-                    All
+                    all
                   </Button>
                 </Col>
                 {Object.values(Tag).map((tag) => (
@@ -80,6 +83,7 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
                     <Button
                       variant={selectedTags.includes(tag) ? 'primary' : 'outline-primary'}
                       href={`?tags=${selectedTags.includes(tag) ? selectedTags.filter(t => t !== tag).join(',') : [...selectedTags, tag].join(',')}`}
+                      className={`${styles.buttonTag} ${selectedTags.includes(tag) ? styles.buttonTagSelected : styles.buttonTagUnselected}`}
                     >
                       {tag}
                     </Button>
@@ -98,21 +102,17 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string } }) =
                   </Col>
                 ))}
               </Row>
-              {/* <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Condition</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {stuff.map((item) => (
-                    <StuffItem key={item.id} {...item} />
-                  ))}
-                </tbody>
-              </Table> */}
+
+              {/* pagination */}
+              <Row>
+                <Col className="pt-4 d-flex justify-content-center">
+                  <PaginationComponent
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    selectedTags={selectedTags}
+                  />
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Container>

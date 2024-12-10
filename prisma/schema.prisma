@@ -27,10 +27,14 @@ model User {
 }
 
 enum Tag {
-  happy
-  neutral
-  sad
-  angry
+  vent
+  advice
+  thoughts
+  positivity
+  love
+  family
+  friendship
+  school
 }
 
 model Reply {
@@ -49,5 +53,6 @@ model Letter {
   reply     Reply[]
   owner     String
   tags      Tag[]
+  createdAt DateTime @default(now())
   signature String @default("Sunshine")
 }

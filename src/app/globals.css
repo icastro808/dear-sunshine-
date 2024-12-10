@@ -5,11 +5,15 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
+  font-family: 'SourGummy-Regular', Georgia, serif;
   /* background-color: #492f6f !important; */
 }
 
 .main{
   background-color: #fff8e6;
+  font-family: 'SourGummy-Regular', Georgia, serif;
+  height: 100vh;
+  overflow-y: scroll;
 }
 
 .wrapper {
@@ -17,6 +21,7 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  font-family: 'SourGummy-Regular', Georgia, serif;
 }
 
 .center-box {
@@ -24,19 +29,23 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-family: 'SourGummy-Regular', Georgia, serif;
 }
 
 .header {
   display: flex;          
-  align-items: center;    
+  align-items: center; 
+  font-family: 'SourGummy-Regular', Georgia, serif;   
 }
 
 .button-group {
-  margin-top: 20px;    
+  margin-top: 20px; 
+  font-family: 'SourGummy-Regular', Georgia, serif;   
 }
 
 .button-group .btn {
-  margin: 0 5px;         
+  margin: 0 5px;
+  font-family: 'SourGummy-Regular', Georgia, serif;    
 }
 
 .sun-image {
@@ -65,6 +74,7 @@ body {
   box-shadow: 0 6px 200px rgba(255, 226, 35, 0.6),
               0 4px 500px rgba(255, 226, 35, 0.5),
               0 3px 20px rgba(181, 176, 142, 0.2); 
+  font-family: 'SourGummy-Regular', Georgia, serif;
 }
 
 .box:hover {
@@ -77,6 +87,7 @@ footer {
   padding: 20px 0;
   text-align: center;
   margin-top: 30px;
+  font-family: 'SourGummy-Regular', Georgia, serif;
 }
 
 .footer-content {
@@ -86,18 +97,100 @@ footer {
   margin: 0 auto;
   padding: 20px 10px;
   flex-wrap: wrap;
+  font-family: 'SourGummy-Regular', Georgia, serif;
 }
 
 .contact-info, .nav-links {
   margin-bottom: 20px;
+  font-family: 'SourGummy-Regular', Georgia, serif;
 }
 
 ul.social-links {
   list-style-type: none;
   padding: 0;
+  font-family: 'SourGummy-Regular', Georgia, serif;
 }
 
 footer p {
   font-size: 0.8rem;
   margin-top: 20px;
+  font-family: 'SourGummy-Regular', Georgia, serif;
+}
+
+/* custom font - delete if needed */
+@font-face {
+  font-family: 'SourGummy-Regular';
+  src: url('/fonts/SourGummy-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* gradient color */
+.gradient {
+  background: linear-gradient(#ffd875, transparent);
+}
+
+/* switches the gradient color when hovering */
+.gradient:hover {
+  background: linear-gradient(transparent, #ffd875);
+}
+
+/* change color of password toggle icon when hovering */
+.link-toggle:hover {
+  color: #f9b300 !important;
+  font-family: 'SourGummy-Regular', Georgia, serif;
+}
+
+/* autofill for input field */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset !important; /* using box-shadow to cover the default background color */
+}
+
+/* LoadingSpinner overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(255, 248, 230, 0.5); /* semi-transparent background. don't really know if this is even working lol */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* ensures it appears above all other content */
+  font-family: 'SourGummy-Regular', Georgia, serif;
+}
+
+/* custom background style - change font if needed */
+.custom-bg {
+  background-color: #fff8e6;
+  color: orange;
+  font-family: 'SourGummy-Regular', Georgia, serif;
+}
+
+.custom-dropdown {
+  color: orange;
+  font-weight: bold;
+  text-decoration: none;
+  font-family: 'SourGummy-Regular', Georgia, serif;
+}
+
+.custom-dropdown:hover {
+  color: orange;
+  background-color: #fbfad3;
+  text-decoration: none;
+  font-family: 'SourGummy-Regular', Georgia, serif;
+}
+
+.no-underline {
+  text-decoration: none !important;
+}
+
+/* pagination colors */
+.custom-pagination .page-link {
+  color: #d76b00 !important;
+}
+.custom-pagination .active .page-link {
+  background-color: #f4cc70 !important;
+  border-color: #edb95e !important;
 }

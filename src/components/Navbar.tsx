@@ -27,7 +27,7 @@ const NavBar: React.FC = () => {
         <Navbar.Brand
           href="/"
           style={{
-            fontFamily: 'Georgia, serif',
+            // fontFamily: 'Georgia, serif',
             fontSize: '1.5rem',
             fontWeight: 'bold',
             color: '#F9A602', // Soft orange-yellow
@@ -76,9 +76,9 @@ const NavBar: React.FC = () => {
                 <Nav.Link
                   id="profile-nav"
                   href={`/profile/${user.id}`}
-                  active={pathName === '/profile'}
+                  active={pathName === `/profile/${user.id}`}
                   style={{
-                    color: pathName === '/profile' ? '#F9A602' : '#FFCC66',
+                    color: pathName === `/profile/${user.id}` ? '#F9A602' : '#FFCC66',
                     fontWeight: '500',
                   }}
                 >
@@ -92,7 +92,7 @@ const NavBar: React.FC = () => {
                 href="/admin"
                 active={pathName === '/admin'}
                 style={{
-                  color: pathName === '/admin' ? '#F9A602' : '#FFB347',
+                  color: pathName === '/admin' ? '#F9A602' : '#FFCC66',
                   fontWeight: '500',
                 }}
               >
@@ -105,16 +105,16 @@ const NavBar: React.FC = () => {
               <NavDropdown
                 id="login-dropdown"
                 title={currentUser}
+                bsPrefix="custom-dropdown"
                 style={{
-                  color: '#FFB347',
+                  color: '#d76b00',
                   fontWeight: 'bold',
+                  textDecoration: 'none',
                 }}
                 menuVariant="light"
               >
                 <div
                   style={{
-                    background: 'linear-gradient(90deg, #FFF8DC, #FAFAD2)',
-                    border: '1px solid #FFD700',
                     borderRadius: '5px',
                   }}
                 >
@@ -122,8 +122,9 @@ const NavBar: React.FC = () => {
                     id="login-dropdown-sign-out"
                     href="/api/auth/signout"
                     style={{
-                      color: '#4B4B4B',
+                      color: '#FFCC66',
                       fontWeight: '500',
+                      backgroundColor: '#FFF',
                     }}
                   >
                     <BoxArrowRight style={{ marginRight: '5px' }} />
@@ -133,8 +134,9 @@ const NavBar: React.FC = () => {
                     id="login-dropdown-change-password"
                     href="/auth/change-password"
                     style={{
-                      color: '#4B4B4B',
+                      color: '#FFCC66',
                       fontWeight: '500',
+                      backgroundColor: '#FFF',
                     }}
                   >
                     <Lock style={{ marginRight: '5px' }} />
@@ -146,16 +148,16 @@ const NavBar: React.FC = () => {
               <NavDropdown
                 id="login-dropdown"
                 title="Login"
+                bsPrefix="custom-dropdown"
                 style={{
-                  color: '#FFD700',
+                  color: '#d76b00',
                   fontWeight: 'bold',
+                  textDecoration: 'none',
                 }}
                 menuVariant="light"
               >
                 <div
                   style={{
-                    background: 'linear-gradient(90deg, #FFF8DC, #FAFAD2)',
-                    border: '1px solid #FFD700',
                     borderRadius: '5px',
                   }}
                 >
@@ -163,8 +165,9 @@ const NavBar: React.FC = () => {
                     id="login-dropdown-sign-in"
                     href="/auth/signin"
                     style={{
-                      color: '#4B4B4B',
+                      color: '#FFCC66',
                       fontWeight: '500',
+                      backgroundColor: '#FFF',
                     }}
                   >
                     <PersonFill style={{ marginRight: '5px' }} />
@@ -174,8 +177,9 @@ const NavBar: React.FC = () => {
                     id="login-dropdown-sign-up"
                     href="/auth/signup"
                     style={{
-                      color: '#4B4B4B',
+                      color: '#FFCC66',
                       fontWeight: '500',
+                      backgroundColor: '#FFF',
                     }}
                   >
                     <PersonPlusFill style={{ marginRight: '5px' }} />

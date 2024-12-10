@@ -15,6 +15,19 @@ import { AddReplySchema } from '@/lib/validationSchemas';
 import { Letter } from '@prisma/client';
 import { Pin } from 'react-bootstrap-icons';
 
+const styles = {
+  submitBtn: {
+    backgroundColor: '#fff8e6',
+    color: '#d76b00',
+    borderRadius: '20px',
+    fontSize: '1rem',
+    fontWeight: 'bold',
+    border: '1px solid #d3c5a0',
+    padding: '10px 15px',
+    boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
+  },
+};
+
 const onSubmit = async (data: {
   reply: string;
   letterId: number;
@@ -72,7 +85,7 @@ const AddReplyForm = ({ letter }: { letter: Letter }) => {
             <textarea
               {...register('reply')}
               className={`form-control ${errors.reply ? 'is-invalid' : ''}`}
-              placeholder="Leave a note for this letter :)"
+              placeholder="Write a response to this letter :)"
               style={{
                 width: '100%',
                 resize: 'vertical',
@@ -101,10 +114,10 @@ const AddReplyForm = ({ letter }: { letter: Letter }) => {
           <Form.Group className="form-group">
             <Row className="pt-3">
               <Col>
-                <Button type="submit" variant="primary" className="float-end" style={{ backgroundColor: '#e6a1a8', borderColor: '#f5c6cb' }}>
+                <Button type="submit" variant="primary" className="float-end" style={styles.submitBtn}>
                   <Pin className="mr-2" />
                   {' '}
-                  Pin to board
+                  Reply to letter
                 </Button>
               </Col>
             </Row>

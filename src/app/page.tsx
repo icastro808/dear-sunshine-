@@ -2,86 +2,81 @@
 
 import { Col, Container, Row, Image, Button } from 'react-bootstrap';
 import { PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
-import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+
+const styles = {
+  main: {
+    backgroundColor: '#fff8e6',
+    height: '100%',
+  },
+  spacer: {
+    height: '10px', // Adjust this value to control the amount of space
+  },
+};
 
 /** The Home page. */
 const Home = () => {
-  // Simulate checking if the user is signed in
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  // retrieve the session status
+  const { status } = useSession();
 
-  // For demonstration, simulate sign-in status change after 2 seconds
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsSignedIn(true); // Change to true after 2 seconds (for testing purposes)
-    }, 2000);
-
-    return () => clearTimeout(timer); // Clean up the timer on unmount
-  }, []);
+  // if the session is still loading, return blank page. this is to prevent the sign-in buttons from flickering
+  if (status === 'loading') {
+    return null;
+  }
 
   return (
-    <main>
+    <main style={styles.main}>
       <Container id="landing-page" fluid className="py-3">
-        <Row className="align-middle text-center">
-          <Col xs={8} className="d-flex justify-content-end">
-            <div
-              className="box"
-              style={{
-                backgroundColor: '',
-                height: '300px',
-                width: 'calc(300px * 1.3)', // Adjust width with aspect ratio of 1.3
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'flex-end', // Align all content to the right
-              }}
-            >
-              <Row className="w-100">
-                <Col
-                  style={{
-                    backgroundColor: '',
-                    height: '100px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                  }}
-                >
-                  <h1>Dear Sunshine</h1>
-                </Col>
-                <Col
-                  style={{
-                    backgroundColor: '',
-                    height: '100px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Image
-                    src="/stamp.png"
-                    alt="Sunshine Stamp"
-                    className="sun-image"
-                    style={{ width: '100px', height: 'auto' }}
-                  />
-                </Col>
-              </Row>
-              <p>A platform designed to uplift and encourage individuals who may be going through tough times.</p>
-
-              {/* Conditionally render buttons based on the signed-in state */}
-              {!isSignedIn && (
-                <div className="button-group">
-                  <Button variant="primary" href="/auth/signin" className="me-2">
-                    <PersonFill />
-                    Sign In
-                  </Button>
-                  <Button variant="secondary" href="/auth/signup">
-                    <PersonPlusFill />
-                    Sign Up
-                  </Button>
-                </div>
-              )}
-            </div>
+        <Row className="justify-content-center">
+          <Col xs={12} className="text-center">
+            <Image
+              src="/landing-image.png"
+              alt="landing-image"
+              className="mx-auto d-block"
+              fluid
+              style={{ width: '50%', paddingLeft: '1%' }}
+            />
           </Col>
         </Row>
+        {/* Add a new Row for the button group */}
+        <Row className="justify-content-center text-center">
+          <Col xs={12}>
+            {/* Conditionally render buttons based on the signed-in state */}
+            {status === 'authenticated' ? null : (
+              <div className="button-group">
+                <Button
+                  variant="primary"
+                  href="/auth/signin"
+                  className="gradient btn-warning rounded-pill"
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '1.1rem',
+                    color: 'white',
+                  }}
+                >
+                  <PersonFill />
+                  Sign In
+                </Button>
+                <Button
+                  variant="secondary"
+                  href="/auth/signup"
+                  className="gradient btn-warning rounded-pill"
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '1.1rem',
+                    color: 'white',
+                  }}
+                >
+                  <PersonPlusFill />
+                  Sign Up
+                </Button>
+              </div>
+            )}
+          </Col>
+        </Row>
+
+        {/* Spacer Row to add extra space */}
+        <Row style={styles.spacer} />
       </Container>
     </main>
   );

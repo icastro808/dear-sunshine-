@@ -1,23 +1,114 @@
 {
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN" },
-    { "email": "john@foo.com", "password": "changeme", "role": "USER" }
+    { "email": "john@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "pat@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "sam@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "morgan@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "chris@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "avery@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "simon@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "taylor@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "alex@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "cameron@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "jordan@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "devon@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "drew@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "reese@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "skye@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "quinn@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "jamie@foo.com", "password": "changeme", "role": "USER" }
   ],
   "defaultLetters": [
     {
-      "text": "This is a letter. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "owner": "john@foo.com",
-      "tags": ["happy"]
-    },
-    {
-      "text": "This is a letter. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "owner": "john@foo.com",
-      "tags": ["neutral"]
-    },
-    {
-      "text": "This is a letter. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "text": "Some days, it feels like the weight of the world is just too much. I try to remind myself that it's okay to take a break and just breathe, but it's hard to not feel like I'm falling behind.",
       "owner": "admin@foo.com",
-      "tags": ["sad", "angry"]
+      "tags": ["vent"]
+    },
+    {
+      "text": "I've been thinking a lot about how to approach difficult conversations. A friend once told me to lead with empathy and listen before I speak. It sounds simple, but it’s been life-changing advice.",
+      "owner": "john@foo.com",
+      "tags": ["advice", "friendship"]
+    },
+    {
+      "text": "I'm frustrated. No matter how much effort I put into my work, it feels like nobody notices or cares. Maybe I need to focus less on others' opinions and more on what fulfills me.",
+      "owner": "pat@foo.com",
+      "tags": ["vent"]
+    },
+    {
+      "text": "Love is such a strange and powerful thing. It can make you feel on top of the world one moment and completely vulnerable the next. But at the end of the day, it’s worth it.",
+      "owner": "sam@foo.com",
+      "tags": ["love"]
+    },
+    {
+      "text": "Friendship is one of the most underrated forms of love. A good friend can see you through your worst days and still remind you of your best qualities.",
+      "owner": "morgan@foo.com",
+      "tags": ["friendship"]
+    },
+    {
+      "text": "School can be so overwhelming sometimes. Between assignments, deadlines, and trying to have a social life, it’s easy to feel like there’s no time to breathe. But I’m trying to take it one day at a time.",
+      "owner": "avery@foo.com",
+      "tags": ["school"]
+    },
+    {
+      "text": "Family is complicated, but at the end of the day, they’re the ones who know you best. I’ve learned that it’s worth working through the tough times to preserve those relationships.",
+      "owner": "chris@foo.com",
+      "tags": ["family", "positivity"]
+    },
+    {
+      "text": "I’ve been feeling lonely lately, even when I’m around people. I guess what I really want is someone who just gets it—someone who understands without me needing to explain.",
+      "owner": "simon@foo.com",
+      "tags": ["vent", "thoughts"]
+    },
+    {
+      "text": "Lately, I feel like I’m carrying too much, and it’s hard to see the light at the end of the tunnel. But I’m reminding myself that even the smallest step forward is still progress.",
+      "owner": "taylor@foo.com",
+      "tags": ["vent"]
+    },
+    {
+      "text": "I’ve been struggling to stay positive, but a little advice from a friend helped: 'Focus on what you can control and let the rest go.' It’s not easy, but I’m trying to hold on to that.",
+      "owner": "alex@foo.com",
+      "tags": ["advice"]
+    },
+    {
+    "text": "It’s hard to talk about love when it feels so out of reach, but I want to believe it’s out there—something real and kind. Maybe we all deserve that.",
+      "owner": "cameron@foo.com",
+      "tags": ["love"]
+    },
+    {
+      "text": "I miss having someone who truly gets me. Friendship feels rare these days, but I’m trying to hold onto the hope that I’ll find connections that feel real again.",
+      "owner": "jordan@foo.com",
+      "tags": ["friendship"]
+    },
+    {
+      "text": "The school workload feels endless, but I’m proud of myself for tackling it one step at a time. Progress is progress.",
+      "owner": "devon@foo.com",
+      "tags": ["school"]
+    },
+    {
+      "text": "Family relationships are messy, and it’s been a tough time. I’m learning that even when it’s hard, showing love and patience can make all the difference.",
+      "owner": "drew@foo.com",
+      "tags": ["family"]
+    },
+    {
+      "text": "Sometimes my thoughts feel scattered, like puzzle pieces that don’t fit together. Writing them down helps me find some clarity.",
+      "owner": "reese@foo.com",
+      "tags": ["thoughts"]
+    },
+    {
+      "text": "Sometimes, it feels impossible to let out all the emotions I’ve been holding back. But maybe sharing them here is a way to start healing.",
+      "owner": "skye@foo.com",
+      "tags": ["vent"]
+    },
+    {
+      "text": "Life has been tough lately, but I remind myself that love comes in many forms—even in the quiet support of a stranger. That thought keeps me going.",
+      "owner": "quinn@foo.com",
+      "tags": ["love", "positivity"]
+    },
+    {
+      "text": "I’ve been thinking about how a kind word or gesture can change someone’s day. Maybe that’s something we can all try to give a little more of.",
+      "owner": "jamie@foo.com",
+      "tags": ["advice", "positivity"]
     }
   ]
 }

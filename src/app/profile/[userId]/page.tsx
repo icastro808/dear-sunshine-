@@ -1,10 +1,22 @@
 /* eslint-disable max-len */
+import { getServerSession } from 'next-auth';
+import authOptions from '@/lib/authOptions';
+import { loggedInProtectedPage } from '@/lib/page-protection';
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { BoxArrowInUpRight } from 'react-bootstrap-icons';
 import getUserData from '@/lib/getUserData';
+import Link from 'next/link';
 
 /** Profile page showing user's posts, replies, and counts. */
 export default async function ProfilePage({ params }: { params: { userId: string } }) {
+  const session = await getServerSession(authOptions);
+  loggedInProtectedPage(
+    session as {
+      user: { email: string; id: string; randomKey: string };
+      // eslint-disable-next-line @typescript-eslint/comma-dangle
+    } | null,
+  );
   const { posts, replies, postCount, replyCount } = await getUserData(params.userId);
   return (
     <main>
@@ -13,18 +25,18 @@ export default async function ProfilePage({ params }: { params: { userId: string
         fluid
         className="py-4"
         style={{
-          backgroundColor: '#F5F5DC', // Soft beige background
+          backgroundColor: '#fff8e6', // Soft beige background
           minHeight: '100vh',
         }}
       >
         <Container>
           <Row className="mb-4 text-center">
-            <h2 style={{ color: '#8B6C42', fontWeight: 'bold' }}>Your Profile</h2>
+            <h2 style={{ color: '#d76b00', fontWeight: 'bold' }}>Your Profile</h2>
           </Row>
 
           <Row className="mb-4 text-center">
             <Col>
-              <h4 style={{ color: '#A67D5D', fontWeight: '600' }}>Change Signature</h4>
+              <h3 style={{ color: '#d76b00', fontWeight: '600' }}>Change Signature</h3>
             </Col>
           </Row>
 
@@ -34,12 +46,13 @@ export default async function ProfilePage({ params }: { params: { userId: string
               className="p-3"
               style={{
                 backgroundColor: '#FFF',
+                color: '#5e4a3c',
                 border: '1px solid #D1BFA7', // Soft neutral border
                 borderRadius: '12px',
                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <h4 style={{ color: '#8B6C42' }}>Posts</h4>
+              <h4 style={{ color: '#5e4a3c' }}>Posts</h4>
               <p style={{ fontSize: '1.5rem', fontWeight: '500' }}>{postCount}</p>
             </Col>
             <Col
@@ -47,17 +60,18 @@ export default async function ProfilePage({ params }: { params: { userId: string
               className="p-3 ms-3"
               style={{
                 backgroundColor: '#FFF',
+                color: '#5e4a3c',
                 border: '1px solid #D1BFA7', // Soft neutral border
                 borderRadius: '12px',
                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <h4 style={{ color: '#8B6C42' }}>Replies</h4>
+              <h4 style={{ color: '#5e4a3c' }}>Replies</h4>
               <p style={{ fontSize: '1.5rem', fontWeight: '500' }}>{replyCount}</p>
             </Col>
           </Row>
 
-          <h3 className="mt-5 text-center" style={{ color: '#A67D5D', fontWeight: 'bold' }}>
+          <h3 className="mt-5 text-center" style={{ color: '#d76b00', fontWeight: 'bold' }}>
             Your Posts
           </h3>
           <Row xs={1} md={2} lg={3} className="g-4">
@@ -66,23 +80,31 @@ export default async function ProfilePage({ params }: { params: { userId: string
                 <div
                   className="p-3 w-100"
                   style={{
-                    backgroundColor: '#FAF9F6', // Subtle warm background
+                    backgroundColor: '#FFF', // Subtle warm background
                     border: '1px solid #D1BFA7',
                     borderRadius: '12px',
                     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                   }}
                 >
-                  <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>{post.text}</p>
+                  <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
+                    {post.text}
+                    <Link href={`/reply/${post.id}`} passHref className="link-toggle no-underline" style={{ color: 'black' }}>
+                      <BoxArrowInUpRight className="mb-2 ms-2" width="9px" />
+                    </Link>
+                  </p>
                   <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
-                    <strong>Tags:</strong>
+                    <strong>Tags: </strong>
                     {post.tags.join(', ')}
+                  </p>
+                  <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
+                    {new Date(post.createdAt).toLocaleDateString('en-US')}
                   </p>
                 </div>
               </Col>
             ))}
           </Row>
 
-          <h3 className="mt-5 text-center" style={{ color: '#A67D5D', fontWeight: 'bold' }}>
+          <h3 className="mt-5 text-center" style={{ color: '#d76b00', fontWeight: 'bold' }}>
             Your Replies
           </h3>
           <Row xs={1} md={2} lg={3} className="g-4">
@@ -91,17 +113,21 @@ export default async function ProfilePage({ params }: { params: { userId: string
                 <div
                   className="p-3 w-100"
                   style={{
-                    backgroundColor: '#FAF9F6', // Subtle warm background
+                    backgroundColor: '#FFF', // Subtle warm background
                     border: '1px solid #D1BFA7',
                     borderRadius: '12px',
                     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                   }}
                 >
-                  <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>{reply.reply}</p>
+                  {/* redirects to the specific letter's reply page */}
+                  <Link href={`/reply/${reply.letterId}`} passHref className="link-toggle no-underline" style={{ color: 'black' }}>
+                    <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
+                      {reply.reply}
+                      <BoxArrowInUpRight className="mb-2 ms-1" width="8px" />
+                    </p>
+                  </Link>
                   <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
-                    <strong>Created At:</strong>
-                    {' '}
-                    {new Date(reply.createdAt).toLocaleString()}
+                    {new Date(reply.createdAt).toLocaleDateString('en-US')}
                   </p>
                 </div>
               </Col>

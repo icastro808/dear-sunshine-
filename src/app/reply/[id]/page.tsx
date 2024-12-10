@@ -35,7 +35,7 @@ export default async function AddReplyPage({ params }: { params: { id: string | 
 
   return (
     <main>
-      <Container style={{ paddingTop: '50px' }}>
+      <Container fluid className="pb-4" style={{ paddingTop: '50px', backgroundColor: '#fff8e6' }}>
         <Row>
           <Col xs={6} key={letter.id}>
             <LetterCard

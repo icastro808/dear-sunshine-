@@ -2,16 +2,24 @@
 
 import { Letter, Reply } from '@prisma/client';
 import Link from 'next/link';
-import { Card, ListGroup, Button, Modal, Row, Col, Badge } from 'react-bootstrap';
+import swal from 'sweetalert';
+import { Pagination, Card, ListGroup, Button, Modal, Row, Col, Badge } from 'react-bootstrap';
 import { deleteLetter } from '@/lib/dbActions';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import ReplyItem from './ReplyItem';
+import styles from './LetterCard.module.css';
 
 const LetterCard = ({
   letter, replies, showReplyButton = true }: { letter: Letter; replies: Reply[]; showReplyButton: boolean }) => {
   // state to control the visibility of the modal
   const [showModal, setShowModal] = useState(false);
+
+  // state to control the current page of replies
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // max replies shown allowed per page
+  const REPLIES_PER_PAGE = 2;
 
   // retrieves the current session
   const { data: session } = useSession();
@@ -20,6 +28,15 @@ const LetterCard = ({
   const handleShowModal = () => setShowModal(true);
   // hides the modal
   const handleCloseModal = () => setShowModal(false);
+
+  // calculates the total number of pages based on the number of replies
+  const totalPages = Math.ceil(replies.length / REPLIES_PER_PAGE);
+
+  // slices the replies array to show only the replies for the current page
+  const paginatedReplies = replies.slice(
+    (currentPage - 1) * REPLIES_PER_PAGE,
+    currentPage * REPLIES_PER_PAGE,
+  );
 
   const confirmDelete = async () => {
     try {
@@ -32,25 +49,34 @@ const LetterCard = ({
     }
   };
 
+  // handles page change so that the user can navigate through the replies
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return (
-    <Card style={{ borderRadius: '2.5%', padding: '5%' }}>
+    <Card style={{ borderRadius: '2.5%', padding: '5%', minWidth: '100%' }}>
       <Card.Header>
         <Card.Title className="d-flex justify-content-between align-items-center">
-          <div className="d-flex gap-1">
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '0.5rem',
+              maxWidth: '100%',
+            }}
+          >
             {letter.tags.map((tag) => (
               // change href to the correct path for filtering by tag
-              // <Link href="/list" key={tag}>
-              <Link href={`/list?tag=${tag}`} key={tag}>
-                <Badge
-                  key={tag}
-                  className="text-white rounded-pill"
-                  style={{ fontSize: '10px' }}
-                >
-                  {tag}
-                </Badge>
-              </Link>
+              // <Link href={`/list?tags=${tag}`} key={tag}>
+              <Badge key={tag} className={styles.badge}>
+                {tag}
+              </Badge>
             ))}
           </div>
+          <p className="fw-lighter mb-0" style={{ fontSize: '0.9rem' }}>
+            {new Date(letter.createdAt).toLocaleDateString('en-US')}
+          </p>
         </Card.Title>
       </Card.Header>
       <Card.Body>
@@ -58,30 +84,57 @@ const LetterCard = ({
           {letter.text}
           <br />
           <br />
-          <strong>From: </strong>
-          <strong>{letter.signature}</strong>
+          From,
+          <br />
+          {letter.signature}
         </Card.Text>
         <ListGroup variant="flush">
-          {replies.map((reply) => <ReplyItem key={reply.id} reply={reply} />)}
+          {paginatedReplies.map((reply) => <ReplyItem key={reply.id} reply={reply} />)}
         </ListGroup>
+
+        {/* pagination - only shows if more than 2 replies */}
+        {totalPages > 1 && (
+          <Pagination className="pt-3 custom-pagination" size="sm">
+            {/* places prev and next buttons on left and right side of letter card */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+              <Pagination.Prev
+                disabled={currentPage === 1}
+                onClick={() => handlePageChange(currentPage - 1)}
+                style={{ marginLeft: '0' }}
+              />
+              <Pagination.Next
+                disabled={currentPage === totalPages}
+                onClick={() => handlePageChange(currentPage + 1)}
+                style={{ marginRight: '0' }}
+              />
+            </div>
+          </Pagination>
+        )}
       </Card.Body>
       <Card.Footer>
         <Row className="justify-content-between">
           { /* show reply button only if the user is viewing from letter board */ }
           {showReplyButton && (
             <Col xs="auto">
-              <Button variant="primary" href={`reply/${letter.id}`}>Reply</Button>
+              <Button variant="primary" href={`reply/${letter.id}`} className={styles.submitBtn}>Reply</Button>
             </Col>
           )}
 
           { (session?.user?.email === letter.owner || (session?.user as any)?.randomKey === 'ADMIN') && (
           // only shows edit and delete buttons if the current user is the owner of the letter or admin.
             <>
-              <Col xs="auto" className="mt-2">
+              {/* <Col xs="auto" className="mt-2">
                 <Link href={`edit/${letter.id}`}>Edit</Link>
+              </Col> */}
+              <Col xs="auto">
+                <Link href={`edit/${letter.id}`} passHref>
+                  <Button className={styles.submitBtn}>
+                    Edit
+                  </Button>
+                </Link>
               </Col>
               <Col xs="auto">
-                <Button onClick={handleShowModal}>
+                <Button onClick={handleShowModal} className={styles.submitBtn}>
                   Delete
                 </Button>
               </Col>
@@ -111,4 +164,5 @@ const LetterCard = ({
     </Card>
   );
 };
+
 export default LetterCard;

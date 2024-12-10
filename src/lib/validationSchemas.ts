@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import * as Yup from 'yup';
 import profanityList from './profanityList.json';
 
@@ -14,7 +15,7 @@ export const AddLetterSchema = Yup.object({
     )
     .required().max(500, 'Your letter cannot exceed 500 characters'),
   owner: Yup.string().required(),
-  tags: Yup.array().of(Yup.string().oneOf(['happy', 'neutral', 'sad', 'angry']).required()).required(),
+  tags: Yup.array().of(Yup.string().oneOf(['vent', 'advice', 'thoughts', 'positivity', 'love', 'family', 'friendship', 'school']).required()).required(),
 });
 
 export const EditLetterSchema = Yup.object({
@@ -31,7 +32,7 @@ export const EditLetterSchema = Yup.object({
     )
     .required().max(500, 'Your letter cannot exceed 500 characters'),
   owner: Yup.string().required(),
-  tags: Yup.array().of(Yup.string().oneOf(['happy', 'neutral', 'sad', 'angry']).required()).required(),
+  tags: Yup.array().of(Yup.string().oneOf(['vent', 'advice', 'thoughts', 'positivity', 'love', 'family', 'friendship', 'school']).required()).required(),
   signature: Yup.string().default('Sunshine'),
 });
 
