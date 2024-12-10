@@ -146,8 +146,8 @@ const SignUp = () => {
                         variant="link"
                       >
                         {/* changes icon depending on password toggle state */}
-                        {passwordVisible ? <Eye className="password-toggle" style={{ color: 'black' }} />
-                          : <EyeSlash className="password-toggle" style={{ color: 'black' }} />}
+                        {passwordVisible ? <Eye className="link-toggle" style={{ color: 'black' }} />
+                          : <EyeSlash className="link-toggle" style={{ color: 'black' }} />}
                       </Button>
                       <div className="invalid-feedback">{errors.password?.message}</div>
                     </InputGroup>
