@@ -4,15 +4,14 @@ import { Container, Row, Col } from 'react-bootstrap';
 const MentalHealthPage = () => (
   <main
     style={{
-      backgroundColor: '#fff8e6', // Light, warm background
-      minHeight: '100vh',
-      overflowY: 'auto', // Enable scrolling
-      padding: '40px 20px',
+      backgroundColor: '#fff8e6',
     }}
   >
     <Container
       style={{
         maxWidth: '900px',
+        marginTop: '30px',
+        marginBottom: '30px',
         backgroundColor: '#ffffff',
         borderRadius: '12px',
         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
