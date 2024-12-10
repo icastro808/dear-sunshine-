@@ -128,7 +128,7 @@ const LetterCard = ({
               </Col> */}
               <Col xs="auto">
                 <Link href={`edit/${letter.id}`} passHref>
-                  <Button onClick={handleShowModal} className={styles.submitBtn}>
+                  <Button className={styles.submitBtn}>
                     Edit
                   </Button>
                 </Link>
