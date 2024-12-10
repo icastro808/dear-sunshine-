@@ -12,6 +12,8 @@ body {
 .main{
   background-color: #fff8e6;
   font-family: 'SourGummy-Regular', Georgia, serif;
+  height: 100vh;
+  overflow-y: scroll;
 }
 
 .wrapper {
