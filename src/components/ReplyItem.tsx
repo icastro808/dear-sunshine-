@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { deleteReply } from '@/lib/dbActions';
 import { Reply } from '@prisma/client';
@@ -10,7 +10,7 @@ import swal from 'sweetalert';
 
 const ReplyItem = ({ reply }: { reply: Reply }) => {
   // used to refresh page after deleting a reply
-  const router = useRouter();
+  const pathname = usePathname();
 
   // retrieves session data
   const { data: session } = useSession();
@@ -19,7 +19,17 @@ const ReplyItem = ({ reply }: { reply: Reply }) => {
     try {
       await deleteReply(reply.id);
       swal('Success', 'Reply deleted successfully', 'success');
-      router.refresh();
+
+      // timer for the success message to show before refreshing the page
+      setTimeout(() => {
+        // go back to the previous page if the current page is a reply page
+        if (pathname.includes('page')) {
+          window.history.back();
+        } else {
+          // reload the page
+          window.location.reload();
+        }
+      }, 1500);
     } catch (error) {
       swal('Error', 'There was an error deleting the reply', 'error');
     }
