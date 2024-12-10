@@ -183,3 +183,12 @@ input:-webkit-autofill {
 .no-underline {
   text-decoration: none !important;
 }
+
+/* pagination colors */
+.custom-pagination .page-link {
+  color: #d76b00 !important;
+}
+.custom-pagination .active .page-link {
+  background-color: #f4cc70 !important;
+  border-color: #edb95e !important;
+}

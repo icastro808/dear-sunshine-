@@ -2,6 +2,7 @@
 
 import { Letter, Reply } from '@prisma/client';
 import Link from 'next/link';
+import swal from 'sweetalert';
 import { Card, ListGroup, Button, Modal, Row, Col, Badge } from 'react-bootstrap';
 import { deleteLetter } from '@/lib/dbActions';
 import { useState } from 'react';
