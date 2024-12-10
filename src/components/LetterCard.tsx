@@ -3,7 +3,7 @@
 import { Letter, Reply } from '@prisma/client';
 import Link from 'next/link';
 import swal from 'sweetalert';
-import { Card, ListGroup, Button, Modal, Row, Col, Badge } from 'react-bootstrap';
+import { Pagination, Card, ListGroup, Button, Modal, Row, Col, Badge } from 'react-bootstrap';
 import { deleteLetter } from '@/lib/dbActions';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
@@ -15,6 +15,12 @@ const LetterCard = ({
   // state to control the visibility of the modal
   const [showModal, setShowModal] = useState(false);
 
+  // state to control the current page of replies
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // max replies shown allowed per page
+  const REPLIES_PER_PAGE = 2;
+
   // retrieves the current session
   const { data: session } = useSession();
 
@@ -22,6 +28,15 @@ const LetterCard = ({
   const handleShowModal = () => setShowModal(true);
   // hides the modal
   const handleCloseModal = () => setShowModal(false);
+
+  // calculates the total number of pages based on the number of replies
+  const totalPages = Math.ceil(replies.length / REPLIES_PER_PAGE);
+
+  // slices the replies array to show only the replies for the current page
+  const paginatedReplies = replies.slice(
+    (currentPage - 1) * REPLIES_PER_PAGE,
+    currentPage * REPLIES_PER_PAGE,
+  );
 
   const confirmDelete = async () => {
     try {
@@ -32,6 +47,11 @@ const LetterCard = ({
       console.error('An error occurred while deleting the letter', error);
       handleCloseModal();
     }
+  };
+
+  // handles page change so that the user can navigate through the replies
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -69,8 +89,27 @@ const LetterCard = ({
           {letter.signature}
         </Card.Text>
         <ListGroup variant="flush">
-          {replies.map((reply) => <ReplyItem key={reply.id} reply={reply} />)}
+          {paginatedReplies.map((reply) => <ReplyItem key={reply.id} reply={reply} />)}
         </ListGroup>
+
+        {/* pagination - only shows if more than 2 replies */}
+        {totalPages > 1 && (
+          <Pagination className="pt-3 custom-pagination" size="sm">
+            {/* places prev and next buttons on left and right side of letter card */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+              <Pagination.Prev
+                disabled={currentPage === 1}
+                onClick={() => handlePageChange(currentPage - 1)}
+                style={{ marginLeft: '0' }}
+              />
+              <Pagination.Next
+                disabled={currentPage === totalPages}
+                onClick={() => handlePageChange(currentPage + 1)}
+                style={{ marginRight: '0' }}
+              />
+            </div>
+          </Pagination>
+        )}
       </Card.Body>
       <Card.Footer>
         <Row className="justify-content-between">
@@ -125,4 +164,5 @@ const LetterCard = ({
     </Card>
   );
 };
+
 export default LetterCard;
