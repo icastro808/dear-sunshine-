@@ -123,11 +123,8 @@ const LetterCard = ({
           { (session?.user?.email === letter.owner || (session?.user as any)?.randomKey === 'ADMIN') && (
           // only shows edit and delete buttons if the current user is the owner of the letter or admin.
             <>
-              {/* <Col xs="auto" className="mt-2">
-                <Link href={`edit/${letter.id}`}>Edit</Link>
-              </Col> */}
               <Col xs="auto">
-                <Link href={`edit/${letter.id}`} passHref>
+                <Link href={`/edit/${letter.id}`} passHref>
                   <Button className={styles.submitBtn}>
                     Edit
                   </Button>
