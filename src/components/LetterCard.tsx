@@ -1,17 +1,21 @@
 'use client';
 
-import { Letter, Reply } from '@prisma/client';
+import { Letter, Reaction, Reply, User } from '@prisma/client';
 import Link from 'next/link';
 import swal from 'sweetalert';
 import { Pagination, Card, ListGroup, Button, Modal, Row, Col, Badge } from 'react-bootstrap';
-import { deleteLetter } from '@/lib/dbActions';
-import { useState } from 'react';
+// eslint-disable-next-line max-len
+import { ChatLeftHeart, EmojiSmile, EmojiSmileFill, HandThumbsUp, HandThumbsUpFill, Heart, HeartFill } from 'react-bootstrap-icons';
+import { addReaction, deleteLetter, deleteReaction } from '@/lib/dbActions';
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import ReplyItem from './ReplyItem';
 import styles from './LetterCard.module.css';
 
 const LetterCard = ({
-  letter, replies, showReplyButton = true }: { letter: Letter; replies: Reply[]; showReplyButton: boolean }) => {
+  letter, replies, showReplyButton = true, initialReaction,
+}: {
+  letter: Letter; replies: Reply[]; showReplyButton: boolean, initialReaction: Reaction[] }) => {
   // state to control the visibility of the modal
   const [showModal, setShowModal] = useState(false);
 
@@ -21,8 +25,79 @@ const LetterCard = ({
   // max replies shown allowed per page
   const REPLIES_PER_PAGE = 2;
 
+  // state to store the reactions for the current letter
+  const [reactions, setReactions] = useState<Reaction[]>(initialReaction || []);
+
+  useEffect(() => {
+    const fetchReactions = async () => {
+      try {
+        // fetch the reactions for the current letter
+        const response = await fetch(`/api/reactions/${letter.id}`);
+
+        if (response.ok) {
+          // set the reactions state with the fetched data
+          const data = await response.json();
+          setReactions(data);
+        } else {
+          console.error('Failed to fetch reactions');
+        }
+      } catch (error) {
+        console.error('An error occurred while fetching reactions', error);
+      }
+    };
+    fetchReactions();
+  }, [letter.id]);
+
   // retrieves the current session
   const { data: session } = useSession();
+
+  // retrieve the current user and get the user's id
+  const user = session?.user as User;
+  const userInt = user?.id as number;
+
+  // handles adding or removing a reaction
+  const handleReaction = async (reactionType: string, hasReacted: boolean) => {
+    try {
+      // check if user has already reacted
+      if (hasReacted) {
+        // if so, remove the reaction
+        await deleteReaction({
+          letterId: letter.id,
+          userId: Number(userInt),
+          type: reactionType,
+        });
+
+        // update the reactions state
+        setReactions((prev) => prev.filter(
+          (r) => !(r.owner === session?.user?.email && r.type === reactionType),
+        ));
+        // console.log('Reaction removed successfully'); // debugging purposes
+      } else {
+        // add the reaction
+        await addReaction({
+          letterId: letter.id,
+          userId: Number(userInt),
+          type: reactionType,
+          owner: session?.user?.email as string, // just to be safe
+        });
+
+        // update the reactions state with the previous reactions + the new one
+        setReactions((prev) => [
+          ...prev,
+          {
+            owner: session?.user?.email as string,
+            letterId: letter.id,
+            userId: Number(userInt),
+            type: reactionType,
+          },
+        ]);
+        // console.log('Reaction added successfully'); // debugging purposes;
+      }
+    } catch (error) {
+      // swal('Error', 'Failed to handle reaction', 'error'); // debugging purposes
+      console.error('An error occurred with the reaction', error);
+    }
+  };
 
   // makes the modal (confirming deletion popup) visible
   const handleShowModal = () => setShowModal(true);
@@ -38,6 +113,7 @@ const LetterCard = ({
     currentPage * REPLIES_PER_PAGE,
   );
 
+  // deletes the letter
   const confirmDelete = async () => {
     try {
       await deleteLetter(letter.id);
@@ -54,8 +130,20 @@ const LetterCard = ({
     setCurrentPage(page);
   };
 
+  // icons for the reactions, both default and filled
+  const reactionIcons: { [key: string]: { default: JSX.Element; filled: JSX.Element } } = {
+    heart: { default: <Heart />, filled: <HeartFill /> },
+    thumbsUp: { default: <HandThumbsUp />, filled: <HandThumbsUpFill /> },
+    smile: { default: <EmojiSmile />, filled: <EmojiSmileFill /> },
+  };
+
+  // options for the reactions
+  const reactionOptions = ['heart', 'thumbsUp', 'smile'];
+
   return (
-    <Card style={{ borderRadius: '2.5%', padding: '5%', minWidth: '100%' }}>
+    <Card
+      style={{ borderRadius: '2.5%', padding: '5%', minWidth: '100%', boxShadow: '0 3px 6px rgb(255, 233, 190)' }}
+    >
       <Card.Header>
         <Card.Title className="d-flex justify-content-between align-items-center">
           <div
@@ -88,6 +176,32 @@ const LetterCard = ({
           <br />
           {letter.signature}
         </Card.Text>
+
+        <Card.Text className="d-flex justify-content-end">
+          {reactionOptions.map((reactionType) => {
+            const hasReacted = reactions?.some(
+              (r) => r.owner === session?.user?.email && r.type === reactionType,
+            ) ?? false;
+
+            return (
+              <Button
+                key={reactionType}
+                variant={hasReacted ? 'primary' : 'outline-primary'}
+                onClick={() => handleReaction(reactionType, hasReacted)}
+                className={styles.reactionButton}
+                style={{ marginBottom: '20px' }}
+                aria-label={`React with ${reactionType}`}
+              >
+                {hasReacted ? reactionIcons[reactionType].filled : reactionIcons[reactionType].default}
+                &nbsp;
+                {reactions?.filter((r) => r.type === reactionType).length || 0}
+              </Button>
+
+            );
+          })}
+        </Card.Text>
+        <hr />
+
         <ListGroup variant="flush">
           {paginatedReplies.map((reply) => <ReplyItem key={reply.id} reply={reply} />)}
         </ListGroup>
@@ -116,7 +230,11 @@ const LetterCard = ({
           { /* show reply button only if the user is viewing from letter board */ }
           {showReplyButton && (
             <Col xs="auto">
-              <Button variant="primary" href={`reply/${letter.id}`} className={styles.submitBtn}>Reply</Button>
+              <Button variant="primary" href={`reply/${letter.id}`} className={styles.submitBtn}>
+                Reply
+                &nbsp;
+                <ChatLeftHeart />
+              </Button>
             </Col>
           )}
 

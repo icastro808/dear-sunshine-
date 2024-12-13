@@ -34,6 +34,7 @@ export const EditLetterSchema = Yup.object({
   owner: Yup.string().required(),
   tags: Yup.array().of(Yup.string().oneOf(['vent', 'advice', 'thoughts', 'positivity', 'love', 'family', 'friendship', 'school']).required()).required(),
   signature: Yup.string().default('Sunshine'),
+  createdAt: Yup.date().default(new Date()),
 });
 
 export const DeleteLetterSchema = Yup.object({

@@ -12,7 +12,7 @@ import { redirect } from 'next/navigation';
 import { addLetter } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddLetterSchema } from '@/lib/validationSchemas';
-import { Pin } from 'react-bootstrap-icons';
+import { Feather, Pin } from 'react-bootstrap-icons';
 
 const styles = {
   container: {
@@ -149,7 +149,11 @@ const AddLetterForm: React.FC = () => {
   return (
     <Container className="py-5" style={styles.container}>
       <Card style={styles.card as React.CSSProperties}>
-        <h2 style={styles.title as React.CSSProperties}>Write Letter</h2>
+        <h2 style={styles.title as React.CSSProperties}>
+          Write Letter
+          &nbsp;
+          <Feather />
+        </h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group>
             {/* <Form.Label style={styles.label}>Text</Form.Label> */}

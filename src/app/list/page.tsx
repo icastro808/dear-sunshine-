@@ -2,7 +2,7 @@
 import { getServerSession } from 'next-auth';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { loggedInProtectedPage } from '@/lib/page-protection';
-import { Letter, Tag } from '@prisma/client';
+import { Letter, Tag, Reaction } from '@prisma/client';
 import authOptions from '@/lib/authOptions';
 import LetterCard from '@/components/LetterCard';
 import { prisma } from '@/lib/prisma';
@@ -10,7 +10,7 @@ import PaginationComponent from '@/components/PaginationComponent';
 import styles from './ListPage.module.css'; // Import your CSS module
 
 /** Render a list of stuff for the logged-in user. */
-const ListPage = async ({ searchParams }: { searchParams: { tags?: string; page?: string } }) => {
+const ListPage = async ({ searchParams }: { searchParams: { tags?: string; page?: string; reactions?: Reaction[] } }) => {
   // max number of letters allowed per page
   const LETTERS_PER_PAGE = 6;
 
@@ -37,12 +37,20 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string; page?
     }
     : {};
 
+  // get the letters based on the selected tags
   const letters: Letter[] = await prisma.letter.findMany({
     where: whereClause,
     skip: (currentPage - 1) * LETTERS_PER_PAGE,
     take: LETTERS_PER_PAGE,
+    // include the reactions and replies for each letter
+    include: {
+      reaction: true,
+      reply: true,
+    },
   });
 
+  // get all the reactions and replies
+  const reactions = await prisma.reaction.findMany({});
   const replies = await prisma.reply.findMany({});
 
   // get the total number of letters
@@ -98,6 +106,7 @@ const ListPage = async ({ searchParams }: { searchParams: { tags?: string; page?
                       letter={letter}
                       replies={replies.filter(reply => reply.letterId === letter.id)}
                       showReplyButton
+                      initialReaction={reactions.filter((reaction) => reaction.letterId === letter.id)}
                     />
                   </Col>
                 ))}

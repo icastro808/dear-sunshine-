@@ -101,6 +101,11 @@ export async function editLetter(letter: Letter) {
 }
 
 export async function deleteLetter(id: number, admin: boolean = false) {
+  // delete all reactions associated with the letter
+  await prisma.reaction.deleteMany({
+    where: { letterId: id },
+  });
+
   await prisma.letter.delete({
     where: { id },
   });
@@ -126,5 +131,45 @@ export async function addReply(reply: { reply: string; letterId: number, owner: 
 export async function deleteReply(replyId: number) {
   await prisma.reply.delete({
     where: { id: replyId },
+  });
+}
+
+/*
+  letterId: the id of the letter to which the reaction is being added to
+  userId: the id of the user who is adding the reaction
+  type: the type of reaction being added (e.g. 'heart', 'smile')
+*/
+export async function addReaction(reaction: { letterId: number, userId: number, type: string, owner: string }) {
+  await prisma.reaction.create({
+    data: {
+      owner: reaction.owner,
+      letterId: reaction.letterId,
+      userId: reaction.userId,
+      type: reaction.type,
+    },
+  });
+}
+
+/*
+ if you get an error saying "Record to delete does not exist", make sure you log out
+ and reset the database. if you don't log out first, the previous session
+ will still be active and it won't be able to interact with the database
+*/
+export async function deleteReaction(reaction: { letterId: number, userId: number, type: string }) {
+  await prisma.reaction.delete({
+    where: {
+      userId_letterId_type: {
+        letterId: reaction.letterId,
+        userId: reaction.userId,
+        type: reaction.type,
+      },
+    },
+  });
+}
+
+// get all the letters in the database
+export async function getReactions(letterId: number) {
+  return prisma.reaction.findMany({
+    where: { letterId },
   });
 }
