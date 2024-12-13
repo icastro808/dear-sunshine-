@@ -245,7 +245,7 @@ const LetterCard = ({
                 <Link href={`edit/${letter.id}`}>Edit</Link>
               </Col> */}
               <Col xs="auto">
-                <Link href={`edit/${letter.id}`} passHref>
+                <Link href={`/edit/${letter.id}`} passHref>
                   <Button className={styles.submitBtn}>
                     Edit
                   </Button>

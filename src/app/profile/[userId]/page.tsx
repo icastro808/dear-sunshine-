@@ -104,12 +104,12 @@ export default async function ProfilePage({ params }: { params: { userId: string
                       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                     }}
                   >
-                    <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
-                      {post.text}
-                      <Link href={`/reply/${post.id}`} passHref className="link-toggle no-underline" style={{ color: 'black' }}>
+                    <Link href={`/reply/${post.id}`} passHref className="link-toggle no-underline" style={{ color: 'black' }}>
+                      <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
+                        {post.text}
                         <BoxArrowInUpRight className="mb-2 ms-2" width="9px" />
-                      </Link>
-                    </p>
+                      </p>
+                    </Link>
                     <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
                       <strong>Tags: </strong>
                       {post.tags.join(', ')}
