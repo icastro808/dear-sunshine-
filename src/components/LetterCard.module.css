@@ -8,6 +8,33 @@
     padding: 10px 10px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
+
+.reactionButton {
+    background-color: transparent !important;
+    color: red;
+    border-color: transparent;
+    display: flex;
+    height: 0px; /* prevent extra height when hovering */
+    transition: all 0.3s ease; /* transition for hover */
+}
+
+.reactionButton:active,
+.reactionButton:focus {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.reactionButton:hover {
+    font-size: 18px;
+    background-color: transparent !important;
+    color: red;
+    border-color: transparent;
+}
+
+.reactionButton span {
+    display: inline-block; /* ensure text alignment inside the button */
+    text-align: center;
+}
   
 .submitBtn {
     background-color: #fff8e6;
