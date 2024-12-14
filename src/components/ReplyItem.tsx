@@ -8,7 +8,11 @@ import { ListGroup, Dropdown, Row, Col } from 'react-bootstrap';
 import { ThreeDots } from 'react-bootstrap-icons';
 import swal from 'sweetalert';
 
-const ReplyItem = ({ reply }: { reply: Reply }) => {
+interface Letter {
+  signature: string;
+}
+
+const ReplyItem = ({ reply, letter }: { reply: Reply; letter: Letter }) => {
   // used to refresh page after deleting a reply
   const pathname = usePathname();
 
@@ -39,11 +43,11 @@ const ReplyItem = ({ reply }: { reply: Reply }) => {
     <ListGroup.Item>
       <Row>
         <Col>
-          <p className="fw-lighter">{reply.createdAt.toLocaleDateString('en-US')}</p>
+          <p className="fw-lighter">{new Date(reply.createdAt).toLocaleDateString('en-US')}</p>
         </Col>
 
         <Col>
-          { (session?.user?.email === reply.owner || (session?.user as any)?.randomKey === 'ADMIN') && (
+          {(session?.user?.email === reply.owner || (session?.user as any)?.randomKey === 'ADMIN') && (
             // only shows delete button if the current user is the owner of the reply or admin.
             <Dropdown>
               <Dropdown.Toggle
@@ -62,7 +66,7 @@ const ReplyItem = ({ reply }: { reply: Reply }) => {
       </Row>
 
       <Row>
-        Dear Sunshine,
+        Dear {reply.signature},
         <p>{reply.reply}</p>
         From,
         <br />

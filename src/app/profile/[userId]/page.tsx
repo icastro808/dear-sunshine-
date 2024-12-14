@@ -4,10 +4,12 @@ import authOptions from '@/lib/authOptions';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { BoxArrowInUpRight, EmojiSmile, EmojiSmileFill, HandThumbsUp, HandThumbsUpFill, Heart, HeartFill } from 'react-bootstrap-icons';
+import { BoxArrowInUpRight } from 'react-bootstrap-icons';
 import getUserData from '@/lib/getUserData';
 import Link from 'next/link';
-import { getReactions } from '@/lib/dbActions';
+import dynamic from 'next/dynamic';
+
+const SignatureForm = dynamic(() => import('@/components/SignatureForm'), { ssr: false });
 
 /** Profile page showing user's posts, replies, and counts. */
 export default async function ProfilePage({ params }: { params: { userId: string } }) {
@@ -18,20 +20,7 @@ export default async function ProfilePage({ params }: { params: { userId: string
       // eslint-disable-next-line @typescript-eslint/comma-dangle
     } | null,
   );
-  const { posts, replies, postCount, replyCount } = await getUserData(params.userId);
-
-  // get reactions for each post
-  const reactionsData = await Promise.all(posts.map(post => getReactions(post.id)));
-
-  // reaction options
-  const reactionOptions = ['heart', 'thumbsUp', 'smile'];
-
-  // icons for reactions, filled and default
-  const reactionIcons: { [key: string]: { default: JSX.Element; filled: JSX.Element } } = {
-    heart: { default: <Heart />, filled: <HeartFill /> },
-    thumbsUp: { default: <HandThumbsUp />, filled: <HandThumbsUpFill /> },
-    smile: { default: <EmojiSmile />, filled: <EmojiSmileFill /> },
-  };
+  const { posts, replies, postCount, replyCount, signature } = await getUserData(params.userId);
   return (
     <main>
       <Container
@@ -51,6 +40,7 @@ export default async function ProfilePage({ params }: { params: { userId: string
           <Row className="mb-4 text-center">
             <Col>
               <h3 style={{ color: '#d76b00', fontWeight: '600' }}>Change Signature</h3>
+              <SignatureForm initialSignature={signature} userEmail={session?.user?.email || ''} />
             </Col>
           </Row>
 
@@ -89,53 +79,33 @@ export default async function ProfilePage({ params }: { params: { userId: string
             Your Posts
           </h3>
           <Row xs={1} md={2} lg={3} className="g-4">
-            {posts.map((post, index) => {
-              // reactions for this post
-              const reactions = reactionsData[index] || [];
-
-              return (
-                <Col key={post.id} className="d-flex">
-                  <div
-                    className="p-3 w-100"
-                    style={{
-                      backgroundColor: '#FFF', // Subtle warm background
-                      border: '1px solid #D1BFA7',
-                      borderRadius: '12px',
-                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                    }}
-                  >
+            {posts.map((post) => (
+              <Col key={post.id} className="d-flex">
+                <div
+                  className="p-3 w-100"
+                  style={{
+                    backgroundColor: '#FFF', // Subtle warm background
+                    border: '1px solid #D1BFA7',
+                    borderRadius: '12px',
+                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                  }}
+                >
+                  <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
+                    {post.text}
                     <Link href={`/reply/${post.id}`} passHref className="link-toggle no-underline" style={{ color: 'black' }}>
-                      <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
-                        {post.text}
-                        <BoxArrowInUpRight className="mb-2 ms-2" width="9px" />
-                      </p>
+                      <BoxArrowInUpRight className="mb-2 ms-2" width="9px" />
                     </Link>
-                    <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
-                      <strong>Tags: </strong>
-                      {post.tags.join(', ')}
-
-                      {/* display reactions */}
-                      {reactionOptions.map((reactionType) => {
-                        const hasReacted = reactions.some( // check if the user has reacted with this reaction
-                          (r) => r.owner === session?.user?.email && r.type === reactionType,
-                        );
-                        return (
-                          <span key={reactionType} style={{ color: 'red' }} className="ms-4">
-                            {/* display reaction icon and count depending on whether the user has reacted */}
-                            {hasReacted ? reactionIcons[reactionType].filled : reactionIcons[reactionType].default}
-                            &nbsp;
-                            {reactions.filter((r) => r.type === reactionType).length || 0}
-                          </span>
-                        );
-                      })}
-                    </p>
-                    <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
-                      {new Date(post.createdAt).toLocaleDateString('en-US')}
-                    </p>
-                  </div>
-                </Col>
-              );
-            })}
+                  </p>
+                  <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
+                    <strong>Tags: </strong>
+                    {post.tags.join(', ')}
+                  </p>
+                  <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
+                    {new Date(post.createdAt).toLocaleDateString('en-US')}
+                  </p>
+                </div>
+              </Col>
+            ))}
           </Row>
 
           <h3 className="mt-5 text-center" style={{ color: '#d76b00', fontWeight: 'bold' }}>

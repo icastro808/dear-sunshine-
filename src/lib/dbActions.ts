@@ -78,13 +78,23 @@ export async function addLetter(letter: {
   owner: string;
   tags: string[];
 }) {
+  const user = await prisma.user.findUnique({
+    where: { email: letter.owner },
+  });
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
   await prisma.letter.create({
     data: {
       text: letter.text,
       owner: letter.owner,
       tags: letter.tags as Tag[],
+      signature: user.signature,
     },
   });
+
   redirect('/list');
 }
 
@@ -118,13 +128,23 @@ export async function deleteLetter(id: number, admin: boolean = false) {
 }
 
 export async function addReply(reply: { reply: string; letterId: number, owner: string }) {
+  const user = await prisma.user.findUnique({
+    where: { email: reply.owner },
+  });
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
   await prisma.reply.create({
     data: {
       reply: reply.reply,
       letterId: reply.letterId,
       owner: reply.owner,
+      signature: user.signature,
     },
   });
+
   redirect('/list');
 }
 
@@ -171,5 +191,12 @@ export async function deleteReaction(reaction: { letterId: number, userId: numbe
 export async function getReactions(letterId: number) {
   return prisma.reaction.findMany({
     where: { letterId },
+  });
+}
+
+export async function updateUserSignature(email: string, signature: string) {
+  await prisma.user.update({
+    where: { email },
+    data: { signature },
   });
 }
