@@ -80,7 +80,6 @@ const LetterCard = ({
           type: reactionType,
           owner: session?.user?.email as string, // just to be safe
         });
-
         // update the reactions state with the previous reactions + the new one
         setReactions((prev) => [
           ...prev,

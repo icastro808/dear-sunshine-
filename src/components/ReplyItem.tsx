@@ -79,7 +79,9 @@ const ReplyItem = ({ reply }: { reply: Reply }) => {
       </Row>
 
       <Row>
-        Dear {letterSignature},
+        Dear&nbsp;
+        {letterSignature}
+        ,
         <p>{reply.reply}</p>
         From,
         <br />

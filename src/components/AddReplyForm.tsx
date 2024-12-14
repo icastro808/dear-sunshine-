@@ -78,7 +78,9 @@ const AddReplyForm = ({ letter }: { letter: Letter }) => {
         <Form onSubmit={handleSubmit((data) => onSubmit(data, reset))}>
           <Form.Group>
             <Form.Label>
-              Dear {letter.signature},
+              Dear&nbsp;
+              {letter.signature}
+              ,
             </Form.Label>
             <textarea
               {...register('reply')}
