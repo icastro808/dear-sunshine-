@@ -1,8 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { deleteReply } from '@/lib/dbActions';
+import { deleteReply, getLetterById } from '@/lib/dbActions';
 import { Reply } from '@prisma/client';
 import { ListGroup, Dropdown, Row, Col } from 'react-bootstrap';
 import { ThreeDots } from 'react-bootstrap-icons';
@@ -14,6 +15,22 @@ const ReplyItem = ({ reply }: { reply: Reply }) => {
 
   // retrieves session data
   const { data: session } = useSession();
+
+  // state to store the letter signature
+  const [letterSignature, setLetterSignature] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchLetterSignature = async () => {
+      try {
+        const letter = await getLetterById(reply.letterId);
+        setLetterSignature(letter.signature);
+      } catch (error) {
+        console.error('Error fetching letter signature:', error);
+      }
+    };
+
+    fetchLetterSignature();
+  }, [reply.letterId]);
 
   const confirmDelete = async () => {
     try {
@@ -62,7 +79,7 @@ const ReplyItem = ({ reply }: { reply: Reply }) => {
       </Row>
 
       <Row>
-        Dear Sunshine,
+        Dear {letterSignature},
         <p>{reply.reply}</p>
         From,
         <br />
