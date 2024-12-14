@@ -28,7 +28,7 @@ async function getUserData(userId: string) {
     replies: userReplies,
     postCount: userPosts.length,
     replyCount: userReplies.length,
-    signature:  '',
+    signature: '',
   };
 }
 
