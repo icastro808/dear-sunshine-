@@ -194,7 +194,7 @@ const LetterCard = ({
               >
                 {hasReacted ? reactionIcons[reactionType].filled : reactionIcons[reactionType].default}
                 &nbsp;
-                {reactions?.filter((r) => r.type === reactionType).length || 0}
+                {reactions?.filter((r) => r.type === reactionType).length || ''}
               </Button>
 
             );
