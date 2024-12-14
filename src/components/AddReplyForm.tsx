@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import swal from 'sweetalert';
 import { redirect } from 'next/navigation';
-import { addReply } from '@/lib/dbActions';
+import { addReply, getLetterById } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddReplySchema } from '@/lib/validationSchemas';
 import { Letter } from '@prisma/client';
@@ -20,11 +20,20 @@ const onSubmit = async (data: {
   letterId: number;
   owner: string;
 }, reset: () => void) => {
-  await addReply(data);
-  swal('Success', 'Your response has been added', 'success', {
-    timer: 2000,
-  });
-  reset();
+  try {
+    const letter = await getLetterById(data.letterId);
+    const replyData = {
+      ...data,
+      lettersignature: letter.signature,
+    };
+    await addReply(replyData);
+    swal('Success', 'Your response has been added', 'success', {
+      timer: 2000,
+    });
+    reset();
+  } catch (error) {
+    swal('Error', 'There was an error adding your response', 'error');
+  }
 };
 
 // max character count for the reply
@@ -68,7 +77,11 @@ const AddReplyForm = ({ letter }: { letter: Letter }) => {
       <Card.Body>
         <Form onSubmit={handleSubmit((data) => onSubmit(data, reset))}>
           <Form.Group>
-            <Form.Label>Dear Sunshine,</Form.Label>
+            <Form.Label>
+              Dear&nbsp;
+              {letter.signature}
+              ,
+            </Form.Label>
             <textarea
               {...register('reply')}
               className={`form-control ${errors.reply ? 'is-invalid' : ''}`}

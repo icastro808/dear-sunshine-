@@ -127,7 +127,7 @@ export async function deleteLetter(id: number, admin: boolean = false) {
   }
 }
 
-export async function addReply(reply: { reply: string; letterId: number, owner: string }) {
+export async function addReply(reply: { reply: string; letterId: number; owner: string; lettersignature: string }) {
   const user = await prisma.user.findUnique({
     where: { email: reply.owner },
   });
@@ -199,4 +199,16 @@ export async function updateUserSignature(email: string, signature: string) {
     where: { email },
     data: { signature },
   });
+}
+
+export async function getLetterById(letterId: number) {
+  const letter = await prisma.letter.findUnique({
+    where: { id: letterId },
+  });
+
+  if (!letter) {
+    throw new Error('Letter not found');
+  }
+
+  return letter;
 }
