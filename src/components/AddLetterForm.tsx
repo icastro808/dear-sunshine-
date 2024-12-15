@@ -203,7 +203,7 @@ const AddLetterForm: React.FC = () => {
                 </Button>
               ))}
             </div>
-            <input type="hidden" {...register('tags')} value={selectedTags.join(',')} />
+
             {errors.tags && (
               <div className="invalid-feedback d-block">{errors.tags?.message}</div>
             )}
