@@ -7,6 +7,9 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { BoxArrowInUpRight } from 'react-bootstrap-icons';
 import getUserData from '@/lib/getUserData';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const SignatureForm = dynamic(() => import('@/components/SignatureForm'), { ssr: false });
 
 /** Profile page showing user's posts, replies, and counts. */
 export default async function ProfilePage({ params }: { params: { userId: string } }) {
@@ -17,7 +20,7 @@ export default async function ProfilePage({ params }: { params: { userId: string
       // eslint-disable-next-line @typescript-eslint/comma-dangle
     } | null,
   );
-  const { posts, replies, postCount, replyCount } = await getUserData(params.userId);
+  const { posts, replies, postCount, replyCount, signature } = await getUserData(params.userId);
   return (
     <main>
       <Container
@@ -37,6 +40,7 @@ export default async function ProfilePage({ params }: { params: { userId: string
           <Row className="mb-4 text-center">
             <Col>
               <h3 style={{ color: '#d76b00', fontWeight: '600' }}>Change Signature</h3>
+              <SignatureForm initialSignature={signature} userEmail={session?.user?.email || ''} />
             </Col>
           </Row>
 
@@ -86,12 +90,18 @@ export default async function ProfilePage({ params }: { params: { userId: string
                     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                   }}
                 >
-                  <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
+                  {/* <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
                     {post.text}
                     <Link href={`/reply/${post.id}`} passHref className="link-toggle no-underline" style={{ color: 'black' }}>
                       <BoxArrowInUpRight className="mb-2 ms-2" width="9px" />
                     </Link>
-                  </p>
+                  </p> */}
+                  <Link href={`/reply/${post.id}`} passHref className="link-toggle no-underline" style={{ color: 'black' }}>
+                    <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
+                      {post.text}
+                      <BoxArrowInUpRight className="mb-2 ms-2" width="9px" />
+                    </p>
+                  </Link>
                   <p className="text-muted" style={{ fontSize: '0.85rem', marginTop: '1rem' }}>
                     <strong>Tags: </strong>
                     {post.tags.join(', ')}

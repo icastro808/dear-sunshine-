@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
+import { BoxArrowRight, BrightnessAltHigh, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 import { User } from '@prisma/client';
 
 const NavBar: React.FC = () => {
@@ -34,6 +34,8 @@ const NavBar: React.FC = () => {
           }}
         >
           Dear Sunshine
+          &nbsp;
+          <BrightnessAltHigh className="me-3" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

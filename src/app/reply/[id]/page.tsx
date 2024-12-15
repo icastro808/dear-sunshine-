@@ -42,6 +42,7 @@ export default async function AddReplyPage({ params }: { params: { id: string | 
               letter={letter}
               replies={replies.filter(reply => reply.letterId === letter.id)}
               showReplyButton={false}
+              initialReaction={[]}
             />
           </Col>
 

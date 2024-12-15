@@ -15,7 +15,9 @@ export const AddLetterSchema = Yup.object({
     )
     .required().max(500, 'Your letter cannot exceed 500 characters'),
   owner: Yup.string().required(),
-  tags: Yup.array().of(Yup.string().oneOf(['vent', 'advice', 'thoughts', 'positivity', 'love', 'family', 'friendship', 'school']).required()).required(),
+  tags: Yup.array()
+    .of(Yup.string().oneOf(['vent', 'advice', 'thoughts', 'positivity', 'love', 'family', 'friendship', 'school']).required())
+    .min(1, 'You must select at least one tag.').required('You must select at least one tag.'),
 });
 
 export const EditLetterSchema = Yup.object({
@@ -32,9 +34,11 @@ export const EditLetterSchema = Yup.object({
     )
     .required().max(500, 'Your letter cannot exceed 500 characters'),
   owner: Yup.string().required(),
-  tags: Yup.array().of(Yup.string().oneOf(['vent', 'advice', 'thoughts', 'positivity', 'love', 'family', 'friendship', 'school']).required()).required(),
+  tags: Yup.array()
+    .of(Yup.string().oneOf(['vent', 'advice', 'thoughts', 'positivity', 'love', 'family', 'friendship', 'school']).required())
+    .min(1, 'You must select at least one tag.').required(),
   signature: Yup.string().default('Sunshine'),
-  createdAt: Yup.date().required(),
+  createdAt: Yup.date().default(new Date()),
 });
 
 export const DeleteLetterSchema = Yup.object({
