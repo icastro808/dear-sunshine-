@@ -17,98 +17,236 @@
     { "email": "reese@foo.com", "password": "changeme", "role": "USER" },
     { "email": "skye@foo.com", "password": "changeme", "role": "USER" },
     { "email": "quinn@foo.com", "password": "changeme", "role": "USER" },
-    { "email": "jamie@foo.com", "password": "changeme", "role": "USER" }
+    { "email": "jamie@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "ella@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "milo@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "zoe@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "lucy@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "sophia@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "jax@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "keira@foo.com", "password": "changeme", "role": "USER" }
   ],
   "defaultLetters": [
     {
-      "text": "Some days, it feels like the weight of the world is just too much. I try to remind myself that it's okay to take a break and just breathe, but it's hard to not feel like I'm falling behind.",
+      "text": "Some days, it feels like I’m barely keeping up. I know I should be chill, but it’s hard not to feel behind. Anyone else feel this way?",
       "owner": "admin@foo.com",
-      "tags": ["vent"]
+      "tags": ["vent"],
+      "reply": [
+        {
+          "text": "I get how that feels. Sometimes it seems like everything's coming at you at once, but you'll make it through!",
+          "owner": "john@foo.com"
+        }
+      ]
     },
     {
-      "text": "I've been thinking a lot about how to approach difficult conversations. A friend once told me to lead with empathy and listen before I speak. It sounds simple, but it’s been life-changing advice.",
+      "text": "Honestly, just listening before responding has been a game-changer for me. It’s simple, but it works.",
       "owner": "john@foo.com",
-      "tags": ["advice", "friendship"]
+      "tags": ["advice"],
+      "reply": [
+        {
+          "text": "That’s such a great tip. I’ve noticed that listening first really helps create a better conversation. Thanks for sharing!",
+          "owner": "pat@foo.com"
+        }
+      ]
     },
     {
-      "text": "I'm frustrated. No matter how much effort I put into my work, it feels like nobody notices or cares. Maybe I need to focus less on others' opinions and more on what fulfills me.",
+      "text": "Feels like no one notices the work I do. Maybe I should stop caring so much about others’ opinions.",
       "owner": "pat@foo.com",
-      "tags": ["vent"]
+      "tags": ["vent"],
+      "reply": [
+        {
+          "text": "I totally understand the frustration. Sometimes it feels like we’re invisible, but your efforts do matter. Keep pushing forward!",
+          "owner": "morgan@foo.com"
+        }
+      ]
     },
     {
-      "text": "Love is such a strange and powerful thing. It can make you feel on top of the world one moment and completely vulnerable the next. But at the end of the day, it’s worth it.",
+      "text": "Love is complicated. I'm struggling to figure it all out.",
       "owner": "sam@foo.com",
       "tags": ["love"]
     },
     {
-      "text": "Friendship is one of the most underrated forms of love. A good friend can see you through your worst days and still remind you of your best qualities.",
+      "text": "Good friends are everything. They can see you at your worst and still make you feel like your best.",
       "owner": "morgan@foo.com",
-      "tags": ["friendship"]
+      "tags": ["friendship"],
+      "reply": [
+        {
+          "text": "Yes! I’ve had friends who’ve done that for me, and it really does make all the difference. You’re so right about the value of true friends.",
+          "owner": "taylor@foo.com"
+        }
+      ]
     },
     {
-      "text": "School can be so overwhelming sometimes. Between assignments, deadlines, and trying to have a social life, it’s easy to feel like there’s no time to breathe. But I’m trying to take it one day at a time.",
+      "text": "School is never-ending right now. I’m just trying to keep up and not drown in assignments.",
       "owner": "avery@foo.com",
       "tags": ["school"]
     },
     {
-      "text": "Family is complicated, but at the end of the day, they’re the ones who know you best. I’ve learned that it’s worth working through the tough times to preserve those relationships.",
+      "text": "Family can be complicated. But at the end of the day, they’re the ones who really know you.",
       "owner": "chris@foo.com",
-      "tags": ["family", "positivity"]
+      "tags": ["family", "positivity"],
+      "reply": [
+        {
+          "text": "Trying to understand each other’s perspectives really helps.",
+          "owner": "drew@foo.com"
+        }
+      ]
     },
     {
-      "text": "I’ve been feeling lonely lately, even when I’m around people. I guess what I really want is someone who just gets it—someone who understands without me needing to explain.",
+      "text": "I’ve been feeling lonely, even when I’m surrounded by people. I just want someone who really gets it.",
       "owner": "simon@foo.com",
-      "tags": ["vent", "thoughts"]
+      "tags": ["vent", "thoughts"],
+      "reply": [
+        {
+          "text": "I get it, I’ve been there. Even surrounded by people, the loneliness can creep in. You’re not alone in feeling this way.",
+          "owner": "reese@foo.com"
+        }
+      ]
     },
     {
-      "text": "Lately, I feel like I’m carrying too much, and it’s hard to see the light at the end of the tunnel. But I’m reminding myself that even the smallest step forward is still progress.",
+      "text": "Everything feels like it’s piling up, but I keep telling myself to just take it one thing at a time.",
       "owner": "taylor@foo.com",
-      "tags": ["vent"]
+      "tags": ["vent"],
+      "reply": [
+        {
+          "text": "That’s a great mindset. One thing at a time really is the best way to handle it. Don’t let the pressure get to you!",
+          "owner": "jamie@foo.com"
+        }
+      ]
     },
     {
-      "text": "I’ve been struggling to stay positive, but a little advice from a friend helped: 'Focus on what you can control and let the rest go.' It’s not easy, but I’m trying to hold on to that.",
+      "text": "I’ve been trying to stay positive, but some days it’s harder than others. Focusing on what I can control helps.",
       "owner": "alex@foo.com",
-      "tags": ["advice"]
+      "tags": ["advice"],
+      "reply": [
+        {
+          "text": "Focusing on what you can control is a great way to stay grounded during tough times.",
+          "owner": "lucy@foo.com"
+        }
+      ]
     },
     {
-    "text": "It’s hard to talk about love when it feels so out of reach, but I want to believe it’s out there—something real and kind. Maybe we all deserve that.",
+      "text": "Love feels so out of reach sometimes, but I keep hoping something real will come along.",
       "owner": "cameron@foo.com",
-      "tags": ["love"]
+      "tags": ["love"],
+      "reply": [
+        {
+          "text": "Hang in there. Love can be a long journey, but real connections are worth the wait. Don’t give up hope.",
+          "owner": "sophia@foo.com"
+        }
+      ]
     },
     {
-      "text": "I miss having someone who truly gets me. Friendship feels rare these days, but I’m trying to hold onto the hope that I’ll find connections that feel real again.",
+      "text": "I miss having a real connection with someone. It’s hard to find friends who really get you.",
       "owner": "jordan@foo.com",
       "tags": ["friendship"]
     },
     {
-      "text": "The school workload feels endless, but I’m proud of myself for tackling it one step at a time. Progress is progress.",
+      "text": "Procrastination is my best friend right now... and my worst enemy. Can’t seem to get motivated today.",
       "owner": "devon@foo.com",
       "tags": ["school"]
     },
     {
-      "text": "Family relationships are messy, and it’s been a tough time. I’m learning that even when it’s hard, showing love and patience can make all the difference.",
+      "text": "Family’s been tough lately, but I’m trying to remember that patience and love go a long way.",
       "owner": "drew@foo.com",
       "tags": ["family"]
     },
     {
-      "text": "Sometimes my thoughts feel scattered, like puzzle pieces that don’t fit together. Writing them down helps me find some clarity.",
+      "text": "Sometimes, my thoughts feel all over the place. Writing them down at least helps me organize things.",
       "owner": "reese@foo.com",
-      "tags": ["thoughts"]
+      "tags": ["thoughts"],
+      "reply": [
+        {
+          "text": "I do the same. Writing things down really helps clear my mind and sort through my thoughts. It’s like a little reset.",
+          "owner": "cameron@foo.com"
+        }
+      ]
     },
     {
-      "text": "Sometimes, it feels impossible to let out all the emotions I’ve been holding back. But maybe sharing them here is a way to start healing.",
+      "text": "Sometimes, it feels impossible to let out all the emotions I’ve been holding back.",
       "owner": "skye@foo.com",
-      "tags": ["vent"]
+      "tags": ["vent"],
+      "reply": [
+        {
+          "text": "I totally understand. But don’t hold back your emotions, let it out when you can.",
+          "owner": "zoe@foo.com"
+        }
+      ]
     },
     {
-      "text": "Life has been tough lately, but I remind myself that love comes in many forms—even in the quiet support of a stranger. That thought keeps me going.",
+      "text": "I’ve been realizing how much a simple kind word can totally turn someone’s day around.",
       "owner": "quinn@foo.com",
       "tags": ["love", "positivity"]
     },
     {
-      "text": "I’ve been thinking about how a kind word or gesture can change someone’s day. Maybe that’s something we can all try to give a little more of.",
+      "text": "Ugh, school never lets up. Just when I think I’m on top of things, another deadline hits.",
       "owner": "jamie@foo.com",
-      "tags": ["advice", "positivity"]
+      "tags": ["school"]
+    },
+    {
+      "text": "Some days I just want to take a nap and forget about everything.",
+      "owner": "ella@foo.com",
+      "tags": ["vent"],
+      "reply": [
+        {
+          "text": "Sometimes all we need is a break to recharge. Take that nap. You deserve it!",
+          "owner": "skye@foo.com"
+        }
+      ]
+    },
+    {
+      "text": "Feeling a little overwhelmed with work right now. I know I’ll get through it, but it’s just one of those days.",
+      "owner": "milo@foo.com",
+      "tags": ["vent"],
+      "reply": [
+        {
+          "text": "Take it one step at a time. You’ll get through it, and soon enough, it’ll feel manageable again.",
+          "owner": "cameron@foo.com"
+        }
+      ]
+    },
+    {
+      "text": "Ever feel like you're not doing enough? I'm constantly battling that feeling, even when I'm working hard.",
+      "owner": "zoe@foo.com",
+      "tags": ["vent"],
+      "reply": [
+        {
+          "text": "I totally relate to this. It’s hard to shake that feeling, but remember, your hard work is valuable.",
+          "owner": "devon@foo.com"
+        }
+      ]
+    },
+    {
+      "text": "Why is it that it’s always the people closest to you that can push your buttons the most?",
+      "owner": "lucy@foo.com",
+      "tags": ["vent", "family"]
+    },
+    {
+      "text": "I’m learning that it’s okay to not have everything figured out. It’s hard, but I’m trying to embrace the uncertainty.",
+      "owner": "sophia@foo.com",
+      "tags": ["positivity"],
+      "reply": [
+        {
+          "text": "Embracing uncertainty is tough, but you’re on the right path.",
+          "owner": "chris@foo.com"
+        }
+      ]
+    },
+    {
+      "text": "Been thinking a lot about love lately. It’s not always perfect, but I guess that’s what makes it real.",
+      "owner": "jax@foo.com",
+      "tags": ["love"],
+      "reply": [
+        {
+          "text": "Love isn’t always perfect, but the imperfections are what make it real.",
+          "owner": "milo@foo.com"
+        }
+      ]
+    },
+    {
+      "text": "Just want to escape for a bit. Everything’s been a bit too much lately. I need a day off.",
+      "owner": "keira@foo.com",
+      "tags": ["vent"]
     }
   ]
 }
